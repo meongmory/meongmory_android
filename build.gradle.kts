@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath(libs.kotlin.gradleplugin)
         classpath(libs.agp)
+        classpath(libs.hilt.plugin)
     }
 }
 
@@ -17,6 +18,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid) apply false
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.serilization) apply false
 }
 
 tasks.register("clean", Delete::class) {

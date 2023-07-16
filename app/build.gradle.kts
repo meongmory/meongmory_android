@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -52,6 +54,8 @@ android {
 
 dependencies {
     implementation(project(":presentation"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -68,4 +72,16 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
+    // Hilt
+    implementation(libs.hilt)
+    kapt(libs.hilt.testing.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.okhttp.logging.interceptor)
+
+    // Serialization
+    implementation(libs.serialization)
+    implementation(libs.kotlin.serilization)
 }
