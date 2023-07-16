@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "meongmory"
 include(":app")
 include(":presentation")
+include(":domain")
