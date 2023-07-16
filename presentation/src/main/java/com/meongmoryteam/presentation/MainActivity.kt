@@ -1,4 +1,4 @@
-package com.meongmoryteam.meongmory
+package com.meongmoryteam.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.meongmoryteam.meongmory.ui.theme.MeongmoryTheme
+import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

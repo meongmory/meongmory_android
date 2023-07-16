@@ -1,4 +1,4 @@
-package com.meongmoryteam.meongmory.ui.theme
+package com.meongmoryteam.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

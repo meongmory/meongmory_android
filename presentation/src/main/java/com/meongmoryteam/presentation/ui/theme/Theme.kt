@@ -1,4 +1,4 @@
-package com.meongmoryteam.meongmory.ui.theme
+package com.meongmoryteam.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
