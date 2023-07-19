@@ -9,5 +9,5 @@ sealed class ExampleFoodState {
 
     data class SuccessWeekFoodGetData(val getWeekFoodData: ResponseWeekFoodEntity) : ExampleFoodState()
 
-    data class Error(val errorCode: Int) : ExampleFoodState()
+    data class Error(val errorCode: Throwable) : ExampleFoodState()
 }

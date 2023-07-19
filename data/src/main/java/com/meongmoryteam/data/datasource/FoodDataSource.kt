@@ -1,9 +1,8 @@
 package com.meongmoryteam.data.datasource
 
-import com.meongmoryteam.domain.model.ResponseWeekFoodEntity
-import com.meongmoryteam.domain.model.Result
+import com.meongmoryteam.data.model.WeekFoodResponse
 
 interface FoodDataSource {
 
-    suspend fun weekGetFoodArea(s: String): Result<ResponseWeekFoodEntity>
+    suspend fun weekGetFoodArea(s: String): Result<WeekFoodResponse>
 }
