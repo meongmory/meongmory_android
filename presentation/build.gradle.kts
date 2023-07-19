@@ -1,21 +1,18 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.android.library)
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.meongmoryteam.meongmory"
+    namespace = "com.meongmoryteam.presentation"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.meongmoryteam.meongmory"
         minSdk = 28
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -45,7 +42,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.7"
     }
-    packaging {
+    packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -53,9 +50,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":presentation"))
     implementation(project(":domain"))
-    implementation(project(":data"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -75,13 +70,6 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt)
+    implementation(libs.hilt.compose)
     kapt(libs.hilt.testing.compiler)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.okhttp.logging.interceptor)
-
-    // Serialization
-    implementation(libs.serialization)
-    implementation(libs.kotlin.serilization)
 }

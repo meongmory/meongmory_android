@@ -1,4 +1,4 @@
-package com.meongmoryteam.meongmory.ui.theme
+package com.meongmoryteam.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
