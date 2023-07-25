@@ -26,7 +26,7 @@ val AppleSD = FontFamily(
     Font(R.font.applesdgothicneosb, FontWeight.W400, FontStyle.Normal),
 )
 val NotoSansKR = FontFamily(
-    Font(R.font.notosanskr_medium, FontWeight.W500, FontStyle.Normal),
+    Font(R.font.notosanskr_medium, FontWeight.W400, FontStyle.Normal),
 )
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -35,32 +35,48 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     titleLarge = TextStyle(
-        fontFamily = Inter,
-        fontWeight = FontWeight.W600,
-        fontSize = 25.sp,
-        lineHeight = 30.26.sp,
-        letterSpacing = 0.5.sp
-    ),
-    titleMedium = TextStyle(
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 20.sp,
         lineHeight = 20.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
+    ),
+    titleMedium = TextStyle(
+        fontFamily = AppleSD,
+        fontWeight = FontWeight.W400,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     titleSmall = TextStyle(
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 12.sp,
         lineHeight = 20.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
-    //버튼텍스트
-    labelSmall = TextStyle(
+    labelLarge = TextStyle( //버튼텍스트
         fontFamily = NotoSansKR,
         fontWeight = FontWeight.W500,
         fontSize = 15.sp,
+        lineHeight = 20.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
+    ),
+    labelMedium = TextStyle( //버튼텍스트
+        fontFamily = AppleSD,
+        fontWeight = FontWeight.W400,
+        fontSize = 15.sp,
+        lineHeight = 20.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
+    ),
+    labelSmall = TextStyle( //버튼텍스트
+        fontFamily = AppleSD,
+        fontWeight = FontWeight.W400,
+        fontSize = 13.sp,
         lineHeight = 20.sp,
         platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
