@@ -30,12 +30,11 @@ val NotoSansKR = FontFamily(
 )
 // Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
+    bodyMedium = TextStyle(
+        fontFamily = AppleSD,
+        fontWeight = FontWeight.W400,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp,
+        lineHeight = 20.sp,
         platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     titleLarge = TextStyle(

@@ -35,6 +35,8 @@ import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextComponent
+import com.meongmoryteam.presentation.ui.register_family.invitation.TextField
+import com.meongmoryteam.presentation.ui.register_family.invitation.checkValidCode
 import com.meongmoryteam.presentation.ui.theme.AppleSD
 import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
@@ -57,80 +59,44 @@ fun RegisterByNameScreen() {
 
     RegisterDogForm {
         Column {
-            TextComponent(text = stringResource(id = R.string.register_by_name_title), style = Typography.titleLarge, modifier = Modifier.padding(bottom = 20.dp), color = Black)
-            TextComponent(text = stringResource(id = R.string.register_by_name_info), style = Typography.titleSmall, color = DarkGrey)
+            TextComponent(
+                text = stringResource(id = R.string.register_by_name_title),
+                style = Typography.titleLarge,
+                modifier = Modifier.padding(bottom = 10.dp),
+                color = Orange)
+            TextComponent(
+                text = stringResource(id = R.string.register_by_name_info),
+                style = Typography.bodyMedium,
+                color = DarkGrey)
         }
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically){
-                TextField(
+            TextField(
                     name = name, 
                     onValueChange = {name = it}, 
-                    placeholder = stringResource(id = R.string.code_placeholder), 
-                    width = 0.7f,
+                    placeholder = stringResource(id = R.string.code_placeholder),
                     bgColor = if(name.text.isEmpty()){Color(0xFFF9F9F9)} else {LightYellow},
                     borderColor =  if(name.text.isEmpty()){InputBoxOutline} else {Yellow}
                 )
-                Spacer(modifier = Modifier.fillMaxWidth(0.1f))
-                TextButtonComponent(
-                    onClick = {}, 
-                    text = stringResource(id = R.string.check),
-                    colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)}, style = TextStyle(fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 13.sp, lineHeight = 20.sp, color = ButtonContent, platformStyle = PlatformTextStyle(includeFontPadding = false)), width = 1f,)
-
-            }
-            checkValidCode(name = name, enabled = enabled) { enabled = !enabled }
+            inputException(text = stringResource(id = R.string.input_family_name_exception))
         }
         Spacer(modifier = Modifier.fillMaxHeight(0.3f))
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
                 onClick = {}, 
-                text = stringResource(id = R.string.next),
-                colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)}, style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent, platformStyle = PlatformTextStyle(includeFontPadding = false)))
+                text = stringResource(id = R.string.make),
+                colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)},
+                style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent, platformStyle = PlatformTextStyle(includeFontPadding = false)))
 
         }
     }
 }
 
 @Composable
-fun TextField(name: TextFieldValue, onValueChange : (TextFieldValue)->Unit, placeholder: String, width: Float = 1f, bgColor: Color = Color(0xFFF9F9F9), borderColor: Color = InputBoxOutline){
-    BasicTextField(
-        value = name,
-        onValueChange = onValueChange,
-        modifier = Modifier.height(43.dp),
-        singleLine = true,
-        textStyle = TextStyle(color = Black, fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 12.sp, lineHeight = 20.sp, platformStyle = PlatformTextStyle(includeFontPadding = false)),
-        decorationBox = {
-            Box(modifier = Modifier
-                .background(bgColor)
-                .fillMaxWidth(width)
-                .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
-                .padding(horizontal = 15.dp, vertical = 14.dp)
-            ){
-                if(name.text.isEmpty()){
-                    Text(text = placeholder, style = Typography.titleSmall, color = Placeholer)
-                }
-                else {it()
-                    Log.d("CHANGE","change")
-                }
-            }
-        }
+fun inputException(text : String){
+    Text(
+        modifier = Modifier.padding(vertical = 5.dp) ,
+        text = text,
+        color = Placeholer,
+        style = Typography.titleSmall
     )
-}
-
-@Composable
-fun checkValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boolean)->Unit){
-    //우선 텍스트가 입력되지 않은 경우 경고 메시지가 뜨도록 설정
-    if (name.text.isEmpty()){
-        Text(
-            modifier = Modifier.padding(vertical = 5.dp) ,
-            text = stringResource(id = R.string.not_valid_code), color = Error, style = Typography.titleSmall)
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MeongmoryTheme {
-        RegisterByNameScreen()
-    }
 }
