@@ -16,18 +16,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
-import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.Brown
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.Orange
 
 @Composable
-fun RegisterDogScreen(){
+fun RegisterFamilyScreen() {
     RegisterDogForm {
         Column() {
             Row {
@@ -88,13 +86,5 @@ fun TextButtonComponent(onClick: ()->Unit, text: String, colors: ButtonColors, s
             style = style,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(vertical = 0.dp))
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MeongmoryTheme {
-        RegisterDogScreen()
     }
 }
