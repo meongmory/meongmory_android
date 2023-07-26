@@ -19,14 +19,16 @@ import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
+
 import com.meongmoryteam.presentation.ui.theme.Brown
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.Orange
 
 @Composable
-fun RegisterFamilyScreen() {
-    RegisterDogForm {
+fun RegisterFamilyScreen(navController: NavController) {
+    RegisterDogForm(navController = navController) {
         Column() {
             Row {
                 TextComponent(
@@ -47,12 +49,12 @@ fun RegisterFamilyScreen() {
         }
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
-                onClick = {},
+                onClick = {navController.navigate(RouteScreen.Name.route)},
                 text = stringResource(id = R.string.go_to_name_btn),
                 colors = ButtonDefaults.textButtonColors(containerColor = Orange, contentColor = ButtonContent),
                 style = Typography.labelMedium)
             TextButtonComponent(
-                onClick = {},
+                onClick = {navController.navigate(RouteScreen.Code.route)},
                 text = stringResource(id = R.string.go_to_code_btn),
                 colors = ButtonDefaults.textButtonColors(containerColor = Brown, contentColor = ButtonContent),
                 style = Typography.labelMedium)
@@ -72,7 +74,7 @@ fun TextComponent(text: String, style: TextStyle, modifier: Modifier = Modifier,
 @Composable
 fun TextButtonComponent(onClick: ()->Unit, text: String, colors: ButtonColors, style: TextStyle, width: Float = 1f){
     TextButton(
-        onClick = {},
+        onClick = onClick,
         shape = RoundedCornerShape(10.dp),
         modifier= Modifier
             .fillMaxWidth(width)

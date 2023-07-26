@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
@@ -51,11 +52,11 @@ import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 
 @Composable
-fun RegisterByCodeScreen() {
+fun RegisterByCodeScreen(navController: NavController) {
     var name by remember{ mutableStateOf(TextFieldValue("")) }
     var enabled by remember{ mutableStateOf(false) }
 
-    RegisterDogForm {
+    RegisterDogForm(navController = navController) {
         Column {
             TextComponent(text = stringResource(id = R.string.register_by_code_title), style = Typography.titleLarge, modifier = Modifier.padding(bottom = 20.dp), color = Black)
             TextComponent(text = stringResource(id = R.string.register_by_code_info), style = Typography.titleSmall, color = DarkGrey)
@@ -123,14 +124,5 @@ fun checkValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boole
         Text(
             modifier = Modifier.padding(vertical = 5.dp) ,
             text = stringResource(id = R.string.not_valid_code), color = Error, style = Typography.titleSmall)
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MeongmoryTheme {
-        RegisterByCodeScreen()
     }
 }

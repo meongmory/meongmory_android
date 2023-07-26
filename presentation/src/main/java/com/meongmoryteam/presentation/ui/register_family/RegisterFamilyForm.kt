@@ -21,11 +21,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.meongmoryteam.presentation.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterDogForm(content: @Composable ColumnScope.() -> Unit){
+fun RegisterDogForm(navController: NavController, content: @Composable ColumnScope.() -> Unit){
     Scaffold(
         modifier = Modifier.padding(horizontal = 6.dp),
         topBar = {
@@ -34,7 +35,7 @@ fun RegisterDogForm(content: @Composable ColumnScope.() -> Unit){
                 modifier = Modifier.padding(top = 15.dp, bottom = 65.dp),
                 navigationIcon = {
                     IconButton(
-                        onClick = {},
+                        onClick = {navController.navigate(RouteScreen.Choose.route)},
                         modifier = Modifier.size(30.dp))
                     {
                         Icon(
