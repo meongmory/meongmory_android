@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,7 +34,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.ui.theme.ListDivider
 import com.meongmoryteam.presentation.ui.theme.ListNextButton
+import com.meongmoryteam.presentation.ui.theme.ListTitle
 import com.meongmoryteam.presentation.ui.theme.MyPageProfileEditButton
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowFill
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowStroke
@@ -145,7 +148,9 @@ fun MyPageList() {
             Text(
                 text = stringResource(id = R.string.my_page_list_account),
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp)
+                modifier = Modifier
+                    .padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
+                color = ListTitle
             )
             ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
             ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
@@ -154,7 +159,7 @@ fun MyPageList() {
 
             // 구분선
             Divider(
-                color = Color.Black,
+                color = ListDivider,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
@@ -165,7 +170,8 @@ fun MyPageList() {
             Text(
                 text = stringResource(id = R.string.my_page_support),
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
+                color = ListTitle
             )
 
             ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
@@ -175,7 +181,7 @@ fun MyPageList() {
 
             // 구분선
             Divider(
-                color = Color.Black,
+                color = ListDivider,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
@@ -185,7 +191,8 @@ fun MyPageList() {
             Text(
                 text = stringResource(id = R.string.my_page_app_info),
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
+                color = ListTitle
             )
             ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
             ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
@@ -236,9 +243,8 @@ fun ListButton(
                 colors = ButtonDefaults.buttonColors(Color.Transparent, ListNextButton)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_right_btn,),
-                    contentDescription = "",
-                    modifier = Modifier
+                    painter = painterResource(id = R.drawable.ic_right_btn),
+                    contentDescription = "선택 버튼",
                 )
             }
         }
