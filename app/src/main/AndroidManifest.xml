@@ -25,6 +25,12 @@
             android:name="com.meongmoryteam.presentation.ui.myPage.MyPageActivity"
             android:exported="true"
             android:theme="@style/Theme.Meongmory">
+
+        </activity>
+        <activity
+            android:name="com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
