@@ -44,12 +44,12 @@ fun RegisterByNameScreen(navController: NavController) {
     RegisterDogForm(navController = navController) {
         Column {
             TextComponent(
-                text = stringResource(id = R.string.register_by_name_title),
+                text = stringResource(R.string.register_by_name_title),
                 style = Typography.titleLarge,
                 modifier = Modifier.padding(bottom = 10.dp),
                 color = Orange)
             TextComponent(
-                text = stringResource(id = R.string.register_by_name_info),
+                text = stringResource(R.string.register_by_name_info),
                 style = Typography.bodyMedium,
                 color = DarkGrey)
         }
@@ -57,7 +57,7 @@ fun RegisterByNameScreen(navController: NavController) {
             TextFieldComponent(
                     name = name,
                     onValueChange = {name = it},
-                    placeholder = stringResource(id = R.string.code_placeholder),
+                    placeholder = stringResource(R.string.code_placeholder),
                     bgColor = if(name.text.isEmpty()){
                         Color(0xFFF9F9F9)
                     } else {
@@ -69,12 +69,12 @@ fun RegisterByNameScreen(navController: NavController) {
                         Yellow
                     }
                 )
-            InputException(text = stringResource(id = R.string.input_family_name_exception))
+            InputException(text = stringResource(R.string.input_family_name_exception))
         }
         Spacer(modifier = Modifier.fillMaxHeight(0.3f))
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
-                text = stringResource(id = R.string.make),
+                text = stringResource(R.string.make),
                 colors = if (name.text.isEmpty()) {
                     ButtonDefaults.textButtonColors(LightGrey)
                 } else{

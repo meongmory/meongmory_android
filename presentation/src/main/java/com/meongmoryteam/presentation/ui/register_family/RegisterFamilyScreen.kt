@@ -22,31 +22,31 @@ fun RegisterFamilyScreen(navController: NavController) {
         Column {
             Row {
                 TextComponent(
-                    text = stringResource(id = R.string.register_family_welcome),
+                    text = stringResource(R.string.register_family_welcome),
                     style = Typography.titleLarge,
                     modifier = Modifier.padding(bottom = 15.dp),
                     color = Orange)
                 TextComponent(
-                    text = stringResource(id = R.string.register_family_name),
+                    text = stringResource(R.string.register_family_name),
                     style = Typography.titleLarge,
                     modifier = Modifier.padding(bottom = 15.dp),
                     color = Brown)
             }
             TextComponent(
-                text = stringResource(id = R.string.register_family_info),
+                text = stringResource(R.string.register_family_info),
                 style = Typography.titleMedium,
                 color = DarkGrey)
         }
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
-                text = stringResource(id = R.string.go_to_name_btn),
+                text = stringResource(R.string.go_to_name_btn),
                 colors = ButtonDefaults.textButtonColors(containerColor = Orange, contentColor = ButtonContent),
                 style = Typography.labelMedium
             ){
                 navController.navigate(RouteScreen.Name.route)
             }
             TextButtonComponent(
-                text = stringResource(id = R.string.go_to_code_btn),
+                text = stringResource(R.string.go_to_code_btn),
                 colors = ButtonDefaults.textButtonColors(containerColor = Brown, contentColor = ButtonContent),
                 style = Typography.labelMedium
             ){

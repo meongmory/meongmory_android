@@ -49,13 +49,13 @@ fun RegisterByCodeScreen(navController: NavController) {
     RegisterDogForm(navController = navController) {
         Column {
             TextComponent(
-                text = stringResource(id = R.string.register_by_code_title),
+                text = stringResource(R.string.register_by_code_title),
                 style = Typography.titleLarge,
                 modifier = Modifier.padding(bottom = 20.dp),
                 color = Black
             )
             TextComponent(
-                text = stringResource(id = R.string.register_by_code_info),
+                text = stringResource(R.string.register_by_code_info),
                 style = Typography.titleSmall,
                 color = DarkGrey
             )
@@ -65,7 +65,7 @@ fun RegisterByCodeScreen(navController: NavController) {
                 TextFieldComponent(
                     name = name,
                     onValueChange = {name = it},
-                    placeholder = stringResource(id = R.string.code_placeholder),
+                    placeholder = stringResource(R.string.code_placeholder),
                     width = 0.7f,
                     bgColor = if(name.text.isEmpty()){
                         Color(0xFFF9F9F9)
@@ -80,7 +80,7 @@ fun RegisterByCodeScreen(navController: NavController) {
                 )
                 Spacer(modifier = Modifier.fillMaxWidth(0.1f))
                 TextButtonComponent(
-                    text = stringResource(id = R.string.check),
+                    text = stringResource(R.string.check),
                     colors = if (name.text.isEmpty()) {
                         ButtonDefaults.textButtonColors(LightGrey)
                     } else{
@@ -103,7 +103,7 @@ fun RegisterByCodeScreen(navController: NavController) {
         Spacer(modifier = Modifier.fillMaxHeight(0.3f))
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
-                text = stringResource(id = R.string.next),
+                text = stringResource(R.string.next),
                 colors = if (name.text.isEmpty()) {
                     ButtonDefaults.textButtonColors(LightGrey)
                 } else{
@@ -127,6 +127,6 @@ fun CheckValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boole
     if (name.text.isEmpty()){
         Text(
             modifier = Modifier.padding(vertical = 5.dp) ,
-            text = stringResource(id = R.string.not_valid_code), color = Error, style = Typography.titleSmall)
+            text = stringResource(R.string.not_valid_code), color = Error, style = Typography.titleSmall)
     }
 }
