@@ -152,9 +152,9 @@ fun MyPageList() {
                     .padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
                 color = ListTitle
             )
-            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
-            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
-            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            ListButton(painterResource(id = R.drawable.ic_coin), stringResource(id = R.string.my_page_pro_ver))
+            ListButton(painterResource(id = R.drawable.ic_logout), stringResource(id = R.string.my_page_logout))
+            ListButton(painterResource(id = R.drawable.ic_person), stringResource(id = R.string.my_page_drop))
             Spacer(modifier = Modifier.padding(top = padding_16))
 
             // 구분선
@@ -174,8 +174,8 @@ fun MyPageList() {
                 color = ListTitle
             )
 
-            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
-            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            ListButton(painterResource(id = R.drawable.ic_mail), stringResource(id = R.string.my_page_notice))
+            ListButton(painterResource(id = R.drawable.ic_send), stringResource(id = R.string.my_page_question))
 
             Spacer(modifier = Modifier.padding(top = padding_16))
 
@@ -194,7 +194,7 @@ fun MyPageList() {
                 modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
                 color = ListTitle
             )
-            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            ListButton(painterResource(id = R.drawable.ic_info), stringResource(id = R.string.my_page_clause))
             ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
 
         }
