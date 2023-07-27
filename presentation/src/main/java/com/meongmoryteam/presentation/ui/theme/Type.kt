@@ -1,7 +1,6 @@
 package com.meongmoryteam.presentation.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -35,49 +34,42 @@ val Typography = Typography(
         fontWeight = FontWeight.W400,
         fontSize = 16.sp,
         lineHeight = 20.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     titleLarge = TextStyle(
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 20.sp,
         lineHeight = 20.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     titleMedium = TextStyle(
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         lineHeight = 20.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     titleSmall = TextStyle(
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 12.sp,
         lineHeight = 20.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     labelLarge = TextStyle( //버튼텍스트
         fontFamily = NotoSansKR,
         fontWeight = FontWeight.W500,
         fontSize = 15.sp,
         lineHeight = 20.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     labelMedium = TextStyle( //버튼텍스트
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 15.sp,
         lineHeight = 20.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     labelSmall = TextStyle( //버튼텍스트
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 13.sp,
         lineHeight = 20.sp,
-        platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩 제거
     ),
     /* Other default text styles to override
     titleLarge = TextStyle(

@@ -19,7 +19,7 @@ import com.meongmoryteam.presentation.ui.theme.Orange
 @Composable
 fun RegisterFamilyScreen(navController: NavController) {
     RegisterDogForm(navController = navController) {
-        Column() {
+        Column {
             Row {
                 TextComponent(
                     text = stringResource(id = R.string.register_family_welcome),
@@ -27,7 +27,7 @@ fun RegisterFamilyScreen(navController: NavController) {
                     modifier = Modifier.padding(bottom = 15.dp),
                     color = Orange)
                 TextComponent(
-                    text = "ooo님!",
+                    text = stringResource(id = R.string.register_family_name),
                     style = Typography.titleLarge,
                     modifier = Modifier.padding(bottom = 15.dp),
                     color = Brown)
@@ -39,15 +39,19 @@ fun RegisterFamilyScreen(navController: NavController) {
         }
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
-                onClick = {navController.navigate(RouteScreen.Name.route)},
                 text = stringResource(id = R.string.go_to_name_btn),
                 colors = ButtonDefaults.textButtonColors(containerColor = Orange, contentColor = ButtonContent),
-                style = Typography.labelMedium)
+                style = Typography.labelMedium
+            ){
+                navController.navigate(RouteScreen.Name.route)
+            }
             TextButtonComponent(
-                onClick = {navController.navigate(RouteScreen.Code.route)},
                 text = stringResource(id = R.string.go_to_code_btn),
                 colors = ButtonDefaults.textButtonColors(containerColor = Brown, contentColor = ButtonContent),
-                style = Typography.labelMedium)
+                style = Typography.labelMedium
+            ){
+                navController.navigate(RouteScreen.Code.route)
+            }
         }
     }
 }

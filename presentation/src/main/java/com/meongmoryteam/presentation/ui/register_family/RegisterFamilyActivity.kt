@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,7 +27,7 @@ class RegisterFamilyActivity : ComponentActivity() {
         setContent {
             MeongmoryTheme {
                 Surface(color = White, modifier = Modifier.fillMaxSize()) {
-                    navigation()
+                    RegisterFamilyNavigation()
                 }
             }
         }
@@ -36,11 +35,10 @@ class RegisterFamilyActivity : ComponentActivity() {
 }
 
 @Composable
-fun navigation(
+fun RegisterFamilyNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ){
-    val context = LocalContext.current
     NavHost(navController = navController, startDestination = RouteScreen.Choose.route, modifier = modifier){
         composable(route = RouteScreen.Choose.route){
             RegisterFamilyScreen(navController)

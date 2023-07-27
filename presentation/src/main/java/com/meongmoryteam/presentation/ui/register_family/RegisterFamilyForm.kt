@@ -29,7 +29,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.AppleSD
 import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.InputBoxOutline
@@ -60,7 +61,7 @@ fun RegisterDogForm(navController: NavController, content: @Composable ColumnSco
                     {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "닫기",
+                            contentDescription = stringResource(R.string.close),
                             modifier = Modifier.size(30.dp)
                         )
                     }
@@ -69,7 +70,9 @@ fun RegisterDogForm(navController: NavController, content: @Composable ColumnSco
         },
     ) {
         Surface(
-            modifier = Modifier.padding(it).fillMaxSize(),
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize(),
         ) {
             Box(modifier = Modifier
                 .background(White)
@@ -87,7 +90,12 @@ fun RegisterDogForm(navController: NavController, content: @Composable ColumnSco
 
 
 @Composable
-fun TextComponent(text: String, style: TextStyle, modifier: Modifier = Modifier, color: Color){
+fun TextComponent(
+    text: String,
+    style: TextStyle,
+    modifier: Modifier = Modifier,
+    color: Color)
+{
     Text(
         text = text,
         style = style,
@@ -96,7 +104,12 @@ fun TextComponent(text: String, style: TextStyle, modifier: Modifier = Modifier,
 }
 
 @Composable
-fun TextButtonComponent(onClick: ()->Unit, text: String, colors: ButtonColors, style: TextStyle, width: Float = 1f){
+fun TextButtonComponent(
+    text: String,
+    colors: ButtonColors,
+    style: TextStyle,
+    width: Float = 1f,
+    onClick: ()->Unit){
     TextButton(
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
@@ -111,18 +124,25 @@ fun TextButtonComponent(onClick: ()->Unit, text: String, colors: ButtonColors, s
             text = text,
             style = style,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(vertical = 0.dp))
+            )
     }
 }
 
 @Composable
-fun TextFieldComponent(name: TextFieldValue, onValueChange : (TextFieldValue)->Unit, placeholder: String, width: Float = 1f, bgColor: Color = Color(0xFFF9F9F9), borderColor: Color = InputBoxOutline){
+fun TextFieldComponent(
+    name: TextFieldValue,
+    onValueChange : (TextFieldValue)->Unit,
+    placeholder: String,
+    width: Float = 1f,
+    bgColor: Color = Color(0xFFF9F9F9),
+    borderColor: Color = InputBoxOutline)
+{
     BasicTextField(
         value = name,
         onValueChange = onValueChange,
         modifier = Modifier.height(43.dp),
         singleLine = true,
-        textStyle = TextStyle(color = Black, fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 12.sp, lineHeight = 20.sp, platformStyle = PlatformTextStyle(includeFontPadding = false)),
+        textStyle = TextStyle(color = Black, fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 12.sp, lineHeight = 20.sp),
         decorationBox = {
             Box(modifier = Modifier
                 .background(bgColor)

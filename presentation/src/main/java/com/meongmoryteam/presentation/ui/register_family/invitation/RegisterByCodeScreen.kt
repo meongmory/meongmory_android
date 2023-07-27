@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -49,8 +48,17 @@ fun RegisterByCodeScreen(navController: NavController) {
 
     RegisterDogForm(navController = navController) {
         Column {
-            TextComponent(text = stringResource(id = R.string.register_by_code_title), style = Typography.titleLarge, modifier = Modifier.padding(bottom = 20.dp), color = Black)
-            TextComponent(text = stringResource(id = R.string.register_by_code_info), style = Typography.titleSmall, color = DarkGrey)
+            TextComponent(
+                text = stringResource(id = R.string.register_by_code_title),
+                style = Typography.titleLarge,
+                modifier = Modifier.padding(bottom = 20.dp),
+                color = Black
+            )
+            TextComponent(
+                text = stringResource(id = R.string.register_by_code_info),
+                style = Typography.titleSmall,
+                color = DarkGrey
+            )
         }
         Column {
             Row(verticalAlignment = Alignment.CenterVertically){
@@ -64,25 +72,29 @@ fun RegisterByCodeScreen(navController: NavController) {
                 )
                 Spacer(modifier = Modifier.fillMaxWidth(0.1f))
                 TextButtonComponent(
-                    onClick = {},
                     text = stringResource(id = R.string.check),
-                    colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)}, style = TextStyle(fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 13.sp, lineHeight = 20.sp, color = ButtonContent, platformStyle = PlatformTextStyle(includeFontPadding = false)), width = 1f,)
-
+                    colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)},
+                    style = TextStyle(fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 13.sp, lineHeight = 20.sp, color = ButtonContent),
+                    width = 1f
+                ){}
             }
-            checkValidCode(name = name, enabled = enabled) { enabled = !enabled }
+            CheckValidCode(name = name, enabled = enabled) {
+                enabled = !enabled
+            }
         }
         Spacer(modifier = Modifier.fillMaxHeight(0.3f))
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
-                onClick = {},
                 text = stringResource(id = R.string.next),
-                colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)}, style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent, platformStyle = PlatformTextStyle(includeFontPadding = false)))
+                colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)},
+                style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent)
+            ) {}
         }
     }
 }
 
 @Composable
-fun checkValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boolean)->Unit){
+fun CheckValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boolean)->Unit){
     //우선 텍스트가 입력되지 않은 경우 경고 메시지가 뜨도록 설정
     if (name.text.isEmpty()){
         Text(
