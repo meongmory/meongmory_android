@@ -10,7 +10,7 @@
     <string name="register_by_code_title">가족 및 지인으로 등록하기</string>
     <string name="code_placeholder">초대 코드 입력</string>
     <string name="register_family_info">우리집 반려동물을 등록하고 가족, 지인과 반려동물의 추억을 공유해보세요!\n혹은 가족 및 지인에게 초대 코드를 받아 반려동물의 일상을 구경해보세요!</string>
-    <string name="register_family_welcome">환영합니다 </string>
+    <string name="register_family_welcome">환영합니다\ </string>
     <string name="register_family_name">ooo님!</string>
     <string name="go_to_name_btn">주인으로 강아지네 새로 만들기</string>
     <string name="go_to_code_btn">가족 및 지인으로 등록하기 (초대 코드)</string>

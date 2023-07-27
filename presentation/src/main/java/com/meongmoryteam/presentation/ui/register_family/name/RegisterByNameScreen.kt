@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -54,10 +55,15 @@ fun RegisterByNameScreen(navController: NavController) {
                 color = DarkGrey)
         }
         Column {
+            Text(
+                text = stringResource(R.string.input_family_name_label),
+                color = Placeholer,
+                style = Typography.bodySmall
+            )
             TextFieldComponent(
                     name = name,
                     onValueChange = {name = it},
-                    placeholder = stringResource(R.string.code_placeholder),
+                    placeholder = stringResource(R.string.input_family_name),
                     bgColor = if(name.text.isEmpty()){
                         Color(0xFFF9F9F9)
                     } else {
@@ -85,7 +91,8 @@ fun RegisterByNameScreen(navController: NavController) {
                     fontWeight = FontWeight.W500,
                     fontSize = 15.sp,
                     lineHeight = 20.sp,
-                    color = ButtonContent
+                    color = ButtonContent,
+                    platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거해주지 않으면 텍스트가 잘림
                 )
             ) {}
         }
@@ -95,7 +102,7 @@ fun RegisterByNameScreen(navController: NavController) {
 @Composable
 fun InputException(text : String){
     Text(
-        modifier = Modifier.padding(vertical = 5.dp) ,
+        modifier = Modifier.padding(vertical = 8.dp) ,
         text = text,
         color = Placeholer,
         style = Typography.titleSmall

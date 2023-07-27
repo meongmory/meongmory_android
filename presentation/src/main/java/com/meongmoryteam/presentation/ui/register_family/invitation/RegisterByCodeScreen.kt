@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -114,7 +115,8 @@ fun RegisterByCodeScreen(navController: NavController) {
                     fontWeight = FontWeight.W500,
                     fontSize = 15.sp,
                     lineHeight = 20.sp,
-                    color = ButtonContent
+                    color = ButtonContent,
+                    platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거해주지 않으면 텍스트가 잘림
                 )
             ) {}
         }

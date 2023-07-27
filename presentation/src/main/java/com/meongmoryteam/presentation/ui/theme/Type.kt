@@ -35,6 +35,12 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 20.sp,
     ),
+    bodySmall = TextStyle(
+        fontFamily = NotoSansKR,
+        fontWeight = FontWeight.W500,
+        fontSize = 12.sp,
+        lineHeight = 20.sp,
+    ),
     titleLarge = TextStyle(
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
