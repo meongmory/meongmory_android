@@ -1,7 +1,5 @@
 package com.meongmoryteam.presentation.ui.myPage
 
-import android.widget.ImageButton
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,32 +7,25 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,16 +37,31 @@ import com.meongmoryteam.presentation.ui.theme.ListNextButton
 import com.meongmoryteam.presentation.ui.theme.MyPageProfileEditButton
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowFill
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowStroke
-val padding = 16.dp
+val padding_16 = 16.dp
 
 @Preview
 @Composable
 fun MyPageScreen() {
     Column {
+        MyPageTitle()
         MyPageProfile()
         MyPageList()
     }
 }
+
+@Composable
+fun MyPageTitle() {
+    Box(
+        modifier = Modifier
+            .padding(24.dp)
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = stringResource(id = R.string.my_page_title))
+
+    }
+}
+
 @Preview
 @Composable
 fun MyPageProfile() {
@@ -63,7 +69,7 @@ fun MyPageProfile() {
     Column {
         Row(
             Modifier
-                .padding(padding)
+                .padding(padding_16)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(20))
                 .border(width = 1.dp, color = MyPageYellowStroke, shape = RoundedCornerShape(20.dp))
@@ -76,20 +82,20 @@ fun MyPageProfile() {
                 painter = painterResource(R.drawable.ic_profile),
                 contentDescription = "프로필 기본 이미지",
                 Modifier
-                    .padding(start = padding)
+                    .padding(start = padding_16)
                     .width(48.dp)
                     .height(48.dp)
                     .clip(RoundedCornerShape(100))
             )
             Column(
                 modifier = Modifier
-                    .padding(padding)
+                    .padding(padding_16)
                     .fillMaxWidth()
-                    .border(width = 1.dp, color = MyPageYellowStroke)
             ) {
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
                         text = stringResource(id = R.string.my_page_profile),
@@ -98,7 +104,9 @@ fun MyPageProfile() {
                     )
                     Button(
                         onClick = { /*TODO*/ },
-                        modifier = Modifier.padding(start = padding),
+                        modifier = Modifier
+                            .padding()
+                            .wrapContentSize(),
                         colors = ButtonDefaults.buttonColors(MyPageProfileEditButton, Color.Black)
                     ) {
                         Text(
@@ -108,6 +116,7 @@ fun MyPageProfile() {
                     }
                 }
                 Text(
+                    modifier = Modifier.padding(bottom = 8.dp),
                     text = stringResource(id = R.string.my_page_phone_number),
                     fontSize = 10.sp
                 )
@@ -125,69 +134,23 @@ fun MyPageList() {
     // 마이페이지 목록 부분
     Row(
         modifier = Modifier
-            .padding(padding)
+            .padding(padding_16)
             .clip(RoundedCornerShape(5))
             .background(color = MyPageYellowFill)
             .border(width = 1.dp, color = MyPageYellowStroke, shape = RoundedCornerShape(19.dp))
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        Column(
-            modifier = Modifier.padding(padding)
-        ) {
+        Column{
             Text(
-                text = "계정 설정",
+                text = stringResource(id = R.string.my_page_list_account),
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp)
             )
-            Row(
-                Modifier.padding(8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_coin),
-                    contentDescription = "pro 버전 아이콘",
-                    Modifier
-                        .width(20.dp)
-                        .height(20.dp)
-                )
-                Text(
-                    text = "Pro 버전",
-                    Modifier.padding(start = padding)
-                )
-
-            }
-
-            Row(
-                Modifier.padding(8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_logout),
-                    contentDescription = "로그아웃 아이콘",
-                    Modifier
-                        .width(20.dp)
-                        .height(20.dp)
-                )
-                Text(
-                    text = "로그아웃",
-                    Modifier.padding(start = padding)
-                )
-            }
-
-            Row(
-                Modifier.padding(8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_person),
-                    contentDescription = "회원탈퇴 아이콘",
-                    Modifier
-                        .width(20.dp)
-                        .height(20.dp)
-                )
-                Text(
-                    text = "회원탈퇴",
-                    Modifier.padding(start = padding, bottom = padding)
-                )
-            }
+            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            Spacer(modifier = Modifier.padding(top = padding_16))
 
             // 구분선
             Divider(
@@ -195,46 +158,20 @@ fun MyPageList() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .padding(start = 8.dp, end = 8.dp)
+                    .padding(start = 24.dp, end = 24.dp)
             )
 
 
             Text(
-                text = "고객 지원",
+                text = stringResource(id = R.string.my_page_support),
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 8.dp, top = padding, bottom = 8.dp)
+                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp)
             )
 
-            Row(
-                Modifier.padding(8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_mail),
-                    contentDescription = "공지사항 아이콘",
-                    Modifier
-                        .width(20.dp)
-                        .height(20.dp)
-                )
-                Text(
-                    text = "공지사항",
-                    Modifier.padding(start = padding)
-                )
-            }
-            Row(
-                Modifier.padding(8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_send),
-                    contentDescription = "문의하기 아이콘",
-                    Modifier
-                        .width(20.dp)
-                        .height(20.dp)
-                )
-                Text(
-                    text = "문의하기, 오류제보",
-                    Modifier.padding(start = padding, bottom = padding)
-                )
-            }
+            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+
+            Spacer(modifier = Modifier.padding(top = padding_16))
 
             // 구분선
             Divider(
@@ -242,73 +179,67 @@ fun MyPageList() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .padding(start = 8.dp, end = 8.dp)
+                    .padding(start = 24.dp, end = 24.dp)
             )
 
             Text(
-                text = "앱정보",
+                text = stringResource(id = R.string.my_page_app_info),
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 8.dp, top = padding, bottom = 8.dp)
+                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp)
             )
-            Row(
-                Modifier.padding(8.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_info),
-                    contentDescription = "약관안내 아이콘",
-                    Modifier
-                        .width(20.dp)
-                        .height(20.dp)
-                )
-                Text(
-                    text = "약관 안내",
-                    Modifier.padding(start = padding)
-                )
-            }
-
-            // ListButton()
+            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
+            ListButton(painterResource(id = R.drawable.ic_lock), stringResource(id = R.string.my_page_personal))
 
         }
 
-    }
 
+    }
 }
 
-@Preview
+
 @Composable
 fun ListButton(
+    buttonIcon: Painter,
+    buttonText: String
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Button(onClick = { /*TODO*/ }) {
+        Button(
+            onClick = { /*TODO*/ },
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+        ) {
 
             Image(
-                painter = painterResource(id = R.drawable.ic_lock),
-                contentDescription = "개인정보 처리 방침 아이콘",
+                painter = buttonIcon,
+                contentDescription = "아이콘",
                 Modifier
                     .width(20.dp)
                     .height(20.dp)
             )
             Text(
-                text = "개인정보 처리 방침",
+                text = buttonText,
                 Modifier
-                    .padding(start = padding),
+                    .padding(start = padding_16),
                 color = Color.Black
             )
-            Box(modifier = Modifier
-                .padding()
-                .fillMaxWidth(),
-                contentAlignment = Alignment.CenterEnd
+        }
+
+        Box(modifier = Modifier
+            .padding()
+            .fillMaxWidth(),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            Button(
+                onClick = { /*TODO*/ },
+                colors = ButtonDefaults.buttonColors(Color.Transparent, ListNextButton)
             ) {
-                Button(onClick = { /*TODO*/ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_right_btn,),
-                        contentDescription = "",
-                        modifier = Modifier
-                    )
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_right_btn,),
+                    contentDescription = "",
+                    modifier = Modifier
+                )
             }
         }
     }
