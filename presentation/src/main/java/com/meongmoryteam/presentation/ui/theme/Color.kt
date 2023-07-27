@@ -22,3 +22,10 @@ val MyPageProfileEditButton = Color(0xFFFFF3E0)
 val ListNextButton = Color(0xFFB2B2B2)
 val ListTitle = Color(0xFF6D6D6D)
 val ListDivider = Color(0xFFFFE2A3)
+
+
+// 프로필 수정 색상
+val ProfileEditText = Color(0xFF737373)
+val ProfileEditStroke = Color(0xFFE7E7E7)
+val ProfileEditButtonFalse = Color(0xFFD9D9D9)
+val ProfileEditDivider = Color(0xFF757575)
