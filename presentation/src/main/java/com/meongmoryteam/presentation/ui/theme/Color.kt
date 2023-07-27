@@ -12,3 +12,9 @@ val Pink40 = Color(0xFF7D5260)
 
 
 val gray = Color(0xFFBAC0CA)
+
+// 마이페이지 색
+val MyPageYellowFill = Color(0xFFFFFBF3)
+val MyPageYellowStroke = Color(0xFFFFD985)
+val MyPageProfileEditButton = Color(0xFFFFF3E0)
+val ListNextButton = Color(0xFFB2B2B2)
