@@ -29,7 +29,7 @@ fun MeongMoryBottomNavigation(
         containerColor = Color.White,
         modifier = Modifier
             .fillMaxWidth()
-            .height(72.dp)
+            .height(56.dp)
             .border(
                 width = 1.dp,
                 color = GRAY100
