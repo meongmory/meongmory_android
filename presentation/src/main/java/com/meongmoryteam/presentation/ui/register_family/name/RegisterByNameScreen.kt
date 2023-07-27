@@ -58,8 +58,16 @@ fun RegisterByNameScreen(navController: NavController) {
                     name = name,
                     onValueChange = {name = it},
                     placeholder = stringResource(id = R.string.code_placeholder),
-                    bgColor = if(name.text.isEmpty()){Color(0xFFF9F9F9)} else {LightYellow},
-                    borderColor =  if(name.text.isEmpty()){InputBoxOutline} else {Yellow}
+                    bgColor = if(name.text.isEmpty()){
+                        Color(0xFFF9F9F9)
+                    } else {
+                        LightYellow
+                    },
+                    borderColor = if(name.text.isEmpty()){
+                        InputBoxOutline
+                    } else {
+                        Yellow
+                    }
                 )
             InputException(text = stringResource(id = R.string.input_family_name_exception))
         }
@@ -67,8 +75,18 @@ fun RegisterByNameScreen(navController: NavController) {
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
                 text = stringResource(id = R.string.make),
-                colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)},
-                style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent)
+                colors = if (name.text.isEmpty()) {
+                    ButtonDefaults.textButtonColors(LightGrey)
+                } else{
+                    ButtonDefaults.textButtonColors(Orange)
+                },
+                style = TextStyle(
+                    fontFamily = NotoSansKR,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 15.sp,
+                    lineHeight = 20.sp,
+                    color = ButtonContent
+                )
             ) {}
         }
     }

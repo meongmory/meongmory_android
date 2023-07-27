@@ -67,14 +67,32 @@ fun RegisterByCodeScreen(navController: NavController) {
                     onValueChange = {name = it},
                     placeholder = stringResource(id = R.string.code_placeholder),
                     width = 0.7f,
-                    bgColor = if(name.text.isEmpty()){Color(0xFFF9F9F9)} else {LightYellow},
-                    borderColor =  if(name.text.isEmpty()){InputBoxOutline} else {Yellow}
+                    bgColor = if(name.text.isEmpty()){
+                        Color(0xFFF9F9F9)
+                    } else {
+                        LightYellow
+                    },
+                    borderColor = if(name.text.isEmpty()){
+                        InputBoxOutline
+                    } else {
+                        Yellow
+                    }
                 )
                 Spacer(modifier = Modifier.fillMaxWidth(0.1f))
                 TextButtonComponent(
                     text = stringResource(id = R.string.check),
-                    colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)},
-                    style = TextStyle(fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 13.sp, lineHeight = 20.sp, color = ButtonContent),
+                    colors = if (name.text.isEmpty()) {
+                        ButtonDefaults.textButtonColors(LightGrey)
+                    } else{
+                        ButtonDefaults.textButtonColors(Orange)
+                        },
+                    style = TextStyle(
+                        fontFamily = AppleSD,
+                        fontWeight = FontWeight.W400,
+                        fontSize = 13.sp,
+                        lineHeight = 20.sp,
+                        color = ButtonContent
+                    ),
                     width = 1f
                 ){}
             }
@@ -86,8 +104,18 @@ fun RegisterByCodeScreen(navController: NavController) {
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
                 text = stringResource(id = R.string.next),
-                colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)},
-                style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent)
+                colors = if (name.text.isEmpty()) {
+                    ButtonDefaults.textButtonColors(LightGrey)
+                } else{
+                    ButtonDefaults.textButtonColors(Orange)
+                      },
+                style = TextStyle(
+                    fontFamily = NotoSansKR,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 15.sp,
+                    lineHeight = 20.sp,
+                    color = ButtonContent
+                )
             ) {}
         }
     }

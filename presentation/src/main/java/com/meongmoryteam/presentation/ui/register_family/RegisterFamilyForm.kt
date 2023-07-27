@@ -142,7 +142,13 @@ fun TextFieldComponent(
         onValueChange = onValueChange,
         modifier = Modifier.height(43.dp),
         singleLine = true,
-        textStyle = TextStyle(color = Black, fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 12.sp, lineHeight = 20.sp),
+        textStyle = TextStyle(
+            color = Black,
+            fontFamily = AppleSD,
+            fontWeight = FontWeight.W400,
+            fontSize = 12.sp,
+            lineHeight = 20.sp
+        ),
         decorationBox = {
             Box(modifier = Modifier
                 .background(bgColor)
