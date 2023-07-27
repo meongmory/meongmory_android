@@ -12,6 +12,7 @@ class MyPageProfileActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MypageProfileScreen()
+
         }
     }
 }
