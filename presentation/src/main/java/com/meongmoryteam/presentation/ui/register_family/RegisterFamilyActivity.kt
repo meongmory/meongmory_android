@@ -1,17 +1,14 @@
 package com.meongmoryteam.presentation.ui.register_family
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -32,9 +29,6 @@ class RegisterFamilyActivity : ComponentActivity() {
             MeongmoryTheme {
                 Surface(color = White, modifier = Modifier.fillMaxSize()) {
                     navigation()
-//                    RegisterFamilyScreen()
-//                    RegisterByNameScreen()
-//                    RegisterByCodeScreen()
                 }
             }
         }

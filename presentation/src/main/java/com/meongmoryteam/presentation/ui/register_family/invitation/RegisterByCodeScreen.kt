@@ -1,18 +1,11 @@
 package com.meongmoryteam.presentation.ui.register_family.invitation
 
-import android.util.Log
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +21,6 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -36,6 +28,7 @@ import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextComponent
+import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
 import com.meongmoryteam.presentation.ui.theme.AppleSD
 import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
@@ -44,10 +37,8 @@ import com.meongmoryteam.presentation.ui.theme.Error
 import com.meongmoryteam.presentation.ui.theme.InputBoxOutline
 import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.LightYellow
-import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
-import com.meongmoryteam.presentation.ui.theme.Placeholer
 import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 
@@ -63,7 +54,7 @@ fun RegisterByCodeScreen(navController: NavController) {
         }
         Column {
             Row(verticalAlignment = Alignment.CenterVertically){
-                TextField(
+                TextFieldComponent(
                     name = name,
                     onValueChange = {name = it},
                     placeholder = stringResource(id = R.string.code_placeholder),
@@ -86,35 +77,8 @@ fun RegisterByCodeScreen(navController: NavController) {
                 onClick = {},
                 text = stringResource(id = R.string.next),
                 colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)}, style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent, platformStyle = PlatformTextStyle(includeFontPadding = false)))
-
         }
     }
-}
-
-@Composable
-fun TextField(name: TextFieldValue, onValueChange : (TextFieldValue)->Unit, placeholder: String, width: Float = 1f, bgColor: Color = Color(0xFFF9F9F9), borderColor: Color = InputBoxOutline){
-    BasicTextField(
-        value = name,
-        onValueChange = onValueChange,
-        modifier = Modifier.height(43.dp),
-        singleLine = true,
-        textStyle = TextStyle(color = Black, fontFamily = AppleSD, fontWeight = FontWeight.W400, fontSize = 12.sp, lineHeight = 20.sp, platformStyle = PlatformTextStyle(includeFontPadding = false)),
-        decorationBox = {
-            Box(modifier = Modifier
-                .background(bgColor)
-                .fillMaxWidth(width)
-                .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
-                .padding(horizontal = 15.dp, vertical = 14.dp)
-            ){
-                if(name.text.isEmpty()){
-                    Text(text = placeholder, style = Typography.titleSmall, color = Placeholer)
-                }
-                else {it()
-                    Log.d("CHANGE","change")
-                }
-            }
-        }
-    )
 }
 
 @Composable

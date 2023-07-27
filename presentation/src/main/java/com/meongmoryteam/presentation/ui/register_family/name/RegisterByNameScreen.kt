@@ -25,7 +25,7 @@ import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextComponent
-import com.meongmoryteam.presentation.ui.register_family.invitation.TextField
+import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.InputBoxOutline
@@ -55,7 +55,7 @@ fun RegisterByNameScreen(navController: NavController) {
                 color = DarkGrey)
         }
         Column {
-            TextField(
+            TextFieldComponent(
                     name = name,
                     onValueChange = {name = it},
                     placeholder = stringResource(id = R.string.code_placeholder),
@@ -71,7 +71,6 @@ fun RegisterByNameScreen(navController: NavController) {
                 text = stringResource(id = R.string.make),
                 colors = if (name.text.isEmpty()) {ButtonDefaults.textButtonColors(LightGrey)} else{ButtonDefaults.textButtonColors(Orange)},
                 style = TextStyle(fontFamily = NotoSansKR, fontWeight = FontWeight.W500, fontSize = 15.sp, lineHeight = 20.sp, color = ButtonContent, platformStyle = PlatformTextStyle(includeFontPadding = false)))
-
         }
     }
 }
