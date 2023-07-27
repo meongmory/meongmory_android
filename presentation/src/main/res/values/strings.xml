@@ -46,4 +46,12 @@
 
 
 
+
+    <!-- 프로필 수정 -->
+    <string name="profile_change_title">프로필 수정</string>
+    <string name="profile_change_label">닉네임</string>
+    <string name="profile_now_nickname">강아지밥주는사람</string>
+    <string name="profile_change_explain">한글/영문/띄어쓰기/숫자 포함 최대 6자 입력 가능해요.</string>
+    <string name="profile_change_button">수정하기</string>
+
 </resources>
