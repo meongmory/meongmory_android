@@ -253,7 +253,7 @@ fun ListButton(
             .fillMaxWidth()
     ) {
         Button(
-            onClick = {  },
+            onClick = { openDialogCustom.value = true },
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.Unspecified,
                 containerColor = Color.Transparent
