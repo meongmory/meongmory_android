@@ -6,6 +6,7 @@
     <string name="my_page_profile">강아지밥주는사람</string>
     <string name="my_page_phone_number">010-1234-1234</string>
     <string name="my_page_profile_edit">프로필 수정</string>
+    <string name="my_page_profile_alarm">알람 설정</string>
     <string name="my_page_list_account">계정 설정</string>
     <string name="my_page_pro_ver">Pro 버전</string>
     <string name="my_page_logout">로그아웃</string>
@@ -16,9 +17,9 @@
     <string name="my_page_app_info">앱 정보</string>
     <string name="my_page_clause">약관 안내</string>
     <string name="my_page_personal">개인정보 처리 방침</string>
+    <string name="my_page_profile_image">프로필 기본 이미지</string>
     <string name="my_page_list_button_icon">아이콘</string>
     <string name="my_page_list_button_right">선택 버튼</string>
-
 
     <!-- 프로필 수정 -->
     <string name="profile_change_title">프로필 수정</string>
@@ -27,5 +28,6 @@
     <string name="profile_change_explain">한글/영문/띄어쓰기/숫자 포함 최대 6자 입력 가능해요.</string>
     <string name="profile_change_button">수정하기</string>
     <string name="profile_back_btn_description">뒤로 가기 버튼</string>
+
 
 </resources>
