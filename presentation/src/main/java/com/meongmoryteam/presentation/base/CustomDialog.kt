@@ -1,7 +1,6 @@
 package com.meongmoryteam.presentation.base
 
-import android.annotation.SuppressLint
-import android.media.Image
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -22,22 +19,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.DialogBackground
 import com.meongmoryteam.presentation.ui.theme.DialogStroke
 import com.meongmoryteam.presentation.ui.theme.DialogTextBlue
-
 
 
 @Composable
@@ -80,20 +72,23 @@ private fun CustomDialogUI(
                         fontSize = 13.sp,
                         color = Color.Black,
                         modifier = Modifier
-                            .padding(top = 5.dp, bottom = 5.dp)
                             .fillMaxWidth(),
                     )
                 }
             }
 
+
+
             Divider(
                 modifier = Modifier
-                    .background(DialogStroke)
+                    .background(DialogStroke.copy(0.36f))
             )
 
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(IntrinsicSize.Min),
+
                 Arrangement.SpaceEvenly
 
             ) {
@@ -106,8 +101,6 @@ private fun CustomDialogUI(
                             leftButton,
                             color = DialogTextBlue,
                             fontSize = 17.sp,
-                            modifier = Modifier
-                                .padding(top = 5.dp, bottom = 5.dp)
                         )
                     }
 
@@ -125,8 +118,6 @@ private fun CustomDialogUI(
                             rightButton,
                             color = DialogTextBlue,
                             fontSize = 17.sp,
-                            modifier = Modifier
-                                .padding(top = 5.dp, bottom = 5.dp)
                         )
                     }
                 }
