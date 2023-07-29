@@ -16,5 +16,8 @@
     <string name="my_page_app_info">앱 정보</string>
     <string name="my_page_clause">약관 안내</string>
     <string name="my_page_personal">개인정보 처리 방침</string>
+    <string name="my_page_profile_image">프로필 기본 이미지</string>
+    <string name="my_page_list_button_icon">아이콘</string>
+    <string name="my_page_list_button_right">선택 버튼</string>
 
 </resources>
