@@ -4,7 +4,7 @@
     <!-- 마이페이지 관련 -->
     <string name="my_page_title">마이페이지</string>
     <string name="my_page_profile">강아지밥주는사람</string>
-    <string name="my_page_phone_number">010-1234-1234</string>
+    <string name="my_page_phone_number">010–1234-1234</string>
     <string name="my_page_profile_edit">프로필 수정</string>
     <string name="my_page_profile_alarm">알람 설정</string>
     <string name="my_page_list_account">계정 설정</string>
@@ -37,6 +37,7 @@
     <string name="question_content_title">내용</string>
     <string name="question_content_detail">각종 문의나 오류 제보에 있어 자유롭게 적어주세요.</string>
     <string name="question_button">공유하기</string>
+    <string name="question_at">\@</string>
 
 
 
