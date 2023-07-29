@@ -9,7 +9,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.meongmoryteam.presentation.R
 
-
 val Inter = FontFamily(
     Font(R.font.inter_black, FontWeight.W900, FontStyle.Normal),
     Font(R.font.inter_extrabold, FontWeight.W800, FontStyle.Normal),
@@ -33,6 +32,12 @@ val Typography = Typography(
         fontFamily = AppleSD,
         fontWeight = FontWeight.W400,
         fontSize = 16.sp,
+        lineHeight = 20.sp,
+    ),
+    bodySmall = TextStyle(
+        fontFamily = NotoSansKR,
+        fontWeight = FontWeight.W500,
+        fontSize = 12.sp,
         lineHeight = 20.sp,
     ),
     titleLarge = TextStyle(

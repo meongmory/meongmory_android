@@ -10,7 +10,7 @@
     <string name="register_by_code_title">가족 및 지인으로 등록하기 👥</string>
     <string name="code_placeholder">초대 코드 입력</string>
     <string name="register_family_info">우리집 반려동물을 등록하고 가족, 지인과 반려동물의 추억을 공유해보세요!\n혹은 가족 및 지인에게 초대 코드를 받아 반려동물의 일상을 구경해보세요!</string>
-    <string name="register_family_welcome">환영합니다 </string>
+    <string name="register_family_welcome">환영합니다\ </string>
     <string name="register_family_name">ooo님!</string>
     <string name="go_to_name_btn">주인으로 강아지네 새로 만들기</string>
     <string name="go_to_code_btn">가족 및 지인으로 등록하기 (초대 코드)</string>
@@ -34,4 +34,25 @@
     <string name="month">월</string>
     <string name="day">일</string>
     <string name="pet_registration_number">반려동물 등록번호</string>
+    
+    <!-- 마이페이지 관련 -->
+    <string name="my_page_title">마이페이지</string>
+    <string name="my_page_profile">강아지밥주는사람</string>
+    <string name="my_page_phone_number">010-1234-1234</string>
+    <string name="my_page_profile_edit">프로필 수정</string>
+    <string name="my_page_profile_alarm">알람 설정</string>
+    <string name="my_page_list_account">계정 설정</string>
+    <string name="my_page_pro_ver">Pro 버전</string>
+    <string name="my_page_logout">로그아웃</string>
+    <string name="my_page_drop">회원 탈퇴</string>
+    <string name="my_page_support">고객 지원</string>
+    <string name="my_page_notice">공지사항</string>
+    <string name="my_page_question">문의하기, 오류제보</string>
+    <string name="my_page_app_info">앱 정보</string>
+    <string name="my_page_clause">약관 안내</string>
+    <string name="my_page_personal">개인정보 처리 방침</string>
+    <string name="my_page_profile_image">프로필 기본 이미지</string>
+    <string name="my_page_list_button_icon">아이콘</string>
+    <string name="my_page_list_button_right">선택 버튼</string>
+
 </resources>

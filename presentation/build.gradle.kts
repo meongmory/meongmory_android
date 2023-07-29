@@ -72,4 +72,7 @@ dependencies {
     implementation(libs.hilt)
     implementation(libs.hilt.compose)
     kapt(libs.hilt.testing.compiler)
+
+    // Navigation
+    implementation(libs.navigation)
 }

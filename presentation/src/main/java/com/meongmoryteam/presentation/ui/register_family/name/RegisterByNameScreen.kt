@@ -56,10 +56,15 @@ fun RegisterByNameScreen(navController: NavController) {
                 color = DarkGrey)
         }
         Column {
+            Text(
+                text = stringResource(R.string.input_family_name_label),
+                color = Placeholer,
+                style = Typography.bodySmall
+            )
             TextFieldComponent(
                     name = name,
                     onValueChange = {name = it},
-                    placeholder = stringResource(R.string.code_placeholder),
+                    placeholder = stringResource(R.string.input_family_name),
                     bgColor = if(name.text.isEmpty()){
                         Color(0xFFF9F9F9)
                     } else {
@@ -98,7 +103,7 @@ fun RegisterByNameScreen(navController: NavController) {
 @Composable
 fun InputException(text : String){
     Text(
-        modifier = Modifier.padding(vertical = 5.dp) ,
+        modifier = Modifier.padding(vertical = 8.dp) ,
         text = text,
         color = Placeholer,
         style = Typography.titleSmall
