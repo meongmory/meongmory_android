@@ -1,6 +1,7 @@
 package com.meongmoryteam.presentation.ui.myPage.profile
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
@@ -31,33 +33,52 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.ui.MyIconPack
+import com.meongmoryteam.presentation.ui.myiconpack.`Arrow-left`
+import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.ProfileEditDivider
 import com.meongmoryteam.presentation.ui.theme.ProfileEditStroke
 import com.meongmoryteam.presentation.ui.theme.ProfileEditText
 
-val padding_8 = 8.dp
-val padding_16 = 16.dp
-val padding_24 = 24.dp
+val PADDING_8 = 8.dp
+val PADDING_16 = 16.dp
+val PADDING_24 = 24.dp
 
-@Preview
 @Composable
 fun MypageProfileScreen() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        ProfileChangeToolBar()
-        ProfileChangeEdit()
+
         Box(Modifier.fillMaxHeight(),
-            contentAlignment = Alignment.BottomEnd) {
-            ProfileChangeButton()
+            contentAlignment = Alignment.CenterStart) {
+
+            Column(modifier = Modifier.fillMaxHeight(),
+            Arrangement.spacedBy(150.dp)) {
+                ProfileChangeToolBar()
+                ProfileChangeEdit()
+
+
+
+
+            }
+
+            Column(Modifier.fillMaxHeight(),
+                Arrangement.Bottom) {
+                ProfileChangeButton()
+
+            }
         }
+
+
     }
 }
 
 
-@Preview
+
 @Composable
 fun ProfileChangeToolBar() {
     Column() {
@@ -65,7 +86,7 @@ fun ProfileChangeToolBar() {
         // 위 아래 여백
         Row(
             modifier = Modifier
-                .padding(top = padding_24, bottom = padding_24)
+                .padding(top = PADDING_24, bottom = PADDING_24)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -79,7 +100,10 @@ fun ProfileChangeToolBar() {
                         .height(24.dp)
                         .fillMaxWidth()
                 ){
-                    Icon(painter = painterResource(id = R.drawable.ic_left_btn), contentDescription = "뒤로 가기")
+                    Icon(imageVector = MyIconPack.`Arrow-left`,
+                        contentDescription = stringResource(
+                        id = R.string.profile_back_btn_description
+                    ))
 
                 }
                 Text(text = stringResource(id = R.string.profile_change_title))
@@ -94,12 +118,11 @@ fun ProfileChangeToolBar() {
 }
 
 
-@Preview
 @Composable
 fun ProfileChangeLabel() {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .padding(start = padding_16)) {
+        .padding(start = PADDING_16)) {
         Text(
             text = stringResource(id = R.string.profile_change_label),
             color = ProfileEditText,
@@ -108,12 +131,11 @@ fun ProfileChangeLabel() {
     }
 }
 
-@Preview
 @Composable
 fun ProfileChangeExplain() {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .padding(start = padding_16)) {
+        .padding(start = PADDING_16)) {
         Text(
             text = stringResource(id = R.string.profile_change_explain),
             color = ProfileEditText,
@@ -122,17 +144,18 @@ fun ProfileChangeExplain() {
     }
 }
 
-@Preview
 @Composable
-fun ProfileChangeEdit() {
+fun ProfileChangeEdit(
+) {
     var text by remember { mutableStateOf("") }
 
-    Column {
+    Column(
+    ) {
         ProfileChangeLabel()
 
         Box(
             modifier = Modifier
-                .padding(all = padding_16)
+                .padding(all = PADDING_16)
                 .fillMaxWidth()
                 .height(48.dp)
                 .border(
@@ -181,5 +204,13 @@ fun ProfileChangeButton() {
     ) {
         Text(text = stringResource(id = R.string.profile_change_button),
         fontSize = 15.sp)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewProfileScreen() {
+    MeongmoryTheme {
+        MypageProfileScreen()
     }
 }
