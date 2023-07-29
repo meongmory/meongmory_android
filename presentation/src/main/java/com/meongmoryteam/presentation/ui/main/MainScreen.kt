@@ -16,6 +16,7 @@ import com.meongmoryteam.presentation.ui.bottom.MeongMoryBottomNavigation
 import com.meongmoryteam.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.meongmoryteam.presentation.ui.home.HomeScreen
 import com.meongmoryteam.presentation.ui.map.MapScreen
+import com.meongmoryteam.presentation.ui.myPage.MyPageScreen
 
 @Composable
 fun MainScreen(
@@ -49,7 +50,7 @@ fun MainScreen(
                 MapScreen()
             }
             composable(route = BottomNavigation.MY_PAGE.route) {
-
+                MyPageScreen()
             }
         }
     }
