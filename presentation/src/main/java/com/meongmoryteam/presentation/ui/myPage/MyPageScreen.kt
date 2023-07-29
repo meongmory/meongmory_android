@@ -202,7 +202,7 @@ fun MyPageList() {
 
 @Composable
 fun MyPageProfileButton(
-    buttonText: String
+    buttonText: String? = null
 ) {
     Column(modifier = Modifier) {
 
@@ -215,10 +215,12 @@ fun MyPageProfileButton(
             colors = ButtonDefaults.buttonColors(MyPageProfileEditButton, Color.Black)
         ) {
 
-            Text(
-                text = buttonText,
-                fontSize = 9.sp
-            )
+            if (buttonText != null) {
+                Text(
+                    text = buttonText,
+                    fontSize = 9.sp
+                )
+            }
         }
     }
 }
