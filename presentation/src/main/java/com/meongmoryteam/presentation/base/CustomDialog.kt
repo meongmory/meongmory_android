@@ -39,24 +39,6 @@ import com.meongmoryteam.presentation.ui.theme.DialogStroke
 import com.meongmoryteam.presentation.ui.theme.DialogTextBlue
 
 
-@Composable
-fun SecessionAlertDialog(
-    openDialogCustom: MutableState<Boolean>
-) {
-    Dialog(
-        onDismissRequest = { openDialogCustom.value = false }
-    ) {
-        CustomDialogUI(
-            textTitle = stringResource(R.string.dialog_secession),
-            textDetail = stringResource(R.string.dialog_secession_detail),
-            leftButton = stringResource(R.string.dialog_secession_no),
-            rightButton = stringResource(R.string.dialog_secession_yes),
-            dialogCustom = openDialogCustom
-        )
-    }
-
-}
-
 
 @Composable
 private fun CustomDialogUI(
@@ -123,6 +105,7 @@ private fun CustomDialogUI(
                         Text(
                             leftButton,
                             color = DialogTextBlue,
+                            fontSize = 17.sp,
                             modifier = Modifier
                                 .padding(top = 5.dp, bottom = 5.dp)
                         )
@@ -141,6 +124,7 @@ private fun CustomDialogUI(
                         Text(
                             rightButton,
                             color = DialogTextBlue,
+                            fontSize = 17.sp,
                             modifier = Modifier
                                 .padding(top = 5.dp, bottom = 5.dp)
                         )
@@ -151,3 +135,43 @@ private fun CustomDialogUI(
     }
 }
 
+
+// 로그아웃 다이어로그
+@Composable
+fun LogoutAlertDialog(
+    openDialogCustom: MutableState<Boolean>
+) {
+    Dialog(
+        onDismissRequest = { openDialogCustom.value = false }
+    ) {
+        CustomDialogUI(
+            textTitle = stringResource(R.string.dialog_logout),
+            textDetail = stringResource(R.string.dialog_logout_detail),
+            leftButton = stringResource(R.string.dialog_cancel),
+            rightButton = stringResource(R.string.dialog_logout),
+            dialogCustom = openDialogCustom
+        )
+    }
+
+}
+
+
+
+// 탈퇴 다이어로그
+@Composable
+fun SecessionAlertDialog(
+    openDialogCustom: MutableState<Boolean>
+) {
+    Dialog(
+        onDismissRequest = { openDialogCustom.value = false }
+    ) {
+        CustomDialogUI(
+            textTitle = stringResource(R.string.dialog_secession),
+            textDetail = stringResource(R.string.dialog_secession_detail),
+            leftButton = stringResource(R.string.dialog_cancel),
+            rightButton = stringResource(R.string.dialog_secession_yes),
+            dialogCustom = openDialogCustom
+        )
+    }
+
+}

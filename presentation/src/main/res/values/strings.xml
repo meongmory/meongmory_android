@@ -41,11 +41,14 @@
     <string name="question_at">\@</string>
 
     <!-- 다이어로그 -->
+    <string name="dialog_cancel">취소</string>
+
     <string name="dialog_secession">회원 탈퇴</string>
     <string name="dialog_secession_detail">회원 탈퇴 시,\n저장된 모든 회원 정보를 잃게됩니다.\n탈퇴하시겠습니까?</string>
-    <string name="dialog_secession_no">취소</string>
     <string name="dialog_secession_yes">탈퇴</string>
 
+    <string name="dialog_logout">로그아웃</string>
+    <string name="dialog_logout_detail">로그아웃 하시겠습니까?</string>
 
 
 

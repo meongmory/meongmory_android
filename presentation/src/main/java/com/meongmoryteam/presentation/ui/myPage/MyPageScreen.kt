@@ -20,6 +20,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.base.LogoutAlertDialog
 import com.meongmoryteam.presentation.base.SecessionAlertDialog
 import com.meongmoryteam.presentation.ui.theme.ListDivider
 import com.meongmoryteam.presentation.ui.theme.ListNextButton
@@ -153,8 +155,8 @@ fun MyPageList() {
             )
 
             ListButton(R.drawable.ic_coin, stringResource(R.string.my_page_pro_ver))
-            ListButton(R.drawable.ic_logout, stringResource(R.string.my_page_logout), true)
-            ListButton(R.drawable.ic_user, stringResource(R.string.my_page_drop))
+            ListButton(R.drawable.ic_logout, stringResource(R.string.my_page_logout), stringResource(R.string.my_page_logout))
+            ListButton(R.drawable.ic_user, stringResource(R.string.my_page_drop), stringResource(R.string.my_page_drop))
 
             Spacer(modifier = Modifier.padding(top = PADDING_16))
 
@@ -238,7 +240,7 @@ fun MyPageProfileButton(
 fun ListButton(
     buttonIcon: Int? = null,
     buttonText: String,
-    onClickAction: Boolean? = null
+    onClickAction: String? = null
 ) {
 
     val openDialogCustom = remember {
@@ -290,9 +292,18 @@ fun ListButton(
         }
     }
 
+    // 버튼마다 다른 다이어로그
     if (openDialogCustom.value) {
-        SecessionAlertDialog(openDialogCustom = openDialogCustom)
+        if (onClickAction == stringResource(R.string.my_page_logout)) {
+            LogoutAlertDialog(openDialogCustom = openDialogCustom)
+        }
+
+        if (onClickAction == stringResource(R.string.my_page_drop)) {
+            SecessionAlertDialog(openDialogCustom = openDialogCustom)
+        }
+
     }
+
 }
 
 
