@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,9 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageToolBar
+import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
+import com.meongmoryteam.presentation.ui.theme.QuestionButtonText
 import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.QuestionSubTitle
 
@@ -58,8 +62,11 @@ fun MyPageQuestionScreen() {
         Column(modifier = Modifier.fillMaxHeight(0.5f)) {
             DetailEdit()
         }
-        Box(modifier = Modifier.fillMaxHeight()) {
-
+        Box(
+            modifier = Modifier.fillMaxHeight(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            QuestionButton()
         }
 
     }
@@ -214,6 +221,24 @@ fun DetailForm() {
                     .padding(PADDING_16)
             )
         }
+    }
+}
+
+@Composable
+fun QuestionButton() {
+    Button(
+        onClick = { /*TODO*/ },
+        colors = ButtonDefaults.buttonColors(EditButtonFalse),
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .height(45.dp),
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.question_button),
+            color = QuestionButtonText,
+            fontSize = 15.sp)
     }
 }
 
