@@ -57,7 +57,7 @@ fun RegisterDogScreen(navController: NavController){
 
     var enabled by remember{ mutableStateOf(false) }
 
-    RegisterDogForm(navController = navController) {
+    RegisterDogForm(bottomPadding = 0.dp, navController = navController) {
         RenderProfile()
         RenderName(name = name){name = it}
         RenderBreed(name = breed){breed = it}
