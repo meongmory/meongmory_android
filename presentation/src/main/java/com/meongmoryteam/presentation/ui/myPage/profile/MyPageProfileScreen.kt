@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
-import com.meongmoryteam.presentation.ui.theme.ProfileEditButtonFalse
-import com.meongmoryteam.presentation.ui.theme.ProfileEditDivider
-import com.meongmoryteam.presentation.ui.theme.ProfileEditStroke
-import com.meongmoryteam.presentation.ui.theme.ProfileEditText
+import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
+import com.meongmoryteam.presentation.ui.theme.EditDivider
+import com.meongmoryteam.presentation.ui.theme.EditStroke
+import com.meongmoryteam.presentation.ui.theme.EditText
 
 val PADDING_16 = 16.dp
 val PADDING_24 = 24.dp
@@ -111,7 +111,7 @@ fun MyPageToolBar(
         }
 
         Divider(
-            color = ProfileEditDivider.copy(0.2f)
+            color = EditDivider.copy(0.2f)
         )
     }
 
@@ -125,7 +125,7 @@ fun ProfileChangeLabel() {
         .padding(start = PADDING_16)) {
         Text(
             text = stringResource(id = R.string.profile_change_label),
-            color = ProfileEditText,
+            color = EditText,
             fontSize = 12.sp
         )
     }
@@ -138,7 +138,7 @@ fun ProfileChangeExplain() {
         .padding(start = PADDING_16)) {
         Text(
             text = stringResource(id = R.string.profile_change_explain),
-            color = ProfileEditText,
+            color = EditText,
             fontSize = 11.sp
         )
     }
@@ -168,7 +168,7 @@ fun MyPageEditForm() {
             .fillMaxWidth()
             .height(48.dp)
             .border(
-                color = ProfileEditStroke,
+                color = EditStroke,
                 width = 1.dp,
                 shape = RoundedCornerShape(10.dp)
             ),
@@ -190,13 +190,9 @@ fun MyPageEditForm() {
         if (text.isEmpty()) {
             Text(
                 text = stringResource(id = R.string.profile_now_nickname),
-                color = ProfileEditText,
+                color = EditText,
                 modifier = Modifier.padding(start = PADDING_16)
             )
-        }
-
-        else {
-
         }
 
     }
@@ -207,7 +203,7 @@ fun MyPageEditForm() {
 fun ProfileChangeButton() {
     Button(
         onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(ProfileEditButtonFalse),
+        colors = ButtonDefaults.buttonColors(EditButtonFalse),
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
