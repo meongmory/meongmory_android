@@ -25,9 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -81,15 +82,6 @@ fun MyPageProfile() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Image(
-                painter = painterResource(R.drawable.ic_profile),
-                contentDescription = stringResource(R.string.my_page_profile_image),
-                Modifier
-                    .padding(start = PADDING_16)
-                    .width(48.dp)
-                    .height(48.dp)
-                    .clip(RoundedCornerShape(100))
-            )
             Column(
                 modifier = Modifier
                     .padding(PADDING_16)
@@ -112,10 +104,14 @@ fun MyPageProfile() {
                             .wrapContentSize(),
                         colors = ButtonDefaults.buttonColors(MyPageProfileEditButton, Color.Black)
                     ) {
-                        Text(
-                            text = stringResource(R.string.my_page_profile_edit),
-                            fontSize = 9.sp
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.my_page_profile_edit),
+                                fontSize = 9.sp
+                            )
+                        }
                     }
                 }
                 Text(
@@ -152,9 +148,11 @@ fun MyPageList() {
                     .padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
                 color = ListTitle
             )
-            ListButton(painterResource(R.drawable.ic_coin), stringResource(R.string.my_page_pro_ver))
-            ListButton(painterResource(R.drawable.ic_logout), stringResource(R.string.my_page_logout))
-            ListButton(painterResource(R.drawable.ic_person), stringResource(R.string.my_page_drop))
+
+            ListButton(R.drawable.ic_coin, stringResource(R.string.my_page_pro_ver))
+            ListButton(R.drawable.ic_logout, stringResource(R.string.my_page_logout))
+            ListButton(R.drawable.ic_user, stringResource(R.string.my_page_drop))
+
             Spacer(modifier = Modifier.padding(top = PADDING_16))
 
             // 구분선
@@ -174,8 +172,9 @@ fun MyPageList() {
                 color = ListTitle
             )
 
-            ListButton(painterResource(R.drawable.ic_mail), stringResource(R.string.my_page_notice))
-            ListButton(painterResource(R.drawable.ic_send), stringResource(R.string.my_page_question))
+            ListButton(R.drawable.ic_mail, stringResource(R.string.my_page_notice))
+            ListButton(R.drawable.ic_send, stringResource(R.string.my_page_question))
+
 
             Spacer(modifier = Modifier.padding(top = PADDING_16))
 
@@ -194,8 +193,8 @@ fun MyPageList() {
                 modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
                 color = ListTitle
             )
-            ListButton(painterResource(R.drawable.ic_info), stringResource(R.string.my_page_clause))
-            ListButton(painterResource(R.drawable.ic_lock), stringResource(R.string.my_page_personal))
+            ListButton(R.drawable.ic_info, stringResource(R.string.my_page_clause))
+            ListButton(R.drawable.ic_unlock, stringResource(R.string.my_page_personal))
 
         }
 
@@ -206,7 +205,7 @@ fun MyPageList() {
 
 @Composable
 fun ListButton(
-    buttonIcon: Painter? = null,
+    buttonIcon: Int? = null,
     buttonText: String
 ) {
     Row(
@@ -215,16 +214,16 @@ fun ListButton(
     ) {
         Button(
             onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+            colors = ButtonDefaults.buttonColors(
+                contentColor = Color.Unspecified,
+                containerColor = Color.Transparent
+            )
         ) {
 
             if (buttonIcon != null) {
-                Image(
-                    painter = buttonIcon,
+                Icon(
+                    imageVector = ImageVector.vectorResource(buttonIcon),
                     contentDescription = stringResource(R.string.my_page_list_button_icon),
-                    Modifier
-                        .width(20.dp)
-                        .height(20.dp)
                 )
             }
             Text(
@@ -245,7 +244,7 @@ fun ListButton(
                 colors = ButtonDefaults.buttonColors(Color.Transparent, ListNextButton)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_right_btn),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_right_btn),
                     contentDescription = stringResource(R.string.my_page_list_button_right),
                 )
             }
