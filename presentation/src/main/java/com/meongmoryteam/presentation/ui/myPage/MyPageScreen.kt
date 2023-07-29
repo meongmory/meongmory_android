@@ -20,6 +20,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,7 +33,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.base.CustomAlertDialog
 import com.meongmoryteam.presentation.ui.theme.ListDivider
 import com.meongmoryteam.presentation.ui.theme.ListNextButton
 import com.meongmoryteam.presentation.ui.theme.ListTitle
@@ -44,7 +49,9 @@ val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
 
 @Composable
-fun MyPageScreen() {
+fun MyPageScreen(
+    navController: NavHostController = rememberNavController()
+) {
     Column {
         MyPageTitle()
         MyPageProfile()
@@ -146,7 +153,7 @@ fun MyPageList() {
             )
 
             ListButton(R.drawable.ic_coin, stringResource(R.string.my_page_pro_ver))
-            ListButton(R.drawable.ic_logout, stringResource(R.string.my_page_logout))
+            ListButton(R.drawable.ic_logout, stringResource(R.string.my_page_logout), true)
             ListButton(R.drawable.ic_user, stringResource(R.string.my_page_drop))
 
             Spacer(modifier = Modifier.padding(top = PADDING_16))
@@ -198,6 +205,7 @@ fun MyPageList() {
 
 
     }
+
 }
 
 @Composable
@@ -229,14 +237,21 @@ fun MyPageProfileButton(
 @Composable
 fun ListButton(
     buttonIcon: Int? = null,
-    buttonText: String
+    buttonText: String,
+    onClickAction: Boolean? = null
 ) {
+
+    val openDialogCustom = remember {
+        mutableStateOf(false)
+    }
+
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {  },
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.Unspecified,
                 containerColor = Color.Transparent
@@ -264,7 +279,7 @@ fun ListButton(
             contentAlignment = Alignment.CenterEnd
         ) {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { openDialogCustom.value = true },
                 colors = ButtonDefaults.buttonColors(Color.Transparent, ListNextButton)
             ) {
                 Icon(
@@ -274,7 +289,12 @@ fun ListButton(
             }
         }
     }
+
+    if (openDialogCustom.value) {
+        CustomAlertDialog(openDialogCustom = openDialogCustom)
+    }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -283,3 +303,4 @@ fun PreviewMyPageScreen() {
         MyPageScreen()
     }
 }
+

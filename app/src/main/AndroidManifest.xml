@@ -20,6 +20,11 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Meongmory">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileActivity"
@@ -31,11 +36,6 @@
         <activity android:name="com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionActivity"
             android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
