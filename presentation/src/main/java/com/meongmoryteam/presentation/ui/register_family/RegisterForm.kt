@@ -81,11 +81,10 @@ fun RegisterDogForm(bottomPadding: Dp = 65.dp, navController: NavController, con
         ) {
             Box(modifier = Modifier
                 .background(White)
-                .padding(horizontal = 10.dp)
-                .verticalScroll(state = scrollState),) {
+                .padding(horizontal = 10.dp),) {
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxHeight(),
+                    modifier = Modifier.fillMaxHeight().verticalScroll(state = scrollState),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     content()
@@ -107,7 +106,8 @@ fun TextComponent(
         text = text,
         style = style,
         modifier = modifier,
-        color = color)
+        color = color
+    )
 }
 
 @Composable
@@ -116,7 +116,8 @@ fun TextButtonComponent(
     colors: ButtonColors,
     style: TextStyle,
     width: Float = 1f,
-    onClick: ()->Unit){
+    onClick: ()->Unit
+){
     TextButton(
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
@@ -140,9 +141,10 @@ fun TextFieldComponent(
     name: TextFieldValue,
     onValueChange : (TextFieldValue)->Unit,
     placeholder: String,
-    width: Float = 1f,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     bgColor: Color = Color(0xFFF9F9F9),
-    borderColor: Color = InputBoxOutline)
+    borderColor: Color = InputBoxOutline
+)
 {
     BasicTextField(
         value = name,
@@ -157,9 +159,8 @@ fun TextFieldComponent(
             lineHeight = 20.sp
         ),
         decorationBox = {
-            Box(modifier = Modifier
+            Box(modifier = modifier
                 .background(bgColor)
-                .fillMaxWidth(width)
                 .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
                 .padding(horizontal = 15.dp, vertical = 14.dp)
             ){

@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -47,7 +48,7 @@ fun RegisterByCodeScreen(navController: NavController) {
     var enabled by remember{ mutableStateOf(false) }
 
     RegisterDogForm(navController = navController) {
-        Column {
+        Column(modifier = Modifier.fillMaxWidth()) {
             TextComponent(
                 text = stringResource(R.string.register_by_code_title),
                 style = Typography.titleLarge,
@@ -66,7 +67,7 @@ fun RegisterByCodeScreen(navController: NavController) {
                     name = name,
                     onValueChange = {name = it},
                     placeholder = stringResource(R.string.code_placeholder),
-                    width = 0.7f,
+                    modifier = Modifier.fillMaxWidth(0.7f),
                     bgColor = if(name.text.isEmpty()){
                         Color(0xFFF9F9F9)
                     } else {
@@ -114,7 +115,8 @@ fun RegisterByCodeScreen(navController: NavController) {
                     fontWeight = FontWeight.W500,
                     fontSize = 15.sp,
                     lineHeight = 20.sp,
-                    color = ButtonContent
+                    color = ButtonContent,
+                    platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거하지 않으면 정렬이 맞지 않음
                 )
             ) {}
         }
