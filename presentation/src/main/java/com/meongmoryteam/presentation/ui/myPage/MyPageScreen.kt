@@ -1,18 +1,17 @@
 package com.meongmoryteam.presentation.ui.myPage
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -26,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +40,7 @@ import com.meongmoryteam.presentation.ui.theme.MyPageProfileEditButton
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowFill
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowStroke
 
+val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
 
 @Composable
@@ -61,7 +60,10 @@ fun MyPageTitle() {
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = stringResource(R.string.my_page_title))
+        Text(
+            text = stringResource(R.string.my_page_title),
+            fontSize = 15.sp
+        )
 
     }
 }
@@ -97,22 +99,14 @@ fun MyPageProfile() {
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
-                    Button(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .padding()
-                            .wrapContentSize(),
-                        colors = ButtonDefaults.buttonColors(MyPageProfileEditButton, Color.Black)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                text = stringResource(R.string.my_page_profile_edit),
-                                fontSize = 9.sp
-                            )
-                        }
+
+                    Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End) {
+                        MyPageProfileButton(stringResource(R.string.my_page_profile_alarm))
+                        MyPageProfileButton(stringResource(R.string.my_page_profile_edit))
                     }
+
+
                 }
                 Text(
                     modifier = Modifier.padding(bottom = 8.dp),
@@ -126,6 +120,7 @@ fun MyPageProfile() {
 
     }
 }
+
 
 @Composable
 fun MyPageList() {
@@ -146,7 +141,8 @@ fun MyPageList() {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
-                color = ListTitle
+                color = ListTitle,
+                fontSize = 11.sp
             )
 
             ListButton(R.drawable.ic_coin, stringResource(R.string.my_page_pro_ver))
@@ -169,7 +165,8 @@ fun MyPageList() {
                 text = stringResource(R.string.my_page_support),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
-                color = ListTitle
+                color = ListTitle,
+                fontSize = 11.sp
             )
 
             ListButton(R.drawable.ic_mail, stringResource(R.string.my_page_notice))
@@ -191,7 +188,8 @@ fun MyPageList() {
                 text = stringResource(R.string.my_page_app_info),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 8.dp),
-                color = ListTitle
+                color = ListTitle,
+                fontSize = 11.sp
             )
             ListButton(R.drawable.ic_info, stringResource(R.string.my_page_clause))
             ListButton(R.drawable.ic_unlock, stringResource(R.string.my_page_personal))
@@ -199,6 +197,29 @@ fun MyPageList() {
         }
 
 
+    }
+}
+
+@Composable
+fun MyPageProfileButton(
+    buttonText: String
+) {
+    Column(modifier = Modifier) {
+
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .padding(end = PADDING_8)
+                .wrapContentSize(),
+            contentPadding = PaddingValues(4.dp),
+            colors = ButtonDefaults.buttonColors(MyPageProfileEditButton, Color.Black)
+        ) {
+
+            Text(
+                text = buttonText,
+                fontSize = 9.sp
+            )
+        }
     }
 }
 
@@ -230,7 +251,8 @@ fun ListButton(
                 text = buttonText,
                 Modifier
                     .padding(start = PADDING_16),
-                color = Color.Black
+                color = Color.Black,
+                fontSize = 12.sp
             )
         }
 

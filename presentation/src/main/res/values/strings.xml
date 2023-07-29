@@ -6,6 +6,7 @@
     <string name="my_page_profile">강아지밥주는사람</string>
     <string name="my_page_phone_number">010-1234-1234</string>
     <string name="my_page_profile_edit">프로필 수정</string>
+    <string name="my_page_profile_alarm">알람 설정</string>
     <string name="my_page_list_account">계정 설정</string>
     <string name="my_page_pro_ver">Pro 버전</string>
     <string name="my_page_logout">로그아웃</string>
