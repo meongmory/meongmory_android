@@ -10,8 +10,10 @@ val Purple40 = Color(0xFFAAA1C4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
+val GRAY100 = Color(0xFFB9BEC1)
+val MAIN100 = Color(0xFFFC9C13)
 
-val gray = Color(0xFFBAC0CA)
+
 
 // 마이페이지 색
 val MyPageYellowFill = Color(0xFFFFFBF3)
