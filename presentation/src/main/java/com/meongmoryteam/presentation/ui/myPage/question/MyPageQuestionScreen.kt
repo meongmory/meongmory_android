@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -51,14 +53,22 @@ fun MyPageQuestionScreen() {
         verticalArrangement = Arrangement.Top,
     ) {
         MyPageToolBar(stringResource(R.string.question_title))
+        Spacer(modifier = Modifier.padding(PADDING_8))
         EmailEdit()
+        Column(modifier = Modifier.fillMaxHeight(0.5f)) {
+            DetailEdit()
+        }
+        Box(modifier = Modifier.fillMaxHeight()) {
+
+        }
+
     }
 }
 
 @Composable
 fun EmailEdit() {
     Column {
-        QuestionLabel()
+        QuestionLabel(stringResource(R.string.question_email_form_title))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -72,12 +82,14 @@ fun EmailEdit() {
 
 
 @Composable
-fun QuestionLabel() {
+fun QuestionLabel(
+    label: String
+) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .padding(start = PADDING_16, top = PADDING_16)) {
         Text(
-            text = stringResource(R.string.question_email_form_title),
+            text = label,
             color = QuestionSubTitle,
             fontSize = 13.sp
         )
@@ -112,7 +124,7 @@ fun EmailForm() {
                 fontSize = 14.sp,
                 textAlign = TextAlign.Start
             ),
-            modifier = Modifier.padding(start = PADDING_16)
+            modifier = Modifier.padding(start = PADDING_16, end = PADDING_16)
         )
 
         if (email.isEmpty()) {
@@ -120,7 +132,7 @@ fun EmailForm() {
                 text = stringResource(R.string.question_email_form_hint),
                 color = EditText,
                 fontSize = 12.sp,
-                modifier = Modifier.padding(start = PADDING_16)
+                modifier = Modifier.padding(start = PADDING_16, end = PADDING_16)
             )
         }
     }
@@ -156,6 +168,54 @@ fun EmailSelect() {
     }
 }
 
+
+
+@Composable
+fun DetailEdit() {
+    QuestionLabel(stringResource(R.string.question_content_title))
+    DetailForm()
+}
+
+@Composable
+fun DetailForm() {
+    var detail by remember { mutableStateOf("") }
+    Box(
+        modifier = Modifier
+            .padding(all = PADDING_16)
+            .fillMaxSize()
+            .border(
+                color = EditStroke,
+                width = 1.dp,
+                shape = RoundedCornerShape(10.dp),
+            )
+            .background(color = QuestionEditFill, shape = RoundedCornerShape(10.dp)),
+        contentAlignment = Alignment.TopStart // 정렬
+    ) {
+
+        BasicTextField(
+            value = detail,
+            onValueChange = { newText ->
+                // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
+                detail = newText
+            },
+            textStyle = TextStyle(
+                fontSize = 14.sp,
+                textAlign = TextAlign.Start
+            ),
+            modifier = Modifier.padding(PADDING_16)
+        )
+
+        if (detail.isEmpty()) {
+            Text(
+                text = stringResource(R.string.question_content_detail),
+                color = EditText,
+                fontSize = 12.sp,
+                modifier = Modifier
+                    .padding(PADDING_16)
+            )
+        }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable

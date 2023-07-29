@@ -191,7 +191,7 @@ fun MyPageEditForm() {
             Text(
                 text = stringResource(id = R.string.profile_now_nickname),
                 color = EditText,
-                modifier = Modifier.padding(start = PADDING_16)
+                modifier = Modifier.padding(start = PADDING_16, end = PADDING_16)
             )
         }
 
