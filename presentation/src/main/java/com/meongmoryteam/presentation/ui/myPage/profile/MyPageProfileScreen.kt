@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
@@ -24,23 +23,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meongmoryteam.presentation.R
-import com.meongmoryteam.presentation.ui.MyIconPack
-import com.meongmoryteam.presentation.ui.myiconpack.`Arrow-left`
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
+import com.meongmoryteam.presentation.ui.theme.ProfileEditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.ProfileEditDivider
 import com.meongmoryteam.presentation.ui.theme.ProfileEditStroke
 import com.meongmoryteam.presentation.ui.theme.ProfileEditText
 
-val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
 val PADDING_24 = 24.dp
 
@@ -60,9 +57,6 @@ fun MypageProfileScreen() {
             Arrangement.spacedBy(150.dp)) {
                 ProfileChangeToolBar()
                 ProfileChangeEdit()
-
-
-
 
             }
 
@@ -100,18 +94,22 @@ fun ProfileChangeToolBar() {
                         .height(24.dp)
                         .fillMaxWidth()
                 ){
-                    Icon(imageVector = MyIconPack.`Arrow-left`,
-                        contentDescription = stringResource(
-                        id = R.string.profile_back_btn_description
-                    ))
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_left_btn),
+                        contentDescription = stringResource(id = R.string.profile_back_btn_description),
+                        modifier = Modifier.padding(start = PADDING_16)
+                    )
 
                 }
-                Text(text = stringResource(id = R.string.profile_change_title))
+                Text(
+                    text = stringResource(id = R.string.profile_change_title),
+                    fontSize = 15.sp
+                )
             }
         }
 
         Divider(
-            color = ProfileEditDivider
+            color = ProfileEditDivider.copy(0.2f)
         )
     }
 
@@ -175,12 +173,14 @@ fun ProfileChangeEdit(
                     fontSize = 14.sp,
                     textAlign = TextAlign.Start
                 ),
+                modifier = Modifier.padding(start = PADDING_16)
             )
 
             if (text.isEmpty()) {
                 Text(
                     text = stringResource(id = R.string.profile_now_nickname),
                     color = ProfileEditText,
+                    modifier = Modifier.padding(start = PADDING_16)
                 )
             }
 
@@ -197,10 +197,12 @@ fun ProfileChangeEdit(
 fun ProfileChangeButton() {
     Button(
         onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(Color.Gray),
+        colors = ButtonDefaults.buttonColors(ProfileEditButtonFalse),
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
+            .height(45.dp),
+        shape = RoundedCornerShape(10.dp)
     ) {
         Text(text = stringResource(id = R.string.profile_change_button),
         fontSize = 15.sp)
