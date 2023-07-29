@@ -55,7 +55,7 @@ fun MypageProfileScreen() {
 
             Column(modifier = Modifier.fillMaxHeight(),
             Arrangement.spacedBy(150.dp)) {
-                ProfileChangeToolBar()
+                MyPageToolBar(stringResource(R.string.profile_change_title))
                 ProfileChangeEdit()
 
             }
@@ -74,7 +74,9 @@ fun MypageProfileScreen() {
 
 
 @Composable
-fun ProfileChangeToolBar() {
+fun MyPageToolBar(
+    title: String
+) {
     Column() {
 
         // 위 아래 여백
@@ -97,12 +99,12 @@ fun ProfileChangeToolBar() {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_left_btn),
                         contentDescription = stringResource(id = R.string.profile_back_btn_description),
-                        modifier = Modifier.padding(start = PADDING_16)
+                        modifier = Modifier.padding(start = PADDING_16),
                     )
 
                 }
                 Text(
-                    text = stringResource(id = R.string.profile_change_title),
+                    text = title,
                     fontSize = 15.sp
                 )
             }
@@ -145,46 +147,10 @@ fun ProfileChangeExplain() {
 @Composable
 fun ProfileChangeEdit(
 ) {
-    var text by remember { mutableStateOf("") }
 
-    Column(
-    ) {
+    Column {
         ProfileChangeLabel()
-
-        Box(
-            modifier = Modifier
-                .padding(all = PADDING_16)
-                .fillMaxWidth()
-                .height(48.dp)
-                .border(
-                    color = ProfileEditStroke,
-                    width = 1.dp,
-                    shape = RoundedCornerShape(10.dp)
-                ),
-            contentAlignment = Alignment.CenterStart // 정렬
-        ) {
-            BasicTextField(
-                value = text,
-                onValueChange = { newText ->
-                    // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
-                    text = newText.replace(Regex("[\n]"),"")
-                },
-                textStyle = TextStyle(
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Start
-                ),
-                modifier = Modifier.padding(start = PADDING_16)
-            )
-
-            if (text.isEmpty()) {
-                Text(
-                    text = stringResource(id = R.string.profile_now_nickname),
-                    color = ProfileEditText,
-                    modifier = Modifier.padding(start = PADDING_16)
-                )
-            }
-
-        }
+        MyPageEditForm()
         ProfileChangeExplain()
 
     }
@@ -192,6 +158,50 @@ fun ProfileChangeEdit(
 }
 
 
+@Composable
+fun MyPageEditForm() {
+    var text by remember { mutableStateOf("") }
+
+    Box(
+        modifier = Modifier
+            .padding(all = PADDING_16)
+            .fillMaxWidth()
+            .height(48.dp)
+            .border(
+                color = ProfileEditStroke,
+                width = 1.dp,
+                shape = RoundedCornerShape(10.dp)
+            ),
+        contentAlignment = Alignment.CenterStart // 정렬
+    ) {
+        BasicTextField(
+            value = text,
+            onValueChange = { newText ->
+                // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
+                text = newText.replace(Regex("[\n]"),"")
+            },
+            textStyle = TextStyle(
+                fontSize = 14.sp,
+                textAlign = TextAlign.Start
+            ),
+            modifier = Modifier.padding(start = PADDING_16)
+        )
+
+        if (text.isEmpty()) {
+            Text(
+                text = stringResource(id = R.string.profile_now_nickname),
+                color = ProfileEditText,
+                modifier = Modifier.padding(start = PADDING_16)
+            )
+        }
+
+        else {
+
+        }
+
+    }
+
+}
 
 @Composable
 fun ProfileChangeButton() {

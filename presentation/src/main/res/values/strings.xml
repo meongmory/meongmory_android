@@ -29,5 +29,17 @@
     <string name="profile_change_button">수정하기</string>
     <string name="profile_back_btn_description">뒤로 가기 버튼</string>
 
+    <!-- 문의 및 오류 제보 -->
+    <string name="question_title">문의 및 오류 제보</string>
+    <string name="question_email_form_title">답변 받을 이메일</string>
+    <string name="question_email_form_hint">아이디(이메일)</string>
+    <string name="question_email_select">선택</string>
+    <string name="question_content_title">내용</string>
+    <string name="question_content_detail">각종 문의나 오류 제보에 있어 자유롭게 적어주세요.</string>
+    <string name="question_button">공유하기</string>
+
+
+
+
 
 </resources>
