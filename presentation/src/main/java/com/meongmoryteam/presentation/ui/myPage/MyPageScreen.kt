@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
-import com.meongmoryteam.presentation.base.CustomAlertDialog
+import com.meongmoryteam.presentation.base.SecessionAlertDialog
 import com.meongmoryteam.presentation.ui.theme.ListDivider
 import com.meongmoryteam.presentation.ui.theme.ListNextButton
 import com.meongmoryteam.presentation.ui.theme.ListTitle
@@ -291,7 +291,7 @@ fun ListButton(
     }
 
     if (openDialogCustom.value) {
-        CustomAlertDialog(openDialogCustom = openDialogCustom)
+        SecessionAlertDialog(openDialogCustom = openDialogCustom)
     }
 }
 
