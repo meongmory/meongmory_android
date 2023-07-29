@@ -184,7 +184,7 @@ fun MyPageEditForm() {
                 fontSize = 14.sp,
                 textAlign = TextAlign.Start
             ),
-            modifier = Modifier.padding(start = PADDING_16)
+            modifier = Modifier.padding(start = PADDING_16, end = PADDING_16)
         )
 
         if (text.isEmpty()) {
