@@ -54,4 +54,7 @@
     <string name="my_page_list_button_icon">아이콘</string>
     <string name="my_page_list_button_right">선택 버튼</string>
 
+    <!--  스플래시, 온보딩  -->
+    <string name="login_logo_description">펫다이어리 로고</string>
+
 </resources>

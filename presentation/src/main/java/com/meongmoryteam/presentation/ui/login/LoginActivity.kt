@@ -1,30 +1,33 @@
-package com.meongmoryteam.presentation.ui.splash
+package com.meongmoryteam.presentation.ui.login
 
-import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.meongmoryteam.presentation.ui.login.LoginActivity
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-@SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
-class SplashActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSplashScreen()
+        setUnivSelectScreen()
     }
 
-    private fun setSplashScreen() {
+    private fun setUnivSelectScreen() {
         setContent {
             MeongmoryTheme {
-                SplashScreen {
-                    LoginActivity.startActivity(this)
-                    finish()
-                }
+
             }
+        }
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            val intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
         }
     }
 }
