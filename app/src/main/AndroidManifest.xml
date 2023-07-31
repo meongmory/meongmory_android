@@ -30,6 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.meongmoryteam.presentation.ui.login.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Meongmory">
+
+        </activity>
     </application>
 
 </manifest>

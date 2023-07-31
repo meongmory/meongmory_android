@@ -55,6 +55,11 @@
     <string name="my_page_list_button_right">선택 버튼</string>
 
     <!--  스플래시, 온보딩  -->
+    <string name="login_phone_title_text">휴대폰 번호로 시작하기</string>
+
+    <!--  description  -->
+    <!--  스플래시, 온보딩  -->
     <string name="login_logo_description">펫다이어리 로고</string>
+    <string name="login_phone_description">전화</string>
 
 </resources>
