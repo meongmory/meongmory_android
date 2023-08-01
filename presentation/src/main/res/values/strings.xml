@@ -1,6 +1,40 @@
 <resources>
     <string name="app_name">presentation</string>
-    
+    <string name="close">닫기</string>
+    <string name="next">다음</string>
+    <string name="check">확인</string>
+    <string name="register">등록하기</string>
+    <string name="month">월</string>
+    <string name="day">일</string>
+    <string name="pet_registration_number">반려동물 등록번호</string>
+    <!--강아지네 등록 관련-->
+    <string name="not_valid_code">유효한 코드가 아닙니다.</string>
+    <string name="register_by_code_info">가족 및 지인에게서 멍모리에서 보낸 초대 코드를 입력해주세요!\n유효한 초대코드를 입력하면 강아지의 일상을 같이 볼 수 있어요!</string>
+    <string name="register_by_code_title">가족 및 지인으로 등록하기</string>
+    <string name="code_placeholder">초대 코드 입력</string>
+    <string name="register_family_info">우리집 반려동물을 등록하고 가족, 지인과 반려동물의 추억을 공유해보세요!\n혹은 가족 및 지인에게 초대 코드를 받아 반려동물의 일상을 구경해보세요!</string>
+    <string name="register_family_welcome">환영합니다\ </string>
+    <string name="register_family_name">ooo님!</string>
+    <string name="go_to_name_btn">주인으로 강아지네 새로 만들기</string>
+    <string name="go_to_code_btn">가족 및 지인으로 등록하기 (초대 코드)</string>
+    <string name="register_by_name_title">펫다이어리 만들기</string>
+    <string name="register_by_name_info">우리 집만의 개성 있는 펫다이어리 이름을 정해보세요!</string>
+    <string name="input_family_name_label">강아지네</string>
+    <string name="input_family_name">강아지네 이름 입력</string>
+    <string name="input_family_name_exception">최대 한글 6자, 영문 12자까지 입력 가능해요.</string>
+    <string name="make">만들기</string>
+
+    <string name="profile_img">대표 사진</string>
+    <string name="dog_name">강아지 이름</string>
+    <string name="breed">품종</string>
+    <string name="gender">성별</string>
+    <string name="female">암컷</string>
+    <string name="male">수컷</string>
+    <string name="age">나이</string>
+    <string name="adoption_date">입양한 날짜</string>
+    <string name="year">년</string>
+
+
     <!-- 마이페이지 관련 -->
     <string name="my_page_title">마이페이지</string>
     <string name="my_page_profile">강아지밥주는사람</string>
@@ -38,9 +72,6 @@
     <string name="question_content_detail">각종 문의나 오류 제보에 있어 자유롭게 적어주세요.</string>
     <string name="question_button">공유하기</string>
     <string name="question_at">\@</string>
-
-
-
 
 
 </resources>
