@@ -3,6 +3,7 @@ package com.meongmoryteam.presentation.ui.register_family.name
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -43,7 +44,7 @@ fun RegisterByNameScreen(navController: NavController) {
     var enabled by remember{ mutableStateOf(false) }
 
     RegisterDogForm(navController = navController) {
-        Column {
+        Column(modifier = Modifier.fillMaxWidth()) {
             TextComponent(
                 text = stringResource(R.string.register_by_name_title),
                 style = Typography.titleLarge,
@@ -92,7 +93,7 @@ fun RegisterByNameScreen(navController: NavController) {
                     fontSize = 15.sp,
                     lineHeight = 20.sp,
                     color = ButtonContent,
-                    platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거해주지 않으면 텍스트가 잘림
+                    platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거하지 않으면 정렬이 맞지 않음
                 )
             ) {}
         }
