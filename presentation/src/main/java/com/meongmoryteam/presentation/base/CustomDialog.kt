@@ -41,19 +41,16 @@ private fun CustomDialogUI(
     dialogCustom: MutableState<Boolean>
 ) {
     Card(
-        //shape = MaterialTheme.shapes.medium,
         shape = RoundedCornerShape(14.dp),
         border = BorderStroke(1.dp, Color.Black),
-        // modifier = modifier.size(280.dp, 240.dp)
         modifier = Modifier.padding(5.dp, 10.dp),
     ) {
         Column(
             Modifier
                 .background(DialogBackground.copy(0.8f))
         ) {
-
             Column(modifier = Modifier.padding(16.dp)) {
-                if (textTitle != null) {
+                textTitle?.let {
                     Text(
                         text = textTitle,
                         textAlign = TextAlign.Center,
@@ -65,7 +62,7 @@ private fun CustomDialogUI(
                         maxLines = 2,
                     )
                 }
-                if (textDetail != null) {
+                textDetail?.let {
                     Text(
                         text = textDetail,
                         textAlign = TextAlign.Center,
@@ -76,44 +73,38 @@ private fun CustomDialogUI(
                     )
                 }
             }
-
-
-
             Divider(
                 modifier = Modifier
                     .background(DialogStroke.copy(0.36f))
             )
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min),
-
                 Arrangement.SpaceEvenly
-
             ) {
 
                 TextButton(onClick = {
                     dialogCustom.value = false
                 }) {
-                    if (leftButton != null) {
+                    leftButton?.let {
                         Text(
                             leftButton,
                             color = DialogTextBlue,
                             fontSize = 17.sp,
                         )
                     }
-
                 }
-
                 Divider(
-                    modifier = Modifier.fillMaxHeight().width(1.dp),
-                    color = DialogStroke.copy(0.36f)
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(1.dp)
+                        .background(DialogStroke.copy(0.36f))
                 )
                 TextButton(onClick = {
                     dialogCustom.value = true
                 }) {
-                    if (rightButton != null) {
+                    rightButton?.let {
                         Text(
                             rightButton,
                             color = DialogTextBlue,
@@ -143,9 +134,7 @@ fun LogoutAlertDialog(
             dialogCustom = openDialogCustom
         )
     }
-
 }
-
 
 
 // 탈퇴 다이어로그
@@ -164,5 +153,4 @@ fun SecessionAlertDialog(
             dialogCustom = openDialogCustom
         )
     }
-
 }
