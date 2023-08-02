@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,7 +39,6 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -60,56 +58,59 @@ import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 
 @Composable
-fun RegisterDogScreen(navController: NavController){
-    var name by remember{ mutableStateOf(TextFieldValue("")) }
-    var breed by remember{ mutableStateOf(TextFieldValue("")) }
+fun RegisterDogScreen(navController: NavController) {
+    var name by remember { mutableStateOf(TextFieldValue("")) }
+    var breed by remember { mutableStateOf(TextFieldValue("")) }
     val buttonItemList = listOf(ButtonItem(0, "수컷"), ButtonItem(1, "암컷"))
-    var age by remember{ mutableStateOf(TextFieldValue("")) }
-    var year by remember{ mutableStateOf(TextFieldValue("")) }
-    var month by remember{ mutableStateOf(TextFieldValue("")) }
-    var day by remember{ mutableStateOf(TextFieldValue("")) }
-    var registrationNum by remember{ mutableStateOf(TextFieldValue("")) }
-    var enabled by remember{ mutableStateOf(false) }
+    var age by remember { mutableStateOf(TextFieldValue("")) }
+    var year by remember { mutableStateOf(TextFieldValue("")) }
+    var month by remember { mutableStateOf(TextFieldValue("")) }
+    var day by remember { mutableStateOf(TextFieldValue("")) }
+    var registrationNum by remember { mutableStateOf(TextFieldValue("")) }
 
     RegisterDogForm(bottomPadding = 0.dp, navController = navController) {
         RenderProfile()
-        RenderName(value = name){name = it}
-        RenderBreed(value = breed){breed = it}
+        RenderName(value = name) { name = it }
+        RenderBreed(value = breed) { breed = it }
         RenderGender(label = R.string.gender, buttonItem = buttonItemList)
-        RenderAge(value = age){age = it}
+        RenderAge(value = age) { age = it }
         RenderAdoptionDate(
             year = year,
             month = month,
             day = day,
-            {year = it},
-            {month = it},
-            {day = it},
-            )
-        RenderPetRegistrationNumber(value = registrationNum){registrationNum = it}
+            { year = it },
+            { month = it },
+            { day = it },
+        )
+        RenderPetRegistrationNumber(value = registrationNum) { registrationNum = it }
         Spacer(modifier = Modifier.height(10.dp))
         RenderRegisterButton(value = registrationNum)
     }
 }
 
 @Composable
-fun RenderProfile(painterResource: Int = R.drawable.default_profile){
+fun RenderProfile(painterResource: Int = R.drawable.default_profile) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,) {
-        Image(painter = painterResource(painterResource),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(painterResource),
             contentDescription = stringResource(R.string.profile_img),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(90.dp)
                 .clip(CircleShape)
         )
-        Text(text = stringResource(R.string.profile_img),
-            modifier = Modifier.padding(top = 10.dp, bottom = 30.dp))
+        Text(
+            text = stringResource(R.string.profile_img),
+            modifier = Modifier.padding(top = 10.dp, bottom = 30.dp)
+        )
     }
 
 }
 
 @Composable
-fun RenderName(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit){
+fun RenderName(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
     LabelNInputForm(
         label = R.string.dog_name,
         placeholder = R.string.dog_name,
@@ -119,7 +120,7 @@ fun RenderName(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit){
 }
 
 @Composable
-fun RenderBreed(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit){
+fun RenderBreed(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
     Box(contentAlignment = Alignment.BottomEnd) {
         LabelNInputForm(
             label = R.string.breed,
@@ -132,7 +133,7 @@ fun RenderBreed(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit){
 }
 
 @Composable
-fun RenderGender(label: Int, buttonItem: List<ButtonItem>){
+fun RenderGender(label: Int, buttonItem: List<ButtonItem>) {
     var selectedIndex by rememberSaveable { mutableStateOf(-1) }
     Column(
         modifier = Modifier
@@ -153,7 +154,7 @@ fun RenderGender(label: Int, buttonItem: List<ButtonItem>){
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            items(buttonItem) {item ->
+            items(buttonItem) { item ->
                 GenderButton(
                     item = item,
                     isSelected = selectedIndex == item.index,
@@ -165,7 +166,7 @@ fun RenderGender(label: Int, buttonItem: List<ButtonItem>){
 }
 
 @Composable
-fun RenderAge(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit){
+fun RenderAge(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
     LabelNInputForm(
         label = R.string.age,
         placeholder = R.string.age,
@@ -181,7 +182,8 @@ fun RenderAdoptionDate(
     day: TextFieldValue,
     onYearChange: (TextFieldValue) -> Unit,
     onMonthChange: (TextFieldValue) -> Unit,
-    onDayChange : (TextFieldValue) -> Unit){
+    onDayChange: (TextFieldValue) -> Unit
+) {
     DateInputForm(
         label = R.string.adoption_date,
         year = year,
@@ -191,11 +193,11 @@ fun RenderAdoptionDate(
         onYearChange = onYearChange,
         onMonthChange = onMonthChange,
         onDayChange = onDayChange
-        )
+    )
 }
 
 @Composable
-fun RenderPetRegistrationNumber(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit){
+fun RenderPetRegistrationNumber(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
     LabelNInputForm(
         label = R.string.pet_registration_number,
         placeholder = R.string.pet_registration_number,
@@ -205,12 +207,12 @@ fun RenderPetRegistrationNumber(value: TextFieldValue, onValueChange: (TextField
 }
 
 @Composable
-fun RenderRegisterButton(value: TextFieldValue){
+fun RenderRegisterButton(value: TextFieldValue) {
     TextButtonComponent(
         text = stringResource(R.string.make),
         colors = if (value.text.isEmpty()) {
             ButtonDefaults.textButtonColors(LightGrey)
-        } else{
+        } else {
             ButtonDefaults.textButtonColors(Orange)
         },
         style = TextStyle(
@@ -229,8 +231,8 @@ fun LabelNInputForm(
     label: Int,
     placeholder: Int,
     value: TextFieldValue,
-    onValueChange:(TextFieldValue)->Unit
-){
+    onValueChange: (TextFieldValue) -> Unit
+) {
     Column(modifier = Modifier.padding(bottom = 14.dp)) {
         Text(
             text = stringResource(label),
@@ -239,25 +241,25 @@ fun LabelNInputForm(
             modifier = Modifier.padding(bottom = 12.dp)
         )
         TextFieldComponent(
-                name = value,
-                onValueChange = onValueChange,
-                placeholder = stringResource(placeholder),
-                bgColor = if (value.text.isEmpty()) {
-                    Color(0xFFF9F9F9)
-                } else {
-                    LightYellow
-                },
-                borderColor = if (value.text.isEmpty()) {
-                    InputBoxOutline
-                } else {
-                    Yellow
-                },
-            )
+            name = value,
+            onValueChange = onValueChange,
+            placeholder = stringResource(placeholder),
+            bgColor = if (value.text.isEmpty()) {
+                Color(0xFFF9F9F9)
+            } else {
+                LightYellow
+            },
+            borderColor = if (value.text.isEmpty()) {
+                InputBoxOutline
+            } else {
+                Yellow
+            },
+        )
     }
 }
 
 @Composable
-fun SearchButton(){
+fun SearchButton() {
     IconButton(
         onClick = {},
         modifier = Modifier
@@ -271,21 +273,22 @@ fun SearchButton(){
         )
     }
 }
+
 @Composable
 fun GenderButton(
     item: ButtonItem,
     isSelected: Boolean,
     modifier: Modifier = Modifier,
     onTap: () -> Unit
-){
+) {
     val backgroundColor =
         if (isSelected) LightYellow
         else Color(0xFFF9F9F9)
     val borderColor =
-        if(isSelected) Yellow
+        if (isSelected) Yellow
         else InputBoxOutline
     val contentColor =
-        if(isSelected) Black
+        if (isSelected) Black
         else Placeholer
     Box(
         modifier = modifier
@@ -316,12 +319,12 @@ fun DateInputForm(
     month: TextFieldValue,
     day: TextFieldValue,
     modifier: Modifier,
-    onYearChange:(TextFieldValue)->Unit,
-    onMonthChange:(TextFieldValue)->Unit,
-    onDayChange:(TextFieldValue)->Unit,
-    ){
+    onYearChange: (TextFieldValue) -> Unit,
+    onMonthChange: (TextFieldValue) -> Unit,
+    onDayChange: (TextFieldValue) -> Unit,
+) {
     val itemList = listOf("년", "월", "일")
-    val textValueList = listOf<TextFieldValue>(year, month, day)
+    val textValueList = listOf(year, month, day)
     val valueChangeList = listOf(onYearChange, onMonthChange, onDayChange)
     val placeholderList = listOf("yyyy", "mm", "dd")
 

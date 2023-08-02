@@ -44,8 +44,8 @@ import com.meongmoryteam.presentation.ui.theme.Yellow
 
 @Composable
 fun RegisterByCodeScreen(navController: NavController) {
-    var name by remember{ mutableStateOf(TextFieldValue("")) }
-    var enabled by remember{ mutableStateOf(false) }
+    var name by remember { mutableStateOf(TextFieldValue("")) }
+    var enabled by remember { mutableStateOf(false) }
 
     RegisterDogForm(navController = navController) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -62,18 +62,18 @@ fun RegisterByCodeScreen(navController: NavController) {
             )
         }
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically){
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 TextFieldComponent(
                     name = name,
-                    onValueChange = {name = it},
+                    onValueChange = { name = it },
                     placeholder = stringResource(R.string.code_placeholder),
                     modifier = Modifier.fillMaxWidth(0.7f),
-                    bgColor = if(name.text.isEmpty()){
+                    bgColor = if (name.text.isEmpty()) {
                         Color(0xFFF9F9F9)
                     } else {
                         LightYellow
                     },
-                    borderColor = if(name.text.isEmpty()){
+                    borderColor = if (name.text.isEmpty()) {
                         InputBoxOutline
                     } else {
                         Yellow
@@ -84,9 +84,9 @@ fun RegisterByCodeScreen(navController: NavController) {
                     text = stringResource(R.string.check),
                     colors = if (name.text.isEmpty()) {
                         ButtonDefaults.textButtonColors(LightGrey)
-                    } else{
+                    } else {
                         ButtonDefaults.textButtonColors(Orange)
-                        },
+                    },
                     style = TextStyle(
                         fontFamily = AppleSD,
                         fontWeight = FontWeight.W400,
@@ -95,7 +95,7 @@ fun RegisterByCodeScreen(navController: NavController) {
                         color = ButtonContent
                     ),
                     width = 1f
-                ){}
+                ) {}
             }
             CheckValidCode(name = name, enabled = enabled) {
                 enabled = !enabled
@@ -107,9 +107,9 @@ fun RegisterByCodeScreen(navController: NavController) {
                 text = stringResource(R.string.next),
                 colors = if (name.text.isEmpty()) {
                     ButtonDefaults.textButtonColors(LightGrey)
-                } else{
+                } else {
                     ButtonDefaults.textButtonColors(Orange)
-                      },
+                },
                 style = TextStyle(
                     fontFamily = NotoSansKR,
                     fontWeight = FontWeight.W500,
@@ -124,11 +124,14 @@ fun RegisterByCodeScreen(navController: NavController) {
 }
 
 @Composable
-fun CheckValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boolean)->Unit){
+fun CheckValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boolean) -> Unit) {
     //우선 텍스트가 입력되지 않은 경우 경고 메시지가 뜨도록 설정
-    if (name.text.isEmpty()){
+    if (name.text.isEmpty()) {
         Text(
-            modifier = Modifier.padding(vertical = 5.dp) ,
-            text = stringResource(R.string.not_valid_code), color = Error, style = Typography.titleSmall)
+            modifier = Modifier.padding(vertical = 5.dp),
+            text = stringResource(R.string.not_valid_code),
+            color = Error,
+            style = Typography.titleSmall
+        )
     }
 }

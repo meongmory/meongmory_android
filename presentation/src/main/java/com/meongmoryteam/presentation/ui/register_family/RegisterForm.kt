@@ -51,7 +51,11 @@ import com.meongmoryteam.presentation.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterDogForm(bottomPadding: Dp = 65.dp, navController: NavController, content: @Composable ColumnScope.() -> Unit){
+fun RegisterDogForm(
+    bottomPadding: Dp = 65.dp,
+    navController: NavController,
+    content: @Composable ColumnScope.() -> Unit
+) {
     val scrollState = rememberScrollState()
     Scaffold(
         modifier = Modifier.padding(horizontal = 6.dp),
@@ -61,8 +65,9 @@ fun RegisterDogForm(bottomPadding: Dp = 65.dp, navController: NavController, con
                 modifier = Modifier.padding(top = 15.dp, bottom = bottomPadding),
                 navigationIcon = {
                     IconButton(
-                        onClick = {navController.navigate(RouteScreen.Choose.route)},
-                        modifier = Modifier.size(30.dp))
+                        onClick = { navController.navigate(RouteScreen.Choose.route) },
+                        modifier = Modifier.size(30.dp)
+                    )
                     {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
@@ -79,12 +84,16 @@ fun RegisterDogForm(bottomPadding: Dp = 65.dp, navController: NavController, con
                 .padding(it)
                 .fillMaxSize(),
         ) {
-            Box(modifier = Modifier
-                .background(White)
-                .padding(horizontal = 10.dp),) {
+            Box(
+                modifier = Modifier
+                    .background(White)
+                    .padding(horizontal = 10.dp),
+            ) {
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxHeight().verticalScroll(state = scrollState),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .verticalScroll(state = scrollState),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     content()
@@ -100,8 +109,8 @@ fun TextComponent(
     text: String,
     style: TextStyle,
     modifier: Modifier = Modifier,
-    color: Color)
-{
+    color: Color
+) {
     Text(
         text = text,
         style = style,
@@ -116,12 +125,12 @@ fun TextButtonComponent(
     colors: ButtonColors,
     style: TextStyle,
     width: Float = 1f,
-    onClick: ()->Unit
-){
+    onClick: () -> Unit
+) {
     TextButton(
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
-        modifier= Modifier
+        modifier = Modifier
             .fillMaxWidth(width)
             .height(50.dp)
             .padding(vertical = 5.dp),
@@ -132,20 +141,19 @@ fun TextButtonComponent(
             text = text,
             style = style,
             textAlign = TextAlign.Center,
-            )
+        )
     }
 }
 
 @Composable
 fun TextFieldComponent(
     name: TextFieldValue,
-    onValueChange : (TextFieldValue)->Unit,
+    onValueChange: (TextFieldValue) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
     bgColor: Color = Color(0xFFF9F9F9),
     borderColor: Color = InputBoxOutline
-)
-{
+) {
     BasicTextField(
         value = name,
         onValueChange = onValueChange,
@@ -159,16 +167,17 @@ fun TextFieldComponent(
             lineHeight = 20.sp
         ),
         decorationBox = {
-            Box(modifier = modifier
-                .background(bgColor)
-                .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
-                .padding(horizontal = 15.dp, vertical = 14.dp)
-            ){
-                if(name.text.isEmpty()){
+            Box(
+                modifier = modifier
+                    .background(bgColor)
+                    .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
+                    .padding(horizontal = 15.dp, vertical = 14.dp)
+            ) {
+                if (name.text.isEmpty()) {
                     Text(text = placeholder, style = Typography.titleSmall, color = Placeholer)
-                }
-                else {it()
-                    Log.d("CHANGE","change")
+                } else {
+                    it()
+                    Log.d("CHANGE", "change")
                 }
             }
         }

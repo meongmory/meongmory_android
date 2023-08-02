@@ -16,11 +16,12 @@ import com.meongmoryteam.presentation.ui.register_family.name.RegisterByNameScre
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.White
 
-sealed class RouteScreen(val route: String){
+sealed class RouteScreen(val route: String) {
     object Choose : RouteScreen("Choose")
     object Name : RouteScreen("Name")
     object Code : RouteScreen("Code")
 }
+
 class RegisterFamilyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +39,20 @@ class RegisterFamilyActivity : ComponentActivity() {
 fun RegisterFamilyNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
-){
-    NavHost(navController = navController, startDestination = RouteScreen.Choose.route, modifier = modifier){
-        composable(route = RouteScreen.Choose.route){
+) {
+    NavHost(
+        navController = navController,
+        startDestination = RouteScreen.Choose.route,
+        modifier = modifier
+    ) {
+        composable(route = RouteScreen.Choose.route) {
             RegisterFamilyScreen(navController)
         }
-        composable(route = RouteScreen.Name.route){
-            RegisterByNameScreen (navController)
+        composable(route = RouteScreen.Name.route) {
+            RegisterByNameScreen(navController)
         }
-        composable(route = RouteScreen.Code.route){
-            RegisterByCodeScreen (navController)
+        composable(route = RouteScreen.Code.route) {
+            RegisterByCodeScreen(navController)
         }
     }
 }
