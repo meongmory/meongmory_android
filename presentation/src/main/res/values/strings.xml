@@ -34,7 +34,7 @@
     <string name="month">월</string>
     <string name="day">일</string>
     <string name="pet_registration_number">반려동물 등록번호</string>
-    
+
     <!-- 마이페이지 관련 -->
     <string name="my_page_title">마이페이지</string>
     <string name="my_page_profile">강아지밥주는사람</string>
@@ -73,12 +73,17 @@
     <string name="question_button">공유하기</string>
     <string name="question_at">\@</string>
 
+    <!-- 다이어로그 -->
+    <string name="dialog_cancel">취소</string>
+
+    <string name="dialog_secession">회원 탈퇴</string>
+    <string name="dialog_secession_detail">회원 탈퇴 시,\n저장된 모든 회원 정보를 잃게됩니다.\n탈퇴하시겠습니까?</string>
+    <string name="dialog_secession_yes">탈퇴</string>
+    <string name="dialog_logout">로그아웃</string>
+    <string name="dialog_logout_detail">로그아웃 하시겠습니까?</string>
 
     <!--  스플래시, 온보딩  -->
     <string name="login_phone_title_text">휴대폰 번호로 시작하기</string>
-
-    <!--  description  -->
-    <!--  스플래시, 온보딩  -->
     <string name="login_logo_description">펫다이어리 로고</string>
     <string name="login_phone_description">전화</string>
 
