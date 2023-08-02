@@ -23,9 +23,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,8 +40,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.RegisterDogEvent
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
@@ -57,33 +59,50 @@ import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 
 @Composable
-fun RegisterDogScreen(navController: NavController) {
-    var name by remember { mutableStateOf("") }
-    var breed by remember { mutableStateOf("") }
+fun RegisterDogScreen(
+    navController: NavController,
+    viewModel: RegisterDogViewModel = hiltViewModel()
+) {
+    val viewState by viewModel.viewState.collectAsState()
+//    var name by remember { mutableStateOf("") }
+//    var breed by remember { mutableStateOf("") }
     val buttonItemList = listOf(ButtonItem(0, "수컷"), ButtonItem(1, "암컷"))
-    var age by remember { mutableStateOf("") }
-    var year by remember { mutableStateOf("") }
-    var month by remember { mutableStateOf("") }
-    var day by remember { mutableStateOf("") }
-    var registrationNum by remember { mutableStateOf("") }
+//    var age by remember { mutableStateOf("") }
+//    var year by remember { mutableStateOf("") }
+//    var month by remember { mutableStateOf("") }
+//    var day by remember { mutableStateOf("") }
+//    var registrationNum by remember { mutableStateOf("") }
 
     RegisterDogForm(bottomPadding = 0.dp, navController = navController) {
         RenderProfile()
-        RenderName(value = name) { name = it }
-        RenderBreed(value = breed) { breed = it }
-        RenderGender(label = R.string.gender, buttonItem = buttonItemList)
-        RenderAge(value = age) { age = it }
-        RenderAdoptionDate(
-            year = year,
-            month = month,
-            day = day,
-            { year = it },
-            { month = it },
-            { day = it },
+        RenderName(value = viewState.name) { viewModel.setEvent(RegisterDogEvent.FillInName(it)) }
+        RenderBreed(value = viewState.breed, onValueChange = {
+            viewModel.setEvent(
+                RegisterDogEvent.FillInBreed(
+                    it
+                )
+            )
+        }) { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
+        RenderGender(
+            label = R.string.gender,
+            buttonItem = buttonItemList
         )
-        RenderPetRegistrationNumber(value = registrationNum) { registrationNum = it }
+        RenderAge(value = viewState.age) { viewModel.setEvent(RegisterDogEvent.FillInAge(it)) }
+        RenderAdoptionDate(
+            year = viewState.year,
+            month = viewState.month,
+            day = viewState.day,
+            { viewModel.setEvent(RegisterDogEvent.FillInYear(it)) },
+            { viewModel.setEvent(RegisterDogEvent.FillInMonth(it)) },
+            { viewModel.setEvent(RegisterDogEvent.FillInDay(it)) },
+        )
+        RenderPetRegistrationNumber(value = viewState.registrationNumber) {
+            viewModel.setEvent(
+                RegisterDogEvent.FillInRegistrationNum(it)
+            )
+        }
         Spacer(modifier = Modifier.height(10.dp))
-        RenderRegisterButton(value = registrationNum)
+        RenderRegisterButton(isAllFilled = viewState.isAllFilled)
     }
 }
 
@@ -119,7 +138,7 @@ fun RenderName(value: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun RenderBreed(value: String, onValueChange: (String) -> Unit) {
+fun RenderBreed(value: String, onValueChange: (String) -> Unit, navigateToSearch: () -> Unit) {
     Box(contentAlignment = Alignment.BottomEnd) {
         LabelNInputForm(
             label = R.string.breed,
@@ -127,12 +146,15 @@ fun RenderBreed(value: String, onValueChange: (String) -> Unit) {
             value = value,
             onValueChange = onValueChange
         )
-        SearchButton()
+        SearchButton(navigateToSearch)
     }
 }
 
 @Composable
-fun RenderGender(label: Int, buttonItem: List<ButtonItem>) {
+fun RenderGender(
+    label: Int,
+    buttonItem: List<ButtonItem>
+) {
     var selectedIndex by rememberSaveable { mutableStateOf(-1) }
     Column(
         modifier = Modifier
@@ -157,8 +179,10 @@ fun RenderGender(label: Int, buttonItem: List<ButtonItem>) {
                 GenderButton(
                     item = item,
                     isSelected = selectedIndex == item.index,
-                    onTap = { selectedIndex = item.index }
                 )
+                {
+                    selectedIndex = item.index
+                }
             }
         }
     }
@@ -206,10 +230,10 @@ fun RenderPetRegistrationNumber(value: String, onValueChange: (String) -> Unit) 
 }
 
 @Composable
-fun RenderRegisterButton(value: String) {
+fun RenderRegisterButton(isAllFilled: Boolean) {
     TextButtonComponent(
         text = stringResource(R.string.make),
-        colors = if (value.isEmpty()) {
+        colors = if (!isAllFilled) {
             ButtonDefaults.textButtonColors(LightGrey)
         } else {
             ButtonDefaults.textButtonColors(Orange)
@@ -258,9 +282,9 @@ fun LabelNInputForm(
 }
 
 @Composable
-fun SearchButton() {
+fun SearchButton(navigateToSearch: () -> Unit) {
     IconButton(
-        onClick = {},
+        onClick = navigateToSearch,
         modifier = Modifier
             .size(45.dp)
             .padding(bottom = 25.dp)
@@ -289,6 +313,7 @@ fun GenderButton(
     val contentColor =
         if (isSelected) Black
         else Placeholer
+
     Box(
         modifier = modifier
             .width(170.dp)

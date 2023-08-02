@@ -22,9 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyViewModel
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent.FillInFamilyName
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
@@ -46,8 +45,6 @@ fun RegisterByNameScreen(
     navigateToRegisterScreen: () -> Unit,
     navigateToMainScreen: () -> Unit
 ) {
-//    var name by remember { mutableStateOf(TextFieldValue("")) }
-//    var enabled by remember { mutableStateOf(false) }
     val viewState by viewModel.viewState.collectAsState()
 
     RegisterDogForm(navController = navController) {
@@ -72,7 +69,7 @@ fun RegisterByNameScreen(
             )
             TextFieldComponent(
                 name = viewState.familyName,
-                onValueChange = { viewModel.setEvent(FillInFamilyName(it)) },
+                onValueChange = { viewModel.setEvent(RegisterFamilyEvent.FillInFamilyName(it)) },
                 placeholder = stringResource(R.string.input_family_name),
                 bgColor = if (!viewState.isFilledName) {
                     Color(0xFFF9F9F9)

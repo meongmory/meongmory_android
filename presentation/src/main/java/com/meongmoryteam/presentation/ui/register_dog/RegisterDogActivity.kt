@@ -13,11 +13,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.White
+import dagger.hilt.android.AndroidEntryPoint
 
 sealed class Route(val route: String) {
     object RegisterDog : Route("RegisterDog")
 }
 
+@AndroidEntryPoint
 class RegisterDogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
