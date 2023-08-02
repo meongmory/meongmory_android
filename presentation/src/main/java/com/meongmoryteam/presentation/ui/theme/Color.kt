@@ -35,3 +35,18 @@ val MyPageProfileEditButton = Color(0xFFFFF3E0)
 val ListNextButton = Color(0xFFB2B2B2)
 val ListTitle = Color(0xFF6D6D6D)
 val ListDivider = Color(0xFFFFE2A3)
+
+
+// 프로필 수정 색상
+val EditText = Color(0xFF737373)
+val EditStroke = Color(0xFFE7E7E7)
+val EditButtonFalse = Color(0xFFD9D9D9)
+val EditDivider = Color(0xFF757575)
+
+// 문의 및 오류 제보 색상
+val QuestionSubTitle = Color(0xFF454545)
+val QuestionButtonText = Color(0xFFFFFCFC)
+val QuestionEditFill = Color(0xFFF9F9F9)
+val QuestionChangeStroke = Color(0xFFBEB7AD)
+val QuestionChangeFill = Color(0xFFF5F4F2)
+val QuestionChangeButtonFill = Color(0xFF3C270A)
