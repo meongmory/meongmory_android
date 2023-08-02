@@ -147,8 +147,8 @@ fun TextButtonComponent(
 
 @Composable
 fun TextFieldComponent(
-    name: TextFieldValue,
-    onValueChange: (TextFieldValue) -> Unit,
+    name: String,
+    onValueChange: (String) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
     bgColor: Color = Color(0xFFF9F9F9),
@@ -173,7 +173,7 @@ fun TextFieldComponent(
                     .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
                     .padding(horizontal = 15.dp, vertical = 14.dp)
             ) {
-                if (name.text.isEmpty()) {
+                if (name.isEmpty()) {
                     Text(text = placeholder, style = Typography.titleSmall, color = Placeholer)
                 } else {
                     it()

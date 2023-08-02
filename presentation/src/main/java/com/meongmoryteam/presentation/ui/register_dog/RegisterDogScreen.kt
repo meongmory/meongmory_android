@@ -38,7 +38,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -59,14 +58,14 @@ import com.meongmoryteam.presentation.ui.theme.Yellow
 
 @Composable
 fun RegisterDogScreen(navController: NavController) {
-    var name by remember { mutableStateOf(TextFieldValue("")) }
-    var breed by remember { mutableStateOf(TextFieldValue("")) }
+    var name by remember { mutableStateOf("") }
+    var breed by remember { mutableStateOf("") }
     val buttonItemList = listOf(ButtonItem(0, "수컷"), ButtonItem(1, "암컷"))
-    var age by remember { mutableStateOf(TextFieldValue("")) }
-    var year by remember { mutableStateOf(TextFieldValue("")) }
-    var month by remember { mutableStateOf(TextFieldValue("")) }
-    var day by remember { mutableStateOf(TextFieldValue("")) }
-    var registrationNum by remember { mutableStateOf(TextFieldValue("")) }
+    var age by remember { mutableStateOf("") }
+    var year by remember { mutableStateOf("") }
+    var month by remember { mutableStateOf("") }
+    var day by remember { mutableStateOf("") }
+    var registrationNum by remember { mutableStateOf("") }
 
     RegisterDogForm(bottomPadding = 0.dp, navController = navController) {
         RenderProfile()
@@ -110,7 +109,7 @@ fun RenderProfile(painterResource: Int = R.drawable.default_profile) {
 }
 
 @Composable
-fun RenderName(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+fun RenderName(value: String, onValueChange: (String) -> Unit) {
     LabelNInputForm(
         label = R.string.dog_name,
         placeholder = R.string.dog_name,
@@ -120,7 +119,7 @@ fun RenderName(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
 }
 
 @Composable
-fun RenderBreed(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+fun RenderBreed(value: String, onValueChange: (String) -> Unit) {
     Box(contentAlignment = Alignment.BottomEnd) {
         LabelNInputForm(
             label = R.string.breed,
@@ -166,7 +165,7 @@ fun RenderGender(label: Int, buttonItem: List<ButtonItem>) {
 }
 
 @Composable
-fun RenderAge(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+fun RenderAge(value: String, onValueChange: (String) -> Unit) {
     LabelNInputForm(
         label = R.string.age,
         placeholder = R.string.age,
@@ -177,12 +176,12 @@ fun RenderAge(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
 
 @Composable
 fun RenderAdoptionDate(
-    year: TextFieldValue,
-    month: TextFieldValue,
-    day: TextFieldValue,
-    onYearChange: (TextFieldValue) -> Unit,
-    onMonthChange: (TextFieldValue) -> Unit,
-    onDayChange: (TextFieldValue) -> Unit
+    year: String,
+    month: String,
+    day: String,
+    onYearChange: (String) -> Unit,
+    onMonthChange: (String) -> Unit,
+    onDayChange: (String) -> Unit
 ) {
     DateInputForm(
         label = R.string.adoption_date,
@@ -197,7 +196,7 @@ fun RenderAdoptionDate(
 }
 
 @Composable
-fun RenderPetRegistrationNumber(value: TextFieldValue, onValueChange: (TextFieldValue) -> Unit) {
+fun RenderPetRegistrationNumber(value: String, onValueChange: (String) -> Unit) {
     LabelNInputForm(
         label = R.string.pet_registration_number,
         placeholder = R.string.pet_registration_number,
@@ -207,10 +206,10 @@ fun RenderPetRegistrationNumber(value: TextFieldValue, onValueChange: (TextField
 }
 
 @Composable
-fun RenderRegisterButton(value: TextFieldValue) {
+fun RenderRegisterButton(value: String) {
     TextButtonComponent(
         text = stringResource(R.string.make),
-        colors = if (value.text.isEmpty()) {
+        colors = if (value.isEmpty()) {
             ButtonDefaults.textButtonColors(LightGrey)
         } else {
             ButtonDefaults.textButtonColors(Orange)
@@ -230,8 +229,8 @@ fun RenderRegisterButton(value: TextFieldValue) {
 fun LabelNInputForm(
     label: Int,
     placeholder: Int,
-    value: TextFieldValue,
-    onValueChange: (TextFieldValue) -> Unit
+    value: String,
+    onValueChange: (String) -> Unit
 ) {
     Column(modifier = Modifier.padding(bottom = 14.dp)) {
         Text(
@@ -244,12 +243,12 @@ fun LabelNInputForm(
             name = value,
             onValueChange = onValueChange,
             placeholder = stringResource(placeholder),
-            bgColor = if (value.text.isEmpty()) {
+            bgColor = if (value.isEmpty()) {
                 Color(0xFFF9F9F9)
             } else {
                 LightYellow
             },
-            borderColor = if (value.text.isEmpty()) {
+            borderColor = if (value.isEmpty()) {
                 InputBoxOutline
             } else {
                 Yellow
@@ -315,13 +314,13 @@ fun GenderButton(
 @Composable
 fun DateInputForm(
     label: Int,
-    year: TextFieldValue,
-    month: TextFieldValue,
-    day: TextFieldValue,
+    year: String,
+    month: String,
+    day: String,
     modifier: Modifier,
-    onYearChange: (TextFieldValue) -> Unit,
-    onMonthChange: (TextFieldValue) -> Unit,
-    onDayChange: (TextFieldValue) -> Unit,
+    onYearChange: (String) -> Unit,
+    onMonthChange: (String) -> Unit,
+    onDayChange: (String) -> Unit,
 ) {
     val itemList = listOf("년", "월", "일")
     val textValueList = listOf(year, month, day)
@@ -355,12 +354,12 @@ fun DateInputForm(
                         name = textValueList[itemList.indexOf(it)],
                         onValueChange = valueChangeList[itemList.indexOf(it)],
                         placeholder = placeholderList[itemList.indexOf(it)],
-                        bgColor = if (textValueList[itemList.indexOf(it)].text.isEmpty()) {
+                        bgColor = if (textValueList[itemList.indexOf(it)].isEmpty()) {
                             Color(0xFFF9F9F9)
                         } else {
                             LightYellow
                         },
-                        borderColor = if (textValueList[itemList.indexOf(it)].text.isEmpty()) {
+                        borderColor = if (textValueList[itemList.indexOf(it)].isEmpty()) {
                             InputBoxOutline
                         } else {
                             Yellow

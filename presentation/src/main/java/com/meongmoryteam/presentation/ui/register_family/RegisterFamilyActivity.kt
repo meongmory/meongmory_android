@@ -15,13 +15,14 @@ import com.meongmoryteam.presentation.ui.register_family.invitation.RegisterByCo
 import com.meongmoryteam.presentation.ui.register_family.name.RegisterByNameScreen
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.White
+import dagger.hilt.android.AndroidEntryPoint
 
 sealed class RouteScreen(val route: String) {
     object Choose : RouteScreen("Choose")
     object Name : RouteScreen("Name")
     object Code : RouteScreen("Code")
 }
-
+@AndroidEntryPoint
 class RegisterFamilyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +50,18 @@ fun RegisterFamilyNavigation(
             RegisterFamilyScreen(navController)
         }
         composable(route = RouteScreen.Name.route) {
-            RegisterByNameScreen(navController)
+            RegisterByNameScreen(
+                navController = navController,
+                navigateToRegisterScreen = {navController.navigate(RouteScreen.Choose.route)},
+                navigateToMainScreen = {navController.navigate(RouteScreen.Choose.route)} //추후 메인으로 변경
+            )
         }
         composable(route = RouteScreen.Code.route) {
-            RegisterByCodeScreen(navController)
+            RegisterByCodeScreen(
+                navController = navController,
+                navigateToRegisterScreen = {navController.navigate(RouteScreen.Choose.route)},
+                navigateToMainScreen = {navController.navigate(RouteScreen.Choose.route)} //추후 메인으로 변경
+            )
         }
     }
 }
