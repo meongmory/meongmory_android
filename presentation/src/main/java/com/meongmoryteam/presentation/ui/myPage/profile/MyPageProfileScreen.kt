@@ -49,28 +49,26 @@ fun MypageProfileScreen() {
             .fillMaxWidth(),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-
-        Box(Modifier.fillMaxHeight(),
-            contentAlignment = Alignment.CenterStart) {
-
-            Column(modifier = Modifier.fillMaxHeight(),
-            Arrangement.spacedBy(150.dp)) {
+        Box(
+            Modifier.fillMaxHeight(),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                Arrangement.spacedBy(150.dp)
+            ) {
                 MyPageToolBar(stringResource(R.string.profile_change_title))
                 ProfileChangeEdit()
-
             }
-
-            Column(Modifier.fillMaxHeight(),
-                Arrangement.Bottom) {
+            Column(
+                Modifier.fillMaxHeight(),
+                Arrangement.Bottom
+            ) {
                 ProfileChangeButton()
-
             }
         }
-
-
     }
 }
-
 
 
 @Composable
@@ -78,7 +76,6 @@ fun MyPageToolBar(
     title: String
 ) {
     Column() {
-
         // 위 아래 여백
         Row(
             modifier = Modifier
@@ -90,18 +87,16 @@ fun MyPageToolBar(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-
                 Row(
                     modifier = Modifier
                         .height(24.dp)
                         .fillMaxWidth()
-                ){
+                ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_left_btn),
-                        contentDescription = stringResource(id = R.string.profile_back_btn_description),
+                        contentDescription = stringResource(R.string.profile_back_btn_description),
                         modifier = Modifier.padding(start = PADDING_16),
                     )
-
                 }
                 Text(
                     text = title,
@@ -109,7 +104,6 @@ fun MyPageToolBar(
                 )
             }
         }
-
         Divider(
             color = EditDivider.copy(0.2f)
         )
@@ -120,11 +114,13 @@ fun MyPageToolBar(
 
 @Composable
 fun ProfileChangeLabel() {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(start = PADDING_16)) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = PADDING_16)
+    ) {
         Text(
-            text = stringResource(id = R.string.profile_change_label),
+            text = stringResource(R.string.profile_change_label),
             color = EditText,
             fontSize = 12.sp
         )
@@ -133,11 +129,13 @@ fun ProfileChangeLabel() {
 
 @Composable
 fun ProfileChangeExplain() {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(start = PADDING_16)) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = PADDING_16)
+    ) {
         Text(
-            text = stringResource(id = R.string.profile_change_explain),
+            text = stringResource(R.string.profile_change_explain),
             color = EditText,
             fontSize = 11.sp
         )
@@ -147,24 +145,20 @@ fun ProfileChangeExplain() {
 @Composable
 fun ProfileChangeEdit(
 ) {
-
     Column {
         ProfileChangeLabel()
         MyPageEditForm()
         ProfileChangeExplain()
-
     }
-
 }
 
 
 @Composable
 fun MyPageEditForm() {
     var text by remember { mutableStateOf("") }
-
     Box(
         modifier = Modifier
-            .padding(all = PADDING_16)
+            .padding(PADDING_16)
             .fillMaxWidth()
             .height(48.dp)
             .border(
@@ -178,7 +172,7 @@ fun MyPageEditForm() {
             value = text,
             onValueChange = { newText ->
                 // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
-                text = newText.replace(Regex("[\n]"),"")
+                text = newText.replace(Regex("[\n]"), "")
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
@@ -189,14 +183,12 @@ fun MyPageEditForm() {
 
         if (text.isEmpty()) {
             Text(
-                text = stringResource(id = R.string.profile_now_nickname),
+                text = stringResource(R.string.profile_now_nickname),
                 color = EditText,
                 modifier = Modifier.padding(start = PADDING_16, end = PADDING_16)
             )
         }
-
     }
-
 }
 
 @Composable
@@ -210,8 +202,10 @@ fun ProfileChangeButton() {
             .height(45.dp),
         shape = RoundedCornerShape(10.dp)
     ) {
-        Text(text = stringResource(id = R.string.profile_change_button),
-        fontSize = 15.sp)
+        Text(
+            text = stringResource(R.string.profile_change_button),
+            fontSize = 15.sp
+        )
     }
 }
 

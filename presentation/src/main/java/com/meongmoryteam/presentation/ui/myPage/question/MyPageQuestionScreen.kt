@@ -81,7 +81,7 @@ fun EmailEdit() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             EmailForm()
-            Text(text = stringResource(id = R.string.question_at))
+            Text(text = stringResource(R.string.question_at))
             EmailSelect()
         }
     }
@@ -92,9 +92,11 @@ fun EmailEdit() {
 fun QuestionLabel(
     label: String
 ) {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(start = PADDING_16, top = PADDING_16)) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = PADDING_16, top = PADDING_16)
+    ) {
         Text(
             text = label,
             color = QuestionSubTitle,
@@ -125,7 +127,7 @@ fun EmailForm() {
             value = email,
             onValueChange = { newText ->
                 // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
-                email = newText.replace(Regex("[\n]"),"")
+                email = newText.replace(Regex("[\n]"), "")
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
@@ -149,7 +151,7 @@ fun EmailForm() {
 fun EmailSelect() {
     Row(
         modifier = Modifier
-            .padding(all = PADDING_16)
+            .padding(PADDING_16)
             .height(48.dp)
             .fillMaxWidth()
             .border(
@@ -167,14 +169,13 @@ fun EmailSelect() {
             color = EditText,
             modifier = Modifier.padding(PADDING_16)
         )
-
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_email_select),
             contentDescription = stringResource(R.string.question_email_select),
-        modifier = Modifier.padding(end = PADDING_8))
+            modifier = Modifier.padding(end = PADDING_8)
+        )
     }
 }
-
 
 
 @Composable
@@ -188,7 +189,7 @@ fun DetailForm() {
     var detail by remember { mutableStateOf("") }
     Box(
         modifier = Modifier
-            .padding(all = PADDING_16)
+            .padding(PADDING_16)
             .fillMaxSize()
             .border(
                 color = EditStroke,
@@ -211,7 +212,6 @@ fun DetailForm() {
             ),
             modifier = Modifier.padding(PADDING_16)
         )
-
         if (detail.isEmpty()) {
             Text(
                 text = stringResource(R.string.question_content_detail),
@@ -238,7 +238,8 @@ fun QuestionButton() {
         Text(
             text = stringResource(R.string.question_button),
             color = QuestionButtonText,
-            fontSize = 15.sp)
+            fontSize = 15.sp
+        )
     }
 }
 
