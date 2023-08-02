@@ -50,9 +50,3 @@ val QuestionEditFill = Color(0xFFF9F9F9)
 val QuestionChangeStroke = Color(0xFFBEB7AD)
 val QuestionChangeFill = Color(0xFFF5F4F2)
 val QuestionChangeButtonFill = Color(0xFF3C270A)
-
-
-// Custom 다이어로그 색상
-val DialogBackground = Color(0xFFF2F2F2)
-val DialogTextBlue = Color(0xFF007AFF)
-val DialogStroke = Color(0xFF3C3C43)
