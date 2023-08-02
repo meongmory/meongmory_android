@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">presentation</string>
+    <string name="close">닫기</string>
     <string name="next">다음</string>
     <string name="check">확인</string>
     <string name="register">등록하기</string>
-    <string name="close">닫기</string>
+    <string name="month">월</string>
+    <string name="day">일</string>
+    <string name="pet_registration_number">반려동물 등록번호</string>
     <!--강아지네 등록 관련-->
     <string name="not_valid_code">유효한 코드가 아닙니다.</string>
     <string name="register_by_code_info">가족 및 지인에게서 멍모리에서 보낸 초대 코드를 입력해주세요!\n유효한 초대코드를 입력하면 강아지의 일상을 같이 볼 수 있어요!</string>
@@ -31,14 +34,12 @@
     <string name="age">나이</string>
     <string name="adoption_date">입양한 날짜</string>
     <string name="year">년</string>
-    <string name="month">월</string>
-    <string name="day">일</string>
-    <string name="pet_registration_number">반려동물 등록번호</string>
-    
+
+
     <!-- 마이페이지 관련 -->
     <string name="my_page_title">마이페이지</string>
     <string name="my_page_profile">강아지밥주는사람</string>
-    <string name="my_page_phone_number">010-1234-1234</string>
+    <string name="my_page_phone_number">010–1234-1234</string>
     <string name="my_page_profile_edit">프로필 수정</string>
     <string name="my_page_profile_alarm">알람 설정</string>
     <string name="my_page_list_account">계정 설정</string>
@@ -54,5 +55,24 @@
     <string name="my_page_profile_image">프로필 기본 이미지</string>
     <string name="my_page_list_button_icon">아이콘</string>
     <string name="my_page_list_button_right">선택 버튼</string>
+
+    <!-- 프로필 수정 -->
+    <string name="profile_change_title">프로필 수정</string>
+    <string name="profile_change_label">닉네임</string>
+    <string name="profile_now_nickname">강아지밥주는사람</string>
+    <string name="profile_change_explain">한글/영문/띄어쓰기/숫자 포함 최대 6자 입력 가능해요.</string>
+    <string name="profile_change_button">수정하기</string>
+    <string name="profile_back_btn_description">뒤로 가기 버튼</string>
+
+    <!-- 문의 및 오류 제보 -->
+    <string name="question_title">문의 및 오류 제보</string>
+    <string name="question_email_form_title">답변 받을 이메일</string>
+    <string name="question_email_form_hint">아이디(이메일)</string>
+    <string name="question_email_select">선택</string>
+    <string name="question_content_title">내용</string>
+    <string name="question_content_detail">각종 문의나 오류 제보에 있어 자유롭게 적어주세요.</string>
+    <string name="question_button">공유하기</string>
+    <string name="question_at">\@</string>
+
 
 </resources>
