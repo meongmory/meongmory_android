@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -23,6 +24,7 @@ import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyViewModel
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextComponent
@@ -42,12 +44,12 @@ import com.meongmoryteam.presentation.ui.theme.Yellow
 fun RegisterByNameScreen(
     navController: NavController,
     viewModel: RegisterFamilyViewModel = hiltViewModel(),
-    navigateToRegisterScreen: () -> Unit,
-    navigateToMainScreen: () -> Unit
+    navigateToMakeScreen: () -> Unit,
+    navigateToFamilyScreen: () -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
-    RegisterDogForm(navController = navController) {
+    RegisterDogForm(navController = navController, navigateTo = { viewModel.setEvent(RegisterFamilyEvent.OnClickBackButton) }) {
         Column(modifier = Modifier.fillMaxWidth()) {
             TextComponent(
                 text = stringResource(R.string.register_by_name_title),
@@ -81,7 +83,6 @@ fun RegisterByNameScreen(
                 } else {
                     Yellow
                 }
-
             )
             InputException(text = stringResource(R.string.input_family_name_exception))
         }
@@ -102,7 +103,22 @@ fun RegisterByNameScreen(
                     color = ButtonContent,
                     platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거하지 않으면 정렬이 맞지 않음
                 )
-            ) {}
+            ) { viewModel.setEvent(RegisterFamilyEvent.OnClickMakeButton) }
+        }
+    }
+
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when(effect) {
+                RegisterFamilySideEffect.NavigateToRegisterCodeScreen -> {}
+                RegisterFamilySideEffect.NavigateToRegisterNameScreen -> {}
+                RegisterFamilySideEffect.NavigateToPreviousScreen -> {
+                    navigateToFamilyScreen()
+                }
+                RegisterFamilySideEffect.NavigateToNextScreen -> {
+                    navigateToMakeScreen()
+                }
+            }
         }
     }
 }

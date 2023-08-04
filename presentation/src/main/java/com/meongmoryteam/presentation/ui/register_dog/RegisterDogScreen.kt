@@ -28,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,11 +51,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.RegisterDogEvent
+import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.RegisterDogSideEffect
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
@@ -69,14 +70,16 @@ import com.meongmoryteam.presentation.ui.theme.Placeholer
 import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RegisterDogScreen(
     navController: NavController,
-    viewModel: RegisterDogViewModel = hiltViewModel()
+    viewModel: RegisterDogViewModel = hiltViewModel(),
+    navigateToSearchBreedScreen: () -> Unit,
+    navigateToPreviousScreen: () -> Unit,
+    navigateToMakeScreen: () -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val buttonItemList = listOf(ButtonItem(0, "수컷"), ButtonItem(1, "암컷"))
@@ -84,7 +87,10 @@ fun RegisterDogScreen(
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = BringIntoViewRequester()
 
-    RegisterDogForm(bottomPadding = 0.dp, navController = navController) {
+    RegisterDogForm(
+        bottomPadding = 0.dp,
+        navController = navController,
+        navigateTo = { viewModel.setEvent(RegisterDogEvent.OnClickBackButton) }) {
         RenderProfile()
         RenderName(value = viewState.name) { viewModel.setEvent(RegisterDogEvent.FillInName(it)) }
         RenderBreed(value = viewState.breed, onValueChange = {
@@ -118,7 +124,30 @@ fun RegisterDogScreen(
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        RenderRegisterButton(isAllFilled = viewState.isAllFilled, bringIntoViewRequester = bringIntoViewRequester)
+        RenderRegisterButton(
+            isAllFilled = viewState.isAllFilled,
+            bringIntoViewRequester = bringIntoViewRequester
+        ) {
+            viewModel.setEvent(RegisterDogEvent.OnClickMakeButton)
+        }
+    }
+
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is RegisterDogSideEffect.NavigateToSearchBreedScreen -> {
+                    navigateToSearchBreedScreen()
+                }
+
+                is RegisterDogSideEffect.NavigateToNextScreen -> {
+                    navigateToMakeScreen()
+                }
+
+                is RegisterDogSideEffect.NavigateToPreviousScreen -> {
+                    navigateToPreviousScreen()
+                }
+            }
+        }
     }
 }
 
@@ -267,7 +296,11 @@ fun RenderPetRegistrationNumber(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RenderRegisterButton(isAllFilled: Boolean, bringIntoViewRequester: BringIntoViewRequester,) {
+fun RenderRegisterButton(
+    isAllFilled: Boolean,
+    bringIntoViewRequester: BringIntoViewRequester,
+    navigateTo: () -> Unit
+) {
     TextButtonComponent(
         text = stringResource(R.string.make),
         colors = if (!isAllFilled) {
@@ -283,8 +316,9 @@ fun RenderRegisterButton(isAllFilled: Boolean, bringIntoViewRequester: BringInto
             color = ButtonContent,
             platformStyle = PlatformTextStyle(includeFontPadding = false)
         ),
-        modifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
-    ) {}
+        modifier = Modifier.bringIntoViewRequester(bringIntoViewRequester),
+        onClick = navigateTo
+    )
 }
 
 @Composable

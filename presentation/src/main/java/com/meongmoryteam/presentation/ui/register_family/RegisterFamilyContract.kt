@@ -18,17 +18,18 @@ class RegisterFamilyContract {
     sealed class RegisterFamilySideEffect : ViewSideEffect {
         object NavigateToNextScreen : RegisterFamilySideEffect()
         object NavigateToPreviousScreen : RegisterFamilySideEffect()
+        object NavigateToRegisterCodeScreen : RegisterFamilySideEffect()
+        object NavigateToRegisterNameScreen : RegisterFamilySideEffect()
     }
 
     sealed class RegisterFamilyEvent : ViewEvent {
         data class FillInFamilyName(val familyName: String) : RegisterFamilyEvent()
         data class FillInCode(val code: String) : RegisterFamilyEvent()
-
-        //        object ClearFamilyName : RegisterFamilyEvent()
-//        object ClearCode : RegisterFamilyEvent()
         object OnClickOkButton : RegisterFamilyEvent()
         object OnClickNextButton : RegisterFamilyEvent()
         object OnClickBackButton : RegisterFamilyEvent()
         object OnClickMakeButton : RegisterFamilyEvent()
+        object OnClickRegisterNameButton : RegisterFamilyEvent()
+        object OnClickRegisterCodeButton : RegisterFamilyEvent()
     }
 }

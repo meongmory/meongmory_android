@@ -3,7 +3,6 @@ package com.meongmoryteam.presentation.ui.register_dog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,14 +21,16 @@ import dagger.hilt.android.AndroidEntryPoint
 
 sealed class Route(val route: String) {
     object RegisterDog : Route("RegisterDog")
-    object SuccessRegisterDog : Route("SuccessRegisterDog")
+    object SuccessRegister : Route("SuccessRegister")
+    object Previous : Route("Previous")
+    object SearchBreed : Route("SearchBreed")
 }
 
 @AndroidEntryPoint
 class RegisterDogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window,false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MeongmoryTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = White) {
@@ -37,7 +38,7 @@ class RegisterDogActivity : ComponentActivity() {
                 }
             }
         }
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)){ view, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { view, insets ->
             val bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             view.updatePadding(bottom = bottom)
             insets
@@ -56,10 +57,21 @@ fun RegisterDogNavigation(
         modifier = modifier
     ) {
         composable(route = Route.RegisterDog.route) {
-            RegisterDogScreen(navController)
+            RegisterDogScreen(
+                navController = navController,
+                navigateToSearchBreedScreen = {navController.navigate(Route.SearchBreed.route)},
+                navigateToMakeScreen = {navController.navigate(Route.SuccessRegister.route)},
+                navigateToPreviousScreen = {navController.navigate(Route.Previous.route)}
+            )
         }
-        composable(route = Route.SuccessRegisterDog.route){
+        composable(route = Route.SuccessRegister.route) {
             //등록 성공 스크린
+        }
+        composable(route = Route.SearchBreed.route) {
+            //품종 검색 스크린
+        }
+        composable(route = Route.Previous.route) {
+            //이전 스크린
         }
     }
 }

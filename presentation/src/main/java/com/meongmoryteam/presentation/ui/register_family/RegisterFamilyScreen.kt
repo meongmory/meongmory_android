@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.Typography
 import androidx.navigation.NavController
@@ -15,9 +17,17 @@ import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.Brown
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.Orange
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
 
 @Composable
-fun RegisterFamilyScreen(navController: NavController) {
+fun RegisterFamilyScreen(
+    navController: NavController,
+    viewModel: RegisterFamilyViewModel = hiltViewModel(),
+    navigateToRegisterByCode: () -> Unit,
+    navigatetoRegisterByName: () -> Unit,
+    navigatetoPreviousScreen: () -> Unit
+) {
     RegisterDogForm(navController = navController) {
         Column {
             Row {
@@ -49,7 +59,7 @@ fun RegisterFamilyScreen(navController: NavController) {
                 ),
                 style = Typography.labelMedium
             ) {
-                navController.navigate(RouteScreen.Name.route)
+                viewModel.setEvent(RegisterFamilyEvent.OnClickRegisterNameButton)
             }
             TextButtonComponent(
                 text = stringResource(R.string.go_to_code_btn),
@@ -59,7 +69,24 @@ fun RegisterFamilyScreen(navController: NavController) {
                 ),
                 style = Typography.labelMedium
             ) {
-                navController.navigate(RouteScreen.Code.route)
+                viewModel.setEvent(RegisterFamilyEvent.OnClickRegisterCodeButton)
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = viewModel.effect){
+        viewModel.effect.collect {effect ->
+            when (effect) {
+                RegisterFamilySideEffect.NavigateToRegisterCodeScreen -> {
+                    navigateToRegisterByCode()
+                }
+                RegisterFamilySideEffect.NavigateToRegisterNameScreen -> {
+                    navigatetoRegisterByName()
+                }
+                RegisterFamilySideEffect.NavigateToPreviousScreen -> {
+                    navigatetoPreviousScreen()
+                }
+                RegisterFamilySideEffect.NavigateToNextScreen -> {}
             }
         }
     }

@@ -21,7 +21,9 @@ sealed class RouteScreen(val route: String) {
     object Choose : RouteScreen("Choose")
     object Name : RouteScreen("Name")
     object Code : RouteScreen("Code")
+    object Main : RouteScreen("Main")
 }
+
 @AndroidEntryPoint
 class RegisterFamilyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,20 +49,25 @@ fun RegisterFamilyNavigation(
         modifier = modifier
     ) {
         composable(route = RouteScreen.Choose.route) {
-            RegisterFamilyScreen(navController)
+            RegisterFamilyScreen(
+                navController = navController,
+                navigatetoRegisterByName = { navController.navigate(RouteScreen.Name.route) },
+                navigateToRegisterByCode = { navController.navigate(RouteScreen.Code.route) },
+                navigatetoPreviousScreen = { navController.popBackStack() }
+            )
         }
         composable(route = RouteScreen.Name.route) {
             RegisterByNameScreen(
                 navController = navController,
-                navigateToRegisterScreen = {navController.navigate(RouteScreen.Choose.route)},
-                navigateToMainScreen = {navController.navigate(RouteScreen.Choose.route)} //추후 메인으로 변경
+                navigateToMakeScreen = { navController.navigate(RouteScreen.Choose.route) },
+                navigateToFamilyScreen = { navController.navigate(RouteScreen.Choose.route) } //추후 메인으로 변경
             )
         }
         composable(route = RouteScreen.Code.route) {
             RegisterByCodeScreen(
                 navController = navController,
-                navigateToRegisterScreen = {navController.navigate(RouteScreen.Choose.route)},
-                navigateToMainScreen = {navController.navigate(RouteScreen.Choose.route)} //추후 메인으로 변경
+                navigateToRegisterScreen = { navController.navigate(RouteScreen.Choose.route) },
+                navigateToFamilyScreen = { navController.navigate(RouteScreen.Choose.route) } //추후 메인으로 변경
             )
         }
     }

@@ -22,6 +22,8 @@ class RegisterFamilyViewModel @Inject constructor() :
             is RegisterFamilyEvent.OnClickMakeButton -> sendEffect({ RegisterFamilySideEffect.NavigateToNextScreen })
             is RegisterFamilyEvent.OnClickNextButton -> sendEffect({ RegisterFamilySideEffect.NavigateToNextScreen })
             is RegisterFamilyEvent.OnClickOkButton -> reflectUpdateState()
+            is RegisterFamilyEvent.OnClickRegisterCodeButton -> sendEffect({RegisterFamilySideEffect.NavigateToRegisterCodeScreen})
+            is RegisterFamilyEvent.OnClickRegisterNameButton -> sendEffect({RegisterFamilySideEffect.NavigateToRegisterNameScreen})
         }
     }
 
