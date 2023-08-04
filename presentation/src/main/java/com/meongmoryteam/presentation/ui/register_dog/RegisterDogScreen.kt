@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.register_dog
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,8 +17,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,20 +31,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
@@ -57,21 +68,21 @@ import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.Placeholer
 import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RegisterDogScreen(
     navController: NavController,
     viewModel: RegisterDogViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsState()
-//    var name by remember { mutableStateOf("") }
-//    var breed by remember { mutableStateOf("") }
     val buttonItemList = listOf(ButtonItem(0, "수컷"), ButtonItem(1, "암컷"))
-//    var age by remember { mutableStateOf("") }
-//    var year by remember { mutableStateOf("") }
-//    var month by remember { mutableStateOf("") }
-//    var day by remember { mutableStateOf("") }
-//    var registrationNum by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
+    val bringIntoViewRequester = BringIntoViewRequester()
 
     RegisterDogForm(bottomPadding = 0.dp, navController = navController) {
         RenderProfile()
@@ -96,13 +107,18 @@ fun RegisterDogScreen(
             { viewModel.setEvent(RegisterDogEvent.FillInMonth(it)) },
             { viewModel.setEvent(RegisterDogEvent.FillInDay(it)) },
         )
-        RenderPetRegistrationNumber(value = viewState.registrationNumber) {
+        RenderPetRegistrationNumber(
+            value = viewState.registrationNumber,
+            coroutineScope = coroutineScope,
+            bringIntoViewRequester = bringIntoViewRequester,
+            focusManager = focusManager
+        ) {
             viewModel.setEvent(
                 RegisterDogEvent.FillInRegistrationNum(it)
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-        RenderRegisterButton(isAllFilled = viewState.isAllFilled)
+        RenderRegisterButton(isAllFilled = viewState.isAllFilled, bringIntoViewRequester = bringIntoViewRequester)
     }
 }
 
@@ -219,18 +235,39 @@ fun RenderAdoptionDate(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RenderPetRegistrationNumber(value: String, onValueChange: (String) -> Unit) {
+fun RenderPetRegistrationNumber(
+    value: String,
+    coroutineScope: CoroutineScope,
+    bringIntoViewRequester: BringIntoViewRequester,
+    focusManager: FocusManager,
+    onValueChange: (String) -> Unit
+) {
     LabelNInputForm(
         label = R.string.pet_registration_number,
         placeholder = R.string.pet_registration_number,
         value = value,
-        onValueChange = onValueChange
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = { focusManager.clearFocus() }
+        )
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RenderRegisterButton(isAllFilled: Boolean) {
+fun RenderRegisterButton(isAllFilled: Boolean, bringIntoViewRequester: BringIntoViewRequester,) {
     TextButtonComponent(
         text = stringResource(R.string.make),
         colors = if (!isAllFilled) {
@@ -245,7 +282,8 @@ fun RenderRegisterButton(isAllFilled: Boolean) {
             lineHeight = 20.sp,
             color = ButtonContent,
             platformStyle = PlatformTextStyle(includeFontPadding = false)
-        )
+        ),
+        modifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
     ) {}
 }
 
@@ -254,6 +292,9 @@ fun LabelNInputForm(
     label: Int,
     placeholder: Int,
     value: String,
+    modifier: Modifier = Modifier.fillMaxWidth(),
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (String) -> Unit
 ) {
     Column(modifier = Modifier.padding(bottom = 14.dp)) {
@@ -277,6 +318,9 @@ fun LabelNInputForm(
             } else {
                 Yellow
             },
+            modifier = modifier,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions
         )
     }
 }

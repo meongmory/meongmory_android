@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,6 +30,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,6 +57,7 @@ import com.meongmoryteam.presentation.ui.theme.White
 fun RegisterDogForm(
     bottomPadding: Dp = 65.dp,
     navController: NavController,
+    navigateTo: () -> Unit = { navController.navigate(RouteScreen.Choose.route) },
     content: @Composable ColumnScope.() -> Unit
 ) {
     val scrollState = rememberScrollState()
@@ -63,9 +67,10 @@ fun RegisterDogForm(
             TopAppBar(
                 title = { Text("") },
                 modifier = Modifier.padding(top = 15.dp, bottom = bottomPadding),
+                colors = TopAppBarDefaults.topAppBarColors(White),
                 navigationIcon = {
                     IconButton(
-                        onClick = { navController.navigate(RouteScreen.Choose.route) },
+                        onClick =  navigateTo,
                         modifier = Modifier.size(30.dp)
                     )
                     {
@@ -125,12 +130,13 @@ fun TextButtonComponent(
     colors: ButtonColors,
     style: TextStyle,
     width: Float = 1f,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     TextButton(
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(width)
             .height(50.dp)
             .padding(vertical = 5.dp),
@@ -152,7 +158,9 @@ fun TextFieldComponent(
     placeholder: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
     bgColor: Color = Color(0xFFF9F9F9),
-    borderColor: Color = InputBoxOutline
+    borderColor: Color = InputBoxOutline,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
     BasicTextField(
         value = name,
@@ -180,7 +188,9 @@ fun TextFieldComponent(
                     Log.d("CHANGE", "change")
                 }
             }
-        }
+        },
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions
     )
 }
 

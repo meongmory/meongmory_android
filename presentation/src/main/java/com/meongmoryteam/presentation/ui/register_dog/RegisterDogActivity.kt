@@ -3,10 +3,15 @@ package com.meongmoryteam.presentation.ui.register_dog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,18 +22,25 @@ import dagger.hilt.android.AndroidEntryPoint
 
 sealed class Route(val route: String) {
     object RegisterDog : Route("RegisterDog")
+    object SuccessRegisterDog : Route("SuccessRegisterDog")
 }
 
 @AndroidEntryPoint
 class RegisterDogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window,false)
         setContent {
             MeongmoryTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = White) {
                     RegisterDogNavigation()
                 }
             }
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)){ view, insets ->
+            val bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            view.updatePadding(bottom = bottom)
+            insets
         }
     }
 }
@@ -45,6 +57,9 @@ fun RegisterDogNavigation(
     ) {
         composable(route = Route.RegisterDog.route) {
             RegisterDogScreen(navController)
+        }
+        composable(route = Route.SuccessRegisterDog.route){
+            //등록 성공 스크린
         }
     }
 }
