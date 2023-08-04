@@ -25,10 +25,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent.FillInCode
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyViewModel
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent.FillInCode
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyViewModel
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
@@ -105,7 +105,7 @@ fun RegisterByCodeScreen(
                         color = ButtonContent
                     ),
                     width = 1f
-                ) {viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton)}
+                ) { viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton) }
             }
             CheckValidCode(isInvalid = viewState.isFilledCode)
         }
@@ -126,18 +126,19 @@ fun RegisterByCodeScreen(
                     color = ButtonContent,
                     platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거하지 않으면 정렬이 맞지 않음
                 )
-            ) { viewModel.setEvent(RegisterFamilyEvent.OnClickNextButton)}
+            ) { viewModel.setEvent(RegisterFamilyEvent.OnClickNextButton) }
         }
     }
 
     LaunchedEffect(key1 = viewModel.effect) {
-        viewModel.effect.collect {effect ->
-            when(effect) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
                 RegisterFamilySideEffect.NavigateToRegisterCodeScreen -> {}
                 RegisterFamilySideEffect.NavigateToRegisterNameScreen -> {}
                 RegisterFamilySideEffect.NavigateToPreviousScreen -> {
                     navigateToFamilyScreen()
                 }
+
                 RegisterFamilySideEffect.NavigateToNextScreen -> {
                     navigateToRegisterScreen()
                 }

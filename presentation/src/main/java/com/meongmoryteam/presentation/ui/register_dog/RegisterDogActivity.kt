@@ -59,9 +59,9 @@ fun RegisterDogNavigation(
         composable(route = Route.RegisterDog.route) {
             RegisterDogScreen(
                 navController = navController,
-                navigateToSearchBreedScreen = {navController.navigate(Route.SearchBreed.route)},
-                navigateToMakeScreen = {navController.navigate(Route.SuccessRegister.route)},
-                navigateToPreviousScreen = {navController.navigate(Route.Previous.route)}
+                navigateToSearchBreedScreen = { navController.navigate(Route.SearchBreed.route) },
+                navigateToMakeScreen = { navController.navigate(Route.SuccessRegister.route) },
+                navigateToPreviousScreen = { navController.navigate(Route.Previous.route) }
             )
         }
         composable(route = Route.SuccessRegister.route) {

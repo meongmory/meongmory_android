@@ -1,12 +1,11 @@
 package com.meongmoryteam.presentation.ui.register_family
 
 import com.meongmoryteam.presentation.base.BaseViewModel
-import com.meongmoryteam.presentation.base.LoadState
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyViewState
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
 
 
 @HiltViewModel
@@ -22,8 +21,8 @@ class RegisterFamilyViewModel @Inject constructor() :
             is RegisterFamilyEvent.OnClickMakeButton -> sendEffect({ RegisterFamilySideEffect.NavigateToNextScreen })
             is RegisterFamilyEvent.OnClickNextButton -> sendEffect({ RegisterFamilySideEffect.NavigateToNextScreen })
             is RegisterFamilyEvent.OnClickOkButton -> reflectUpdateState()
-            is RegisterFamilyEvent.OnClickRegisterCodeButton -> sendEffect({RegisterFamilySideEffect.NavigateToRegisterCodeScreen})
-            is RegisterFamilyEvent.OnClickRegisterNameButton -> sendEffect({RegisterFamilySideEffect.NavigateToRegisterNameScreen})
+            is RegisterFamilyEvent.OnClickRegisterCodeButton -> sendEffect({ RegisterFamilySideEffect.NavigateToRegisterCodeScreen })
+            is RegisterFamilyEvent.OnClickRegisterNameButton -> sendEffect({ RegisterFamilySideEffect.NavigateToRegisterNameScreen })
         }
     }
 

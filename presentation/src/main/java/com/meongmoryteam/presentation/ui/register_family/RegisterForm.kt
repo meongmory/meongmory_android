@@ -63,6 +63,7 @@ fun RegisterDogForm(
     val scrollState = rememberScrollState()
     Scaffold(
         modifier = Modifier.padding(horizontal = 6.dp),
+        containerColor = White,
         topBar = {
             TopAppBar(
                 title = { Text("") },

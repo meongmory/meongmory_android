@@ -49,7 +49,9 @@ fun RegisterByNameScreen(
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
-    RegisterDogForm(navController = navController, navigateTo = { viewModel.setEvent(RegisterFamilyEvent.OnClickBackButton) }) {
+    RegisterDogForm(
+        navController = navController,
+        navigateTo = { viewModel.setEvent(RegisterFamilyEvent.OnClickBackButton) }) {
         Column(modifier = Modifier.fillMaxWidth()) {
             TextComponent(
                 text = stringResource(R.string.register_by_name_title),
@@ -109,12 +111,13 @@ fun RegisterByNameScreen(
 
     LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collect { effect ->
-            when(effect) {
+            when (effect) {
                 RegisterFamilySideEffect.NavigateToRegisterCodeScreen -> {}
                 RegisterFamilySideEffect.NavigateToRegisterNameScreen -> {}
                 RegisterFamilySideEffect.NavigateToPreviousScreen -> {
                     navigateToFamilyScreen()
                 }
+
                 RegisterFamilySideEffect.NavigateToNextScreen -> {
                     navigateToMakeScreen()
                 }

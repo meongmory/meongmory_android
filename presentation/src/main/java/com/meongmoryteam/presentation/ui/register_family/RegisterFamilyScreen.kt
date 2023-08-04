@@ -10,15 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.meongmoryteam.presentation.ui.theme.ButtonContent
-import com.meongmoryteam.presentation.ui.theme.Typography
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
 import com.meongmoryteam.presentation.ui.theme.Brown
+import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.Orange
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
-import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
+import com.meongmoryteam.presentation.ui.theme.Typography
 
 @Composable
 fun RegisterFamilyScreen(
@@ -74,18 +74,21 @@ fun RegisterFamilyScreen(
         }
     }
 
-    LaunchedEffect(key1 = viewModel.effect){
-        viewModel.effect.collect {effect ->
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
             when (effect) {
                 RegisterFamilySideEffect.NavigateToRegisterCodeScreen -> {
                     navigateToRegisterByCode()
                 }
+
                 RegisterFamilySideEffect.NavigateToRegisterNameScreen -> {
                     navigatetoRegisterByName()
                 }
+
                 RegisterFamilySideEffect.NavigateToPreviousScreen -> {
                     navigatetoPreviousScreen()
                 }
+
                 RegisterFamilySideEffect.NavigateToNextScreen -> {}
             }
         }
