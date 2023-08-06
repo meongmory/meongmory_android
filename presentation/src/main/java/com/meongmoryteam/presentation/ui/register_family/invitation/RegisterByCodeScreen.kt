@@ -105,7 +105,7 @@ fun RegisterByCodeScreen(
                         color = ButtonContent
                     ),
                     width = 1f
-                ) { viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton) }
+                ) { if (viewState.isFilledCode) viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton) else {} }
             }
             CheckValidCode(isInvalid = viewState.isFilledCode)
         }
@@ -126,7 +126,7 @@ fun RegisterByCodeScreen(
                     color = ButtonContent,
                     platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거하지 않으면 정렬이 맞지 않음
                 )
-            ) { viewModel.setEvent(RegisterFamilyEvent.OnClickNextButton) }
+            ) { if (viewState.isFilledCode) viewModel.setEvent(RegisterFamilyEvent.OnClickNextButton) else {} }
         }
     }
 

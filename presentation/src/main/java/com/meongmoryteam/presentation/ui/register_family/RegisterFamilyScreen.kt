@@ -25,8 +25,8 @@ fun RegisterFamilyScreen(
     navController: NavController,
     viewModel: RegisterFamilyViewModel = hiltViewModel(),
     navigateToRegisterByCode: () -> Unit,
-    navigatetoRegisterByName: () -> Unit,
-    navigatetoPreviousScreen: () -> Unit
+    navigateToRegisterByName: () -> Unit,
+    navigateToPreviousScreen: () -> Unit
 ) {
     RegisterDogForm(navController = navController) {
         Column {
@@ -82,11 +82,11 @@ fun RegisterFamilyScreen(
                 }
 
                 RegisterFamilySideEffect.NavigateToRegisterNameScreen -> {
-                    navigatetoRegisterByName()
+                    navigateToRegisterByName()
                 }
 
                 RegisterFamilySideEffect.NavigateToPreviousScreen -> {
-                    navigatetoPreviousScreen()
+                    navigateToPreviousScreen()
                 }
 
                 RegisterFamilySideEffect.NavigateToNextScreen -> {}
