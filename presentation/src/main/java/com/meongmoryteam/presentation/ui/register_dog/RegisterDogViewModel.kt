@@ -22,6 +22,7 @@ class RegisterDogViewModel @Inject constructor() :
             is RegisterDogEvent.FillInDay -> reflectUpdateState(day = event.day)
             is RegisterDogEvent.FillInRegistrationNum -> reflectUpdateState(registrationNumber = event.num)
             is RegisterDogEvent.OnPetTypeClicked -> reflectUpdateState(petType = event.petType)
+            is RegisterDogEvent.OnBreedClicked -> reflectUpdateState(breed = event.breed)
             is RegisterDogEvent.OnGenderClicked -> reflectUpdateState(gender = event.gender)
             is RegisterDogEvent.OnClickSearchButton -> sendEffect({ RegisterDogSideEffect.NavigateToSearchBreedScreen })
             is RegisterDogEvent.OnClickBackButton -> sendEffect({ RegisterDogSideEffect.NavigateToPreviousScreen })

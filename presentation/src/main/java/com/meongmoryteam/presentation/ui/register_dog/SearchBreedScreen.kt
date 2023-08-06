@@ -4,25 +4,39 @@ package com.meongmoryteam.presentation.ui.register_dog
 
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,8 +44,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,12 +66,16 @@ import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
 import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
+import com.meongmoryteam.presentation.ui.theme.DarkGrey
+import com.meongmoryteam.presentation.ui.theme.DeepYellow
 import com.meongmoryteam.presentation.ui.theme.InputBoxOutline
 import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.LightYellow
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
+import com.meongmoryteam.presentation.ui.theme.Placeholer
 import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
+import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 
 @Composable
@@ -63,7 +86,8 @@ fun SearchBreedScreen(
     navigateToSelectScreen: () -> Unit
 ) {
     val buttonItemList = listOf("강아지", "고양이")
-    val searchList = listOf(Breed("말티즈", "강아지"), Breed("말티즈", "고양이"), Breed("푸들", "강아지"), Breed("푸들", "고양이"), )
+    val searchList =
+        listOf(Breed("말티즈", "강아지"), Breed("페르시안", "고양이"), Breed("푸들", "강아지"), Breed("벵갈", "고양이"))
     val viewState by viewModel.viewState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
@@ -89,7 +113,11 @@ fun SearchBreedScreen(
             },
             navigateToSearch = { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
         )
-        SearchList(searchList = searchList)
+        SearchList(
+            searchList = searchList,
+            breed = viewState.breed,
+            isSelected = viewState.isSelected,
+            onValueChange = { viewModel.setEvent(RegisterDogEvent.OnBreedClicked(it)) })
         RenderSelectButton(
             isSelected = viewState.isSelected,
             bringIntoViewRequester = bringIntoViewRequester
@@ -148,7 +176,7 @@ fun SearchScreen(
     onValueChange: (String) -> Unit,
     navigateToSearch: () -> Unit
 ) {
-    Box(contentAlignment = Alignment.CenterEnd) {
+    Box(contentAlignment = Alignment.CenterEnd, modifier = modifier.padding(bottom = 20.dp)) {
         TextFieldComponent(
             name = value,
             onValueChange = onValueChange,
@@ -173,13 +201,65 @@ fun SearchScreen(
 
 @Composable
 fun SearchList(
-    searchList: List<Breed>
-){
+    searchList: List<Breed>,
+    breed: String,
+    isSelected: Boolean,
+    onValueChange: (String) -> Unit
+) {
     LazyColumn(
-        modifier = Modifier.background(Black).fillMaxWidth().fillMaxHeight(0.85f)
-    ){
-        items(searchList) { item ->
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.85f)
+    ) {
+        itemsIndexed(searchList) { index, item ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row {
+                    var imageVector =
+                        if (item.category == stringResource(R.string.dog_icon)) R.drawable.dog else R.drawable.cat
+                    Icon(
+                        modifier = Modifier.padding(horizontal = 5.dp),
+                        imageVector = ImageVector.vectorResource(imageVector),
+                        contentDescription = stringResource(
+                            id = R.string.dog_icon
+                        )
+                    )
+                    Text(text = item.breed, style = Typography.labelSmall, color = Black)
+                    Text(
+                        modifier = Modifier.padding(horizontal = 5.dp),
+                        text = "[${item.category}]",
+                        style = Typography.labelSmall,
+                        color = DarkGrey
+                    )
+                }
+                Checkbox(
+                    checked = item.breed == breed,
+                    onCheckedChange = { onValueChange(item.breed) },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = DeepYellow,
+                        uncheckedColor = DarkGrey,
+                    )
+                )
 
+//                Box(
+//                    modifier = Modifier
+//                        .size(21.dp)
+//                        .background(color = Color.Transparent)
+//                ) {
+//                    IconButton(
+//                        onClick = { onValueChange(item.breed)
+//                        }
+//                    ) {
+//                        Icon(
+//                            imageVector = if (item.breed == breed) ImageVector.vectorResource(R.drawable.checkbox_selected) else ImageVector.vectorResource(R.drawable.checkbox),
+//                            contentDescription = stringResource(R.string.unchecked_box)
+//                        )
+//                    }
+//                }
+            }
         }
     }
 }
@@ -209,7 +289,8 @@ fun RenderSelectButton(
             .bringIntoViewRequester(bringIntoViewRequester)
             .padding(bottom = 30.dp),
         onClick = {
-            if(isSelected) navigateTo else {}
+            if (isSelected) navigateTo else {
+            }
         }
     )
 }

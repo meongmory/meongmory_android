@@ -37,6 +37,7 @@ class RegisterDogContract {
         data class FillInDay(val day: String) : RegisterDogEvent()
         data class FillInRegistrationNum(val num: String) : RegisterDogEvent()
         data class OnPetTypeClicked(val petType: String) : RegisterDogEvent()
+        data class OnBreedClicked(val breed: String) : RegisterDogEvent()
         data class OnGenderClicked(val gender: String) : RegisterDogEvent()
         object OnClickSearchButton : RegisterDogEvent()
         object OnClickMakeButton : RegisterDogEvent()

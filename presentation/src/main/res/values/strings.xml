@@ -38,6 +38,10 @@
 
     <string name="search_breed">반려동물 품종 검색</string>
     <string name="select">선택하기</string>
+    <string name="dog_icon">강아지</string>
+    <string name="cat_icon">고양이</string>
+    <string name="checked_box">선택된 체크박스</string>
+    <string name="unchecked_box">선택되진 않은 체크박스</string>
 
 
     <!-- 마이페이지 관련 -->
