@@ -15,12 +15,16 @@ import com.meongmoryteam.presentation.ui.register_family.invitation.RegisterByCo
 import com.meongmoryteam.presentation.ui.register_family.name.RegisterByNameScreen
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.White
+import dagger.hilt.android.AndroidEntryPoint
 
-sealed class RouteScreen(val route: String){
+sealed class RouteScreen(val route: String) {
     object Choose : RouteScreen("Choose")
     object Name : RouteScreen("Name")
     object Code : RouteScreen("Code")
+    object Main : RouteScreen("Main")
 }
+
+@AndroidEntryPoint
 class RegisterFamilyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +42,33 @@ class RegisterFamilyActivity : ComponentActivity() {
 fun RegisterFamilyNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
-){
-    NavHost(navController = navController, startDestination = RouteScreen.Choose.route, modifier = modifier){
-        composable(route = RouteScreen.Choose.route){
-            RegisterFamilyScreen(navController)
+) {
+    NavHost(
+        navController = navController,
+        startDestination = RouteScreen.Choose.route,
+        modifier = modifier
+    ) {
+        composable(route = RouteScreen.Choose.route) {
+            RegisterFamilyScreen(
+                navController = navController,
+                navigatetoRegisterByName = { navController.navigate(RouteScreen.Name.route) },
+                navigateToRegisterByCode = { navController.navigate(RouteScreen.Code.route) },
+                navigatetoPreviousScreen = { navController.popBackStack() }
+            )
         }
-        composable(route = RouteScreen.Name.route){
-            RegisterByNameScreen (navController)
+        composable(route = RouteScreen.Name.route) {
+            RegisterByNameScreen(
+                navController = navController,
+                navigateToMakeScreen = { navController.navigate(RouteScreen.Choose.route) },
+                navigateToFamilyScreen = { navController.navigate(RouteScreen.Choose.route) } //추후 메인으로 변경
+            )
         }
-        composable(route = RouteScreen.Code.route){
-            RegisterByCodeScreen (navController)
+        composable(route = RouteScreen.Code.route) {
+            RegisterByCodeScreen(
+                navController = navController,
+                navigateToRegisterScreen = { navController.navigate(RouteScreen.Choose.route) },
+                navigateToFamilyScreen = { navController.navigate(RouteScreen.Choose.route) } //추후 메인으로 변경
+            )
         }
     }
 }

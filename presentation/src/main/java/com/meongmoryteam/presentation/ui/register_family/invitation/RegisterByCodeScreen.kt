@@ -9,10 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,12 +19,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent.FillInCode
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyViewModel
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
 import com.meongmoryteam.presentation.ui.register_family.TextComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
@@ -39,15 +42,23 @@ import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.LightYellow
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
+import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.Typography
+import com.meongmoryteam.presentation.ui.theme.White
 import com.meongmoryteam.presentation.ui.theme.Yellow
 
 @Composable
-fun RegisterByCodeScreen(navController: NavController) {
-    var name by remember{ mutableStateOf(TextFieldValue("")) }
-    var enabled by remember{ mutableStateOf(false) }
+fun RegisterByCodeScreen(
+    navController: NavController,
+    viewModel: RegisterFamilyViewModel = hiltViewModel(),
+    navigateToRegisterScreen: () -> Unit,
+    navigateToFamilyScreen: () -> Unit
+) {
+    val viewState by viewModel.viewState.collectAsState()
 
-    RegisterDogForm(navController = navController) {
+    RegisterDogForm(
+        navController = navController,
+        navigateTo = { viewModel.setEvent(RegisterFamilyEvent.OnClickBackButton) }) {
         Column(modifier = Modifier.fillMaxWidth()) {
             TextComponent(
                 text = stringResource(R.string.register_by_code_title),
@@ -62,18 +73,18 @@ fun RegisterByCodeScreen(navController: NavController) {
             )
         }
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically){
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 TextFieldComponent(
-                    name = name,
-                    onValueChange = {name = it},
+                    name = viewState.code,
+                    onValueChange = { viewModel.setEvent(FillInCode(it)) },
                     placeholder = stringResource(R.string.code_placeholder),
                     modifier = Modifier.fillMaxWidth(0.7f),
-                    bgColor = if(name.text.isEmpty()){
-                        Color(0xFFF9F9F9)
+                    bgColor = if (!viewState.isFilledCode) {
+                        QuestionEditFill
                     } else {
                         LightYellow
                     },
-                    borderColor = if(name.text.isEmpty()){
+                    borderColor = if (!viewState.isFilledCode) {
                         InputBoxOutline
                     } else {
                         Yellow
@@ -82,11 +93,11 @@ fun RegisterByCodeScreen(navController: NavController) {
                 Spacer(modifier = Modifier.fillMaxWidth(0.1f))
                 TextButtonComponent(
                     text = stringResource(R.string.check),
-                    colors = if (name.text.isEmpty()) {
+                    colors = if (!viewState.isFilledCode) {
                         ButtonDefaults.textButtonColors(LightGrey)
-                    } else{
+                    } else {
                         ButtonDefaults.textButtonColors(Orange)
-                        },
+                    },
                     style = TextStyle(
                         fontFamily = AppleSD,
                         fontWeight = FontWeight.W400,
@@ -95,21 +106,19 @@ fun RegisterByCodeScreen(navController: NavController) {
                         color = ButtonContent
                     ),
                     width = 1f
-                ){}
+                ) { viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton) }
             }
-            CheckValidCode(name = name, enabled = enabled) {
-                enabled = !enabled
-            }
+            CheckValidCode(isInvalid = viewState.isFilledCode)
         }
         Spacer(modifier = Modifier.fillMaxHeight(0.3f))
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
             TextButtonComponent(
                 text = stringResource(R.string.next),
-                colors = if (name.text.isEmpty()) {
+                colors = if (!viewState.isFilledCode) {
                     ButtonDefaults.textButtonColors(LightGrey)
-                } else{
+                } else {
                     ButtonDefaults.textButtonColors(Orange)
-                      },
+                },
                 style = TextStyle(
                     fontFamily = NotoSansKR,
                     fontWeight = FontWeight.W500,
@@ -118,17 +127,43 @@ fun RegisterByCodeScreen(navController: NavController) {
                     color = ButtonContent,
                     platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거하지 않으면 정렬이 맞지 않음
                 )
-            ) {}
+            ) { viewModel.setEvent(RegisterFamilyEvent.OnClickNextButton) }
+        }
+    }
+
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                RegisterFamilySideEffect.NavigateToRegisterCodeScreen -> {}
+                RegisterFamilySideEffect.NavigateToRegisterNameScreen -> {}
+                RegisterFamilySideEffect.NavigateToPreviousScreen -> {
+                    navigateToFamilyScreen()
+                }
+
+                RegisterFamilySideEffect.NavigateToNextScreen -> {
+                    navigateToRegisterScreen()
+                }
+            }
         }
     }
 }
 
 @Composable
-fun CheckValidCode(name: TextFieldValue, enabled: Boolean, onChangeState: (Boolean)->Unit){
+fun CheckValidCode(isInvalid: Boolean) {
     //우선 텍스트가 입력되지 않은 경우 경고 메시지가 뜨도록 설정
-    if (name.text.isEmpty()){
+    if (!isInvalid) {
         Text(
-            modifier = Modifier.padding(vertical = 5.dp) ,
-            text = stringResource(R.string.not_valid_code), color = Error, style = Typography.titleSmall)
+            modifier = Modifier.padding(vertical = 5.dp),
+            text = stringResource(R.string.not_valid_code),
+            color = Error,
+            style = Typography.titleSmall
+        )
+    } else {
+        Text(
+            modifier = Modifier.padding(vertical = 5.dp),
+            text = "",
+            color = White,
+            style = Typography.titleSmall
+        )
     }
 }
