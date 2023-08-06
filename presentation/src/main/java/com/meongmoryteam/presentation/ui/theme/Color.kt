@@ -27,7 +27,6 @@ val GRAY100 = Color(0xFFB9BEC1)
 val MAIN100 = Color(0xFFFC9C13)
 
 
-
 // 마이페이지 색
 val MyPageYellowFill = Color(0xFFFFFBF3)
 val MyPageYellowStroke = Color(0xFFFFD985)

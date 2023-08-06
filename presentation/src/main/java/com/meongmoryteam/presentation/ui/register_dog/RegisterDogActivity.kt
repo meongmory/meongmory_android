@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 sealed class Route(val route: String) {
     object RegisterDog : Route("RegisterDog")
     object SuccessRegister : Route("SuccessRegister")
-    object Previous : Route("Previous")
+    object Main : Route("Main")
     object SearchBreed : Route("SearchBreed")
 }
 
@@ -53,7 +53,7 @@ fun RegisterDogNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.RegisterDog.route,
+        startDestination = Route.SearchBreed.route,
         modifier = modifier
     ) {
         composable(route = Route.RegisterDog.route) {
@@ -61,7 +61,7 @@ fun RegisterDogNavigation(
                 navController = navController,
                 navigateToSearchBreedScreen = { navController.navigate(Route.SearchBreed.route) },
                 navigateToMakeScreen = { navController.navigate(Route.SuccessRegister.route) },
-                navigateToPreviousScreen = { navController.navigate(Route.Previous.route) }
+                navigateToPreviousScreen = { navController.navigate(Route.Main.route) }
             )
         }
         composable(route = Route.SuccessRegister.route) {
@@ -69,8 +69,13 @@ fun RegisterDogNavigation(
         }
         composable(route = Route.SearchBreed.route) {
             //품종 검색 스크린
+            SearchBreedScreen(
+                navController = navController,
+                navigateToPreviousScreen = {navController.navigate(Route.RegisterDog.route)},
+                navigateToSelectScreen = {navController.navigate(Route.RegisterDog.route)}
+            )
         }
-        composable(route = Route.Previous.route) {
+        composable(route = Route.Main.route) {
             //이전 스크린
         }
     }

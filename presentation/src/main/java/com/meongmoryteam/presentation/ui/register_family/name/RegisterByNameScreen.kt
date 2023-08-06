@@ -105,7 +105,7 @@ fun RegisterByNameScreen(
                     color = ButtonContent,
                     platformStyle = PlatformTextStyle(includeFontPadding = false) //폰트 패딩을 제거하지 않으면 정렬이 맞지 않음
                 )
-            ) { viewModel.setEvent(RegisterFamilyEvent.OnClickMakeButton) }
+            ) { if(viewState.isFilledName) viewModel.setEvent(RegisterFamilyEvent.OnClickMakeButton) else {} }
         }
     }
 

@@ -22,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,20 +59,22 @@ fun RegisterDogForm(
     bottomPadding: Dp = 65.dp,
     navController: NavController,
     navigateTo: () -> Unit = { navController.navigate(RouteScreen.Choose.route) },
+    title: String = "",
+    verticalArrangement: Arrangement.Vertical = Arrangement.SpaceBetween,
+    modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val scrollState = rememberScrollState()
     Scaffold(
         modifier = Modifier.padding(horizontal = 6.dp),
         containerColor = White,
         topBar = {
-            TopAppBar(
-                title = { Text("") },
+            CenterAlignedTopAppBar(
+                title = { Text(text = title, style = Typography.titleMedium) },
                 modifier = Modifier.padding(top = 15.dp, bottom = bottomPadding),
                 colors = TopAppBarDefaults.topAppBarColors(White),
                 navigationIcon = {
                     IconButton(
-                        onClick =  navigateTo,
+                        onClick = navigateTo,
                         modifier = Modifier.size(30.dp)
                     )
                     {
@@ -96,10 +99,9 @@ fun RegisterDogForm(
                     .padding(horizontal = 10.dp),
             ) {
                 Column(
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .verticalScroll(state = scrollState),
+                    verticalArrangement = verticalArrangement,
+                    modifier = modifier
+                        .fillMaxHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     content()
