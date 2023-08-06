@@ -42,6 +42,7 @@ import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.LightYellow
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
+import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.White
 import com.meongmoryteam.presentation.ui.theme.Yellow
@@ -79,7 +80,7 @@ fun RegisterByCodeScreen(
                     placeholder = stringResource(R.string.code_placeholder),
                     modifier = Modifier.fillMaxWidth(0.7f),
                     bgColor = if (!viewState.isFilledCode) {
-                        Color(0xFFF9F9F9)
+                        QuestionEditFill
                     } else {
                         LightYellow
                     },
