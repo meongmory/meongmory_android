@@ -33,6 +33,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -68,6 +69,7 @@ import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.DeepYellow
+import com.meongmoryteam.presentation.ui.theme.EditDivider
 import com.meongmoryteam.presentation.ui.theme.InputBoxOutline
 import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.LightYellow
@@ -176,7 +178,7 @@ fun SearchScreen(
     onValueChange: (String) -> Unit,
     navigateToSearch: () -> Unit
 ) {
-    Box(contentAlignment = Alignment.CenterEnd, modifier = modifier.padding(bottom = 20.dp)) {
+    Box(contentAlignment = Alignment.CenterEnd, modifier = modifier.padding(bottom = 30.dp)) {
         TextFieldComponent(
             name = value,
             onValueChange = onValueChange,
@@ -212,6 +214,7 @@ fun SearchList(
             .fillMaxHeight(0.85f)
     ) {
         itemsIndexed(searchList) { index, item ->
+            var tint = if (item.breed == breed) DeepYellow else EditDivider
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -225,7 +228,8 @@ fun SearchList(
                         imageVector = ImageVector.vectorResource(imageVector),
                         contentDescription = stringResource(
                             id = R.string.dog_icon
-                        )
+                        ),
+                        tint = tint
                     )
                     Text(text = item.breed, style = Typography.labelSmall, color = Black)
                     Text(
@@ -235,31 +239,24 @@ fun SearchList(
                         color = DarkGrey
                     )
                 }
-                Checkbox(
-                    checked = item.breed == breed,
-                    onCheckedChange = { onValueChange(item.breed) },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = DeepYellow,
-                        uncheckedColor = DarkGrey,
-                    )
-                )
-
-//                Box(
-//                    modifier = Modifier
-//                        .size(21.dp)
-//                        .background(color = Color.Transparent)
-//                ) {
-//                    IconButton(
-//                        onClick = { onValueChange(item.breed)
-//                        }
-//                    ) {
-//                        Icon(
-//                            imageVector = if (item.breed == breed) ImageVector.vectorResource(R.drawable.checkbox_selected) else ImageVector.vectorResource(R.drawable.checkbox),
-//                            contentDescription = stringResource(R.string.unchecked_box)
-//                        )
-//                    }
-//                }
+                Box(
+                    modifier = Modifier
+                        .size(21.dp)
+                        .background(color = Color.Transparent)
+                ) {
+                    IconButton(
+                        onClick = { onValueChange(item.breed)
+                        }
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.checkbox),
+                            contentDescription = stringResource(R.string.unchecked_box),
+                            tint = tint
+                        )
+                    }
+                }
             }
+            Divider(modifier = Modifier.padding(vertical = 15.dp), thickness = 1.dp, color = InputBoxOutline)
         }
     }
 }
