@@ -41,10 +41,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -97,10 +98,7 @@ fun RegisterDogScreen(
         navigateTo = { viewModel.setEvent(RegisterDogEvent.OnClickBackButton) }) {
         RenderProfile()
         RenderName(value = viewState.name) { viewModel.setEvent(RegisterDogEvent.FillInName(it)) }
-        RenderBreed(
-//            value = viewState.breed,
-            value = searchBreed
-        ) { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
+        RenderBreed(value = searchBreed) { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
         RenderGender(
             label = R.string.gender,
             buttonItem = buttonItemList,
@@ -156,12 +154,12 @@ fun RegisterDogScreen(
 }
 
 @Composable
-fun RenderProfile(painterResource: Int = R.drawable.default_profile) {
+fun RenderProfile() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(painterResource),
+            imageVector = ImageVector.vectorResource(R.drawable.default_profile_img),
             contentDescription = stringResource(R.string.profile_img),
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -173,7 +171,6 @@ fun RenderProfile(painterResource: Int = R.drawable.default_profile) {
             modifier = Modifier.padding(top = 10.dp, bottom = 30.dp)
         )
     }
-
 }
 
 @Composable
@@ -216,7 +213,7 @@ fun RenderBreed(value: String, navigateToSearch: () -> Unit) {
             ) {
                 val text: String
                 val color: Color
-                if (value.isEmpty()) {
+                if (value == null) {
                     text = stringResource(R.string.breed)
                     color = Placeholer
                 } else {
@@ -408,7 +405,7 @@ fun SearchButton(padding: Dp = 0.dp, navigateToSearch: () -> Unit) {
             .padding(top = padding)
     ) {
         Icon(
-            painter = painterResource(R.drawable.search),
+            imageVector = ImageVector.vectorResource(R.drawable.search_btn),
             contentDescription = stringResource(R.string.search),
             modifier = Modifier.size(20.dp)
         )
@@ -520,8 +517,3 @@ fun DateInputForm(
         }
     }
 }
-
-data class ButtonItem(
-    var index: Int,
-    var label: String
-)
