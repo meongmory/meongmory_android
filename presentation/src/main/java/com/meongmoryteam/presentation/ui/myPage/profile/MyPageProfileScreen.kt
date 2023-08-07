@@ -17,6 +17,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,9 +44,7 @@ val PADDING_16 = 16.dp
 val PADDING_24 = 24.dp
 
 @Composable
-fun MyPageProfileScreen(
-    viewModel: MyPageProfileViewModel = hiltViewModel(),
-) {
+fun MyPageProfileScreen() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -195,9 +194,14 @@ fun MyPageEditForm() {
 }
 
 @Composable
-fun ProfileChangeButton() {
+fun ProfileChangeButton(
+    viewModel: MyPageProfileViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.viewState.collectAsState()
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickChangeButton)
+        },
         colors = ButtonDefaults.buttonColors(EditButtonFalse),
         modifier = Modifier
             .padding(16.dp)
