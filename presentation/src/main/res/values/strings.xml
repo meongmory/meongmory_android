@@ -43,6 +43,13 @@
     <string name="checked_box">선택된 체크박스</string>
     <string name="unchecked_box">선택되진 않은 체크박스</string>
 
+    <string name="success_icon">등록 성공</string>
+    <string name="success_registration_title">반려동물 등록 성공!</string>
+    <string name="success_registration_content1">더 많은 반려동물 등록을 원하시나요?</string>
+    <string name="success_registration_content2">반려동물 등록하기\ </string>
+    <string name="success_registration_content3">버튼을 클릭해서</string>
+    <string name="success_registration_content4">다른 반려동물의 추억과 일정을 관리해보세요!</string>
+
 
     <!-- 마이페이지 관련 -->
     <string name="my_page_title">마이페이지</string>
