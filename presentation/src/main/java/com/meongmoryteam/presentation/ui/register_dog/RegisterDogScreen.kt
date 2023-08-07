@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.register_dog
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -67,6 +68,7 @@ import com.meongmoryteam.presentation.ui.theme.LightYellow
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.Placeholer
+import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 import kotlinx.coroutines.CoroutineScope
@@ -79,7 +81,8 @@ fun RegisterDogScreen(
     viewModel: RegisterDogViewModel = hiltViewModel(),
     navigateToSearchBreedScreen: () -> Unit,
     navigateToPreviousScreen: () -> Unit,
-    navigateToMakeScreen: () -> Unit
+    navigateToMakeScreen: () -> Unit,
+    searchBreed: String
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val buttonItemList = listOf("수컷", "암컷")
@@ -95,8 +98,8 @@ fun RegisterDogScreen(
         RenderProfile()
         RenderName(value = viewState.name) { viewModel.setEvent(RegisterDogEvent.FillInName(it)) }
         RenderBreed(
-            value = viewState.breed,
-            onValueChange = { viewModel.setEvent(RegisterDogEvent.FillInBreed(it)) }
+//            value = viewState.breed,
+            value = searchBreed
         ) { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
         RenderGender(
             label = R.string.gender,
@@ -145,6 +148,8 @@ fun RegisterDogScreen(
                 is RegisterDogSideEffect.NavigateToPreviousScreen -> {
                     navigateToPreviousScreen()
                 }
+
+                is RegisterDogSideEffect.NavigateToRegisterScreen -> {}
             }
         }
     }
@@ -182,14 +187,47 @@ fun RenderName(value: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun RenderBreed(value: String, onValueChange: (String) -> Unit, navigateToSearch: () -> Unit) {
+fun RenderBreed(value: String, navigateToSearch: () -> Unit) {
     Box(contentAlignment = Alignment.CenterEnd) {
-        LabelNInputForm(
-            label = R.string.breed,
-            placeholder = R.string.breed,
-            value = value,
-            onValueChange = onValueChange
-        )
+        val bgColor = if (value.isEmpty()) {
+            QuestionEditFill
+        } else {
+            LightYellow
+        }
+        val borderColor = if (value.isEmpty()) {
+            InputBoxOutline
+        } else {
+            Yellow
+        }
+        Column(modifier = Modifier.padding(bottom = 14.dp)) {
+            Text(
+                text = stringResource(R.string.breed),
+                color = Placeholer,
+                style = Typography.titleSmall,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(43.dp)
+                    .background(bgColor)
+                    .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
+                    .padding(horizontal = 15.dp, vertical = 14.dp)
+            ) {
+                val text: String
+                val color: Color
+                if (value.isEmpty()) {
+                    text = stringResource(R.string.breed)
+                    color = Placeholer
+                } else {
+                    text = value
+                    color = Black
+                    Log.d("CHANGE", "change")
+                }
+                Text(text = text, style = Typography.titleSmall, color = color, maxLines = 1)
+            }
+        }
+
         SearchButton(padding = 15.dp, navigateToSearch)
     }
 }
@@ -316,7 +354,9 @@ fun RenderRegisterButton(
             color = ButtonContent,
             platformStyle = PlatformTextStyle(includeFontPadding = false)
         ),
-        modifier = Modifier.bringIntoViewRequester(bringIntoViewRequester).padding(bottom = 30.dp),
+        modifier = Modifier
+            .bringIntoViewRequester(bringIntoViewRequester)
+            .padding(bottom = 30.dp),
         onClick = navigateTo
     )
 }
@@ -343,7 +383,7 @@ fun LabelNInputForm(
             onValueChange = onValueChange,
             placeholder = stringResource(placeholder),
             bgColor = if (value.isEmpty()) {
-                Color(0xFFF9F9F9)
+                QuestionEditFill
             } else {
                 LightYellow
             },
@@ -458,7 +498,7 @@ fun DateInputForm(
                         onValueChange = valueChangeList[itemList.indexOf(it)],
                         placeholder = placeholderList[itemList.indexOf(it)],
                         bgColor = if (textValueList[itemList.indexOf(it)].isEmpty()) {
-                            Color(0xFFF9F9F9)
+                            QuestionEditFill
                         } else {
                             LightYellow
                         },
