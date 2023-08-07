@@ -31,18 +31,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
-import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.EditDivider
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
+import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 
 val PADDING_16 = 16.dp
 val PADDING_24 = 24.dp
 
 @Composable
-fun MypageProfileScreen() {
+fun MyPageProfileScreen(
+    viewModel: MyPageProfileViewModel = hiltViewModel(),
+) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -213,6 +216,6 @@ fun ProfileChangeButton() {
 @Composable
 fun PreviewProfileScreen() {
     MeongmoryTheme {
-        MypageProfileScreen()
+        MyPageProfileScreen()
     }
 }
