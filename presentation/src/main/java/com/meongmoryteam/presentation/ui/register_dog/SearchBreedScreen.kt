@@ -87,9 +87,23 @@ fun SearchBreedScreen(
     navigateToPreviousScreen: () -> Unit,
     navigateToSelectScreen: () -> Unit
 ) {
-    val buttonItemList = listOf("강아지", "고양이")
+    val buttonItemList = listOf(stringResource(R.string.dog_icon), stringResource(R.string.cat_icon))
+    //임시데이터
     val searchList =
-        listOf(Breed("말티즈", "강아지"), Breed("페르시안", "고양이"), Breed("푸들", "강아지"), Breed("벵갈", "고양이"))
+        listOf(
+            Breed("말티즈", "강아지"),
+            Breed("페르시안", "고양이"),
+            Breed("푸들", "강아지"),
+            Breed("벵갈", "고양이"),
+            Breed("포메라니안", "강아지"),
+            Breed("엑조틱", "고양이"),
+            Breed("비숑", "강아지"),
+            Breed("레그돌", "고양이"),
+            Breed("골든리트리버", "강아지"),
+            Breed("브리티쉬 숏헤어", "고양이"),
+            Breed("진돗개", "강아지"),
+            Breed("아메리칸 숏헤어", "고양이")
+        )
     val viewState by viewModel.viewState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
@@ -117,6 +131,7 @@ fun SearchBreedScreen(
         )
         SearchList(
             searchList = searchList,
+            category = viewState.petType,
             breed = viewState.breed,
             isSelected = viewState.isSelected,
             onValueChange = { viewModel.setEvent(RegisterDogEvent.OnBreedClicked(it)) })
@@ -204,16 +219,21 @@ fun SearchScreen(
 @Composable
 fun SearchList(
     searchList: List<Breed>,
+    category: String,
     breed: String,
     isSelected: Boolean,
     onValueChange: (String) -> Unit
 ) {
+    var lazyList = if (category == stringResource(R.string.blank)) searchList else selectLogic(
+        searchList = searchList,
+        category = category
+    )
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.85f)
     ) {
-        itemsIndexed(searchList) { index, item ->
+        items(lazyList) { item ->
             var tint = if (item.breed == breed) DeepYellow else EditDivider
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -245,7 +265,8 @@ fun SearchList(
                         .background(color = Color.Transparent)
                 ) {
                     IconButton(
-                        onClick = { onValueChange(item.breed)
+                        onClick = {
+                            onValueChange(item.breed)
                         }
                     ) {
                         Icon(
@@ -256,7 +277,11 @@ fun SearchList(
                     }
                 }
             }
-            Divider(modifier = Modifier.padding(vertical = 15.dp), thickness = 1.dp, color = InputBoxOutline)
+            Divider(
+                modifier = Modifier.padding(vertical = 15.dp),
+                thickness = 1.dp,
+                color = InputBoxOutline
+            )
         }
     }
 }
@@ -290,6 +315,19 @@ fun RenderSelectButton(
             }
         }
     )
+}
+
+@Composable
+fun selectLogic(
+    searchList: List<Breed>,
+    category: String
+): MutableList<Breed> {
+    var selectedList = mutableListOf<Breed>()
+
+    for (item in searchList) {
+        if (item.category == category) selectedList.add(item)
+    }
+    return selectedList
 }
 
 data class Breed(
