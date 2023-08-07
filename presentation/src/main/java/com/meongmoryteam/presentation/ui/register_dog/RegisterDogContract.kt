@@ -1,6 +1,5 @@
 package com.meongmoryteam.presentation.ui.register_dog
 
-import androidx.compose.runtime.MutableState
 import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.base.ViewEvent
 import com.meongmoryteam.presentation.base.ViewSideEffect
@@ -26,6 +25,7 @@ class RegisterDogContract {
         object NavigateToSearchBreedScreen : RegisterDogSideEffect()
         object NavigateToNextScreen : RegisterDogSideEffect()
         object NavigateToPreviousScreen : RegisterDogSideEffect()
+        data class NavigateToRegisterScreen(val breed: String) : RegisterDogSideEffect()
     }
 
     sealed class RegisterDogEvent : ViewEvent {
@@ -42,5 +42,6 @@ class RegisterDogContract {
         object OnClickSearchButton : RegisterDogEvent()
         object OnClickMakeButton : RegisterDogEvent()
         object OnClickBackButton : RegisterDogEvent()
+        data class OnClickSelectButton(val breed: String) : RegisterDogEvent()
     }
 }

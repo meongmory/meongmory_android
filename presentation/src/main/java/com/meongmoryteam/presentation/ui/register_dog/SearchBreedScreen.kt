@@ -2,42 +2,27 @@
 
 package com.meongmoryteam.presentation.ui.register_dog
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -45,16 +30,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -75,19 +61,21 @@ import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.LightYellow
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
-import com.meongmoryteam.presentation.ui.theme.Placeholer
 import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun SearchBreedScreen(
     navController: NavController,
     viewModel: RegisterDogViewModel = hiltViewModel(),
     navigateToPreviousScreen: () -> Unit,
-    navigateToSelectScreen: () -> Unit
+//    navigateToRegisterScreen: () -> Unit
 ) {
-    val buttonItemList = listOf(stringResource(R.string.dog_icon), stringResource(R.string.cat_icon))
+    val buttonItemList =
+        listOf(stringResource(R.string.dog_icon), stringResource(R.string.cat_icon))
     //임시데이터
     val searchList =
         listOf(
@@ -122,6 +110,9 @@ fun SearchBreedScreen(
         ) { viewModel.setEvent(RegisterDogEvent.OnPetTypeClicked(it)) }
         SearchScreen(
             value = viewState.breed,
+            coroutineScope = coroutineScope,
+            bringIntoViewRequester = bringIntoViewRequester,
+            focusManager = focusManager,
             onValueChange = {
                 viewModel.setEvent(
                     RegisterDogEvent.FillInBreed(it)
@@ -133,14 +124,13 @@ fun SearchBreedScreen(
             searchList = searchList,
             category = viewState.petType,
             breed = viewState.breed,
-            isSelected = viewState.isSelected,
             onValueChange = { viewModel.setEvent(RegisterDogEvent.OnBreedClicked(it)) })
         RenderSelectButton(
             isSelected = viewState.isSelected,
-            bringIntoViewRequester = bringIntoViewRequester
-        ) {
-            viewModel.setEvent(RegisterDogEvent.OnClickMakeButton)
-        }
+            breed = viewState.breed,
+            bringIntoViewRequester = bringIntoViewRequester,
+            navigateTo = { viewModel.setEvent(RegisterDogEvent.OnClickSelectButton(it)) }
+        )
     }
 
     LaunchedEffect(key1 = viewModel.effect) {
@@ -151,15 +141,16 @@ fun SearchBreedScreen(
                 }
 
                 is RegisterDogSideEffect.NavigateToSearchBreedScreen -> {}
-                is RegisterDogSideEffect.NavigateToNextScreen -> {
-                    navigateToSelectScreen()
+                is RegisterDogSideEffect.NavigateToRegisterScreen -> {
+                    navController.navigate(Route.RegisterDog.route.plus("/${effect.breed}"))
                 }
+
+                is RegisterDogSideEffect.NavigateToNextScreen -> {}
             }
         }
     }
 }
 
-//
 @Composable
 fun CategoryScreen(
     buttonItem: List<String>,
@@ -188,8 +179,9 @@ fun CategoryScreen(
 fun SearchScreen(
     value: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    coroutineScope: CoroutineScope,
+    bringIntoViewRequester: BringIntoViewRequester,
+    focusManager: FocusManager,
     onValueChange: (String) -> Unit,
     navigateToSearch: () -> Unit
 ) {
@@ -208,9 +200,17 @@ fun SearchScreen(
             } else {
                 Yellow
             },
-            modifier = modifier,
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions
+            modifier = modifier.onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onDone = { focusManager.clearFocus() }
+            )
         )
         SearchButton { navigateToSearch }
     }
@@ -221,10 +221,9 @@ fun SearchList(
     searchList: List<Breed>,
     category: String,
     breed: String,
-    isSelected: Boolean,
     onValueChange: (String) -> Unit
 ) {
-    var lazyList = if (category == stringResource(R.string.blank)) searchList else selectLogic(
+    val lazyList = if (category == stringResource(R.string.blank)) searchList else selectLogic(
         searchList = searchList,
         category = category
     )
@@ -234,14 +233,14 @@ fun SearchList(
             .fillMaxHeight(0.85f)
     ) {
         items(lazyList) { item ->
-            var tint = if (item.breed == breed) DeepYellow else EditDivider
+            val tint = if (item.breed == breed) DeepYellow else EditDivider
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row {
-                    var imageVector =
+                    val imageVector =
                         if (item.category == stringResource(R.string.dog_icon)) R.drawable.dog else R.drawable.cat
                     Icon(
                         modifier = Modifier.padding(horizontal = 5.dp),
@@ -289,8 +288,9 @@ fun SearchList(
 @Composable
 fun RenderSelectButton(
     isSelected: Boolean,
+    breed: String,
     bringIntoViewRequester: BringIntoViewRequester,
-    navigateTo: () -> Unit
+    navigateTo: (String) -> Unit
 ) {
     TextButtonComponent(
         text = stringResource(R.string.select),
@@ -310,10 +310,7 @@ fun RenderSelectButton(
         modifier = Modifier
             .bringIntoViewRequester(bringIntoViewRequester)
             .padding(bottom = 30.dp),
-        onClick = {
-            if (isSelected) navigateTo else {
-            }
-        }
+        onClick = { navigateTo(breed) }
     )
 }
 
@@ -322,7 +319,7 @@ fun selectLogic(
     searchList: List<Breed>,
     category: String
 ): MutableList<Breed> {
-    var selectedList = mutableListOf<Breed>()
+    val selectedList = mutableListOf<Breed>()
 
     for (item in searchList) {
         if (item.category == category) selectedList.add(item)

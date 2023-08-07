@@ -12,9 +12,11 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.White
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,12 +58,16 @@ fun RegisterDogNavigation(
         startDestination = Route.SearchBreed.route,
         modifier = modifier
     ) {
-        composable(route = Route.RegisterDog.route) {
+        composable(
+            route = Route.RegisterDog.route.plus("/{breed}"),
+            arguments = listOf(navArgument("breed") { type = NavType.StringType })
+        ) {
             RegisterDogScreen(
                 navController = navController,
                 navigateToSearchBreedScreen = { navController.navigate(Route.SearchBreed.route) },
                 navigateToMakeScreen = { navController.navigate(Route.SuccessRegister.route) },
-                navigateToPreviousScreen = { navController.navigate(Route.Main.route) }
+                navigateToPreviousScreen = { navController.navigate(Route.Main.route) },
+                searchBreed = "${it.arguments?.getString("breed")}"
             )
         }
         composable(route = Route.SuccessRegister.route) {
@@ -71,8 +77,8 @@ fun RegisterDogNavigation(
             //품종 검색 스크린
             SearchBreedScreen(
                 navController = navController,
-                navigateToPreviousScreen = {navController.navigate(Route.RegisterDog.route)},
-                navigateToSelectScreen = {navController.navigate(Route.RegisterDog.route)}
+                navigateToPreviousScreen = { navController.navigate(Route.RegisterDog.route) },
+//                navigateToRegisterScreen = {navController.navigate(Route.RegisterDog.route)}
             )
         }
         composable(route = Route.Main.route) {

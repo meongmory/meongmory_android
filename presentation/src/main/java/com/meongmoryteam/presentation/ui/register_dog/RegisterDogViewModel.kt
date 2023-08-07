@@ -27,6 +27,11 @@ class RegisterDogViewModel @Inject constructor() :
             is RegisterDogEvent.OnClickSearchButton -> sendEffect({ RegisterDogSideEffect.NavigateToSearchBreedScreen })
             is RegisterDogEvent.OnClickBackButton -> sendEffect({ RegisterDogSideEffect.NavigateToPreviousScreen })
             is RegisterDogEvent.OnClickMakeButton -> sendEffect({ RegisterDogSideEffect.NavigateToNextScreen })
+            is RegisterDogEvent.OnClickSelectButton -> sendEffect({
+                RegisterDogSideEffect.NavigateToRegisterScreen(
+                    breed = event.breed
+                )
+            })
         }
     }
 
@@ -83,7 +88,7 @@ class RegisterDogViewModel @Inject constructor() :
     private fun isConfirmed(
         petType: String,
         breed: String
-    ): Boolean{
+    ): Boolean {
         return (petType.isNotEmpty() && breed.isNotEmpty())
     }
 }
