@@ -33,6 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.EditDivider
@@ -44,7 +46,8 @@ val PADDING_16 = 16.dp
 val PADDING_24 = 24.dp
 
 @Composable
-fun MyPageProfileScreen() {
+fun MyPageProfileScreen(
+) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
