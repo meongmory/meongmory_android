@@ -19,6 +19,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,12 +34,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageToolBar
 import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
-import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
+import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.QuestionButtonText
 import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.QuestionSubTitle
@@ -59,7 +61,9 @@ fun MyPageQuestionScreen() {
         MyPageToolBar(stringResource(R.string.question_title))
         Spacer(modifier = Modifier.padding(PADDING_8))
         EmailEdit()
-        Column(modifier = Modifier.fillMaxHeight(0.5f)) {
+        Column(
+            modifier = Modifier.fillMaxHeight(0.5f)
+        ) {
             DetailEdit()
         }
         Box(
@@ -225,9 +229,14 @@ fun DetailForm() {
 }
 
 @Composable
-fun QuestionButton() {
+fun QuestionButton(
+    viewModel: MyPageQuestionViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.viewState.collectAsState()
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.OnClickButton)
+        },
         colors = ButtonDefaults.buttonColors(EditButtonFalse),
         modifier = Modifier
             .padding(16.dp)
