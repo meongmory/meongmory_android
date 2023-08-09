@@ -23,6 +23,11 @@ import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.White
 import dagger.hilt.android.AndroidEntryPoint
 
+object NavArgs {
+    const val BREED_ROUTE_PLUS = "/{breed}"
+    const val BREED_ARG = "breed"
+}
+
 sealed class Route(val route: String) {
     object RegisterDog : Route("RegisterDog")
     object SuccessRegister : Route("SuccessRegister")
@@ -57,12 +62,12 @@ fun RegisterDogNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.RegisterDog.route.plus("/{breed}"),
+        startDestination = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS),
         modifier = modifier
     ) {
         composable(
-            route = Route.RegisterDog.route.plus("/{breed}"),
-            arguments = listOf(navArgument("breed") { type = NavType.StringType })
+            route = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS),
+            arguments = listOf(navArgument(NavArgs.BREED_ARG) { type = NavType.StringType })
         ) {
             RegisterDogScreen(
                 navController = navController,
@@ -70,22 +75,31 @@ fun RegisterDogNavigation(
                 navigateToMakeScreen = { navController.navigate(Route.SuccessRegister.route) },
                 navigateToPreviousScreen = { navController.navigate(Route.Main.route) },
                 searchBreed =
-                if (it.arguments?.getString("breed") == null || it.arguments?.getString("breed") == "{breed}") stringResource(R.string.blank)
-                else "${it.arguments?.getString("breed")}"
+                if (it.arguments?.getString(NavArgs.BREED_ARG) == null || it.arguments?.getString(
+                        NavArgs.BREED_ARG
+                    ) == NavArgs.BREED_ROUTE_PLUS
+                ) stringResource(R.string.blank)
+                else "${it.arguments?.getString(NavArgs.BREED_ARG)}"
             )
         }
         composable(route = Route.SuccessRegister.route) {
             //등록 성공 스크린
             SuccessRegisterScreen(
                 navController = navController,
-                navigateToMainScreen = {navController.navigate(Route.Main.route)}
+                navigateToMainScreen = { navController.navigate(Route.Main.route) }
             )
         }
         composable(route = Route.SearchBreed.route) {
             //품종 검색 스크린
             SearchBreedScreen(
                 navController = navController,
-                navigateToPreviousScreen = { navController.navigate(Route.RegisterDog.route.plus("/{breed}")) },
+                navigateToPreviousScreen = {
+                    navController.navigate(
+                        Route.RegisterDog.route.plus(
+                            NavArgs.BREED_ROUTE_PLUS
+                        )
+                    )
+                },
             )
         }
         composable(route = Route.Main.route) {
