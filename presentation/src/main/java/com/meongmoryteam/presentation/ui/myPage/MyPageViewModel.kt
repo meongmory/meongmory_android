@@ -17,7 +17,7 @@ class MyPageViewModel @Inject constructor(
     override fun handleEvents(event: MyPageEvent) {
         when (event) {
             is MyPageEvent.OnClickProfileEditButtonClicked -> {
-                sendEffect({ MyPageSideEffect.EditNickName })
+                sendEffect({ MyPageSideEffect.NavigateToEditProfile })
             }
             is MyPageEvent.OnClickQuestionButtonClicked -> {
                 sendEffect({ MyPageSideEffect.NavigateToQuestion })
