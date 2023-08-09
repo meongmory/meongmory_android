@@ -114,13 +114,15 @@ fun TextComponent(
     text: String,
     style: TextStyle,
     modifier: Modifier = Modifier,
-    color: Color
+    color: Color,
+    maxLine: Int = 1
 ) {
     Text(
         text = text,
         style = style,
         modifier = modifier,
-        color = color
+        color = color,
+        maxLines = maxLine
     )
 }
 
