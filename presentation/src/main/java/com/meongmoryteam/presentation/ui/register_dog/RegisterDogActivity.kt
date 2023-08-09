@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 object NavArgs {
     const val BREED_ROUTE_PLUS = "/{breed}"
     const val BREED_ARG = "breed"
+    const val BREED_EXCEPTION_ARG = "{breed}"
 }
 
 sealed class Route(val route: String) {
@@ -77,7 +78,7 @@ fun RegisterDogNavigation(
                 searchBreed =
                 if (it.arguments?.getString(NavArgs.BREED_ARG) == null || it.arguments?.getString(
                         NavArgs.BREED_ARG
-                    ) == NavArgs.BREED_ROUTE_PLUS
+                    ) == NavArgs.BREED_EXCEPTION_ARG
                 ) stringResource(R.string.blank)
                 else "${it.arguments?.getString(NavArgs.BREED_ARG)}"
             )

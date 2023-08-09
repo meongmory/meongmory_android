@@ -60,6 +60,7 @@ import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.Regist
 import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.RegisterDogSideEffect
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
+import com.meongmoryteam.presentation.ui.register_family.TextComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
 import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
@@ -197,10 +198,10 @@ fun RenderBreed(value: String, navigateToSearch: () -> Unit) {
             Yellow
         }
         Column(modifier = Modifier.padding(bottom = 14.dp)) {
-            Text(
+            TextComponent(
                 text = stringResource(R.string.breed),
-                color = Placeholer,
                 style = Typography.titleSmall,
+                color = Placeholer,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
             Box(
@@ -211,17 +212,18 @@ fun RenderBreed(value: String, navigateToSearch: () -> Unit) {
                     .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
                     .padding(horizontal = 15.dp, vertical = 14.dp)
             ) {
-                val text: String
-                val color: Color
-                if (value == null) {
-                    text = stringResource(R.string.breed)
-                    color = Placeholer
-                } else {
-                    text = value
-                    color = Black
-                    Log.d("CHANGE", "change")
-                }
-                Text(text = text, style = Typography.titleSmall, color = color, maxLines = 1)
+                TextComponent(
+                    text = stringResource(R.string.breed),
+                    style = Typography.titleSmall,
+                    color = Placeholer,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+                Text(
+                    text = value.ifEmpty { stringResource(R.string.breed) },
+                    style = Typography.titleSmall,
+                    color = if (value.isEmpty()) Placeholer else Black,
+                    maxLines = 1
+                )
             }
         }
 
