@@ -13,7 +13,7 @@ class MyPageContract {
     ) : ViewState
 
     sealed class MyPageSideEffect: ViewSideEffect {
-        object EditNickName: MyPageSideEffect()
+        object NavigateToEditProfile: MyPageSideEffect()
         object NavigateToQuestion: MyPageSideEffect()
     }
 

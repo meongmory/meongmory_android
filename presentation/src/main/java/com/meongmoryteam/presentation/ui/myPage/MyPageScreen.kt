@@ -20,7 +20,9 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,8 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.base.LogoutAlertDialog
 import com.meongmoryteam.presentation.base.SecessionAlertDialog
@@ -46,14 +47,32 @@ import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.MyPageProfileEditButton
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowFill
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowStroke
+import kotlinx.coroutines.flow.collect
 
 val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
 
 @Composable
 fun MyPageScreen(
-    navController: NavHostController = rememberNavController()
+    viewModel: MyPageViewModel = hiltViewModel(),
+    navigateToEditNickNameScreen: () -> Unit,
+    navigateToQuestionScreen: () -> Unit,
 ) {
+    val viewState by viewModel.viewState.collectAsState()
+
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is MyPageContract.MyPageSideEffect.NavigateToEditProfile -> {
+                    navigateToEditNickNameScreen()
+                }
+                is MyPageContract.MyPageSideEffect.NavigateToQuestion -> {
+                    navigateToQuestionScreen()
+                }
+            }
+        }
+    }
+
     Column {
         MyPageTitle()
         MyPageProfile()
@@ -311,7 +330,10 @@ fun ListButton(
 @Composable
 fun PreviewMyPageScreen() {
     MeongmoryTheme {
-        MyPageScreen()
+        MyPageScreen(
+            navigateToEditNickNameScreen = { },
+            navigateToQuestionScreen = { },
+        )
     }
 }
 
