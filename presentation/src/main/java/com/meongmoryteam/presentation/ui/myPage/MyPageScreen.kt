@@ -38,8 +38,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.base.LogoutAlertDialog
 import com.meongmoryteam.presentation.base.SecessionAlertDialog
+import com.meongmoryteam.presentation.ui.main.MainViewModel
 import com.meongmoryteam.presentation.ui.theme.ListDivider
 import com.meongmoryteam.presentation.ui.theme.ListNextButton
 import com.meongmoryteam.presentation.ui.theme.ListTitle
@@ -47,7 +49,6 @@ import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.MyPageProfileEditButton
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowFill
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowStroke
-import kotlinx.coroutines.flow.collect
 
 val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
@@ -66,16 +67,38 @@ fun MyPageScreen(
                 is MyPageContract.MyPageSideEffect.NavigateToEditProfile -> {
                     navigateToEditNickNameScreen()
                 }
+
                 is MyPageContract.MyPageSideEffect.NavigateToQuestion -> {
                     navigateToQuestionScreen()
                 }
             }
         }
     }
+    when (viewState.loadState) {
+        LoadState.SUCCESS -> {
+            MyPageProfileButton(
+                OnClickEditNickname = {
+                    navigateToEditNickNameScreen
+                },
+            )
+        }
+        LoadState.LOADING -> {
+
+        }
+        LoadState.ERROR -> {
+
+        }
+    }
+
+
+
 
     Column {
         MyPageTitle()
-        MyPageProfile()
+        MyPageProfile(
+            userName = "",
+            OnClickEditNickname = { navigateToEditNickNameScreen() }
+        )
         MyPageList()
     }
 }
@@ -98,7 +121,10 @@ fun MyPageTitle() {
 
 
 @Composable
-fun MyPageProfile() {
+fun MyPageProfile(
+    userName: String,
+    OnClickEditNickname: () -> Unit,
+) {
 // 상단 프로필 메뉴
     Column {
         Row(
@@ -128,10 +154,18 @@ fun MyPageProfile() {
                         fontSize = 14.sp
                     )
 
-                    Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End) {
-                        MyPageProfileButton(stringResource(R.string.my_page_profile_alarm))
-                        MyPageProfileButton(stringResource(R.string.my_page_profile_edit))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        MyPageProfileButton(
+                            stringResource(R.string.my_page_profile_alarm),
+                            OnClickEditNickname = { }
+                        )
+                        MyPageProfileButton(
+                            stringResource(R.string.my_page_profile_edit),
+                            OnClickEditNickname = { }
+                        )
                     }
 
 
@@ -163,7 +197,7 @@ fun MyPageList() {
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        Column{
+        Column {
             Text(
                 text = stringResource(R.string.my_page_list_account),
                 fontWeight = FontWeight.Bold,
@@ -174,8 +208,16 @@ fun MyPageList() {
             )
 
             ListButton(R.drawable.ic_coin, stringResource(R.string.my_page_pro_ver))
-            ListButton(R.drawable.ic_logout, stringResource(R.string.my_page_logout), stringResource(R.string.my_page_logout))
-            ListButton(R.drawable.ic_user, stringResource(R.string.my_page_drop), stringResource(R.string.my_page_drop))
+            ListButton(
+                R.drawable.ic_logout,
+                stringResource(R.string.my_page_logout),
+                stringResource(R.string.my_page_logout)
+            )
+            ListButton(
+                R.drawable.ic_user,
+                stringResource(R.string.my_page_drop),
+                stringResource(R.string.my_page_drop)
+            )
 
             Spacer(modifier = Modifier.padding(top = PADDING_16))
 
@@ -231,12 +273,20 @@ fun MyPageList() {
 
 @Composable
 fun MyPageProfileButton(
-    buttonText: String? = null
+    buttonText: String? = null,
+    onClickAction: String? = null,
+    OnClickEditNickname: () -> Unit,
 ) {
+    val refreshButton = remember {
+        mutableStateOf(false)
+    }
     Column(modifier = Modifier) {
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                // 프로필 편집 버튼이 클릭되었을 때
+                OnClickEditNickname
+            },
             modifier = Modifier
                 .padding(end = PADDING_8)
                 .wrapContentSize(),
@@ -250,6 +300,15 @@ fun MyPageProfileButton(
                     fontSize = 9.sp
                 )
             }
+        }
+    }
+    // 버튼마다 다른 다이어로그
+    if (refreshButton.value) {
+        if (onClickAction == stringResource(R.string.my_page_profile_edit)) {
+            LogoutAlertDialog(openDialogCustom = refreshButton)
+        }
+        if (onClickAction == stringResource(R.string.my_page_question)) {
+            SecessionAlertDialog(openDialogCustom = refreshButton)
         }
     }
 }
@@ -294,9 +353,10 @@ fun ListButton(
             )
         }
 
-        Box(modifier = Modifier
-            .padding()
-            .fillMaxWidth(),
+        Box(
+            modifier = Modifier
+                .padding()
+                .fillMaxWidth(),
             contentAlignment = Alignment.CenterEnd
         ) {
             Button(

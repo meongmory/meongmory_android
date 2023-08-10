@@ -6,12 +6,11 @@ import javax.inject.Inject
 import com.meongmoryteam.presentation.ui.main.MainContract.*
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel<MainViewState, MainSideEffect, MainEvent>(
-    MainViewState()
-) {
+class MainViewModel @Inject constructor(
+) : BaseViewModel<MainViewState, MainSideEffect, MainEvent>(MainViewState) {
     override fun handleEvents(event: MainEvent) {
         when (event) {
-            is MainEvent.OnBottomNavigationClicked -> {
+            is MainEvent.FinishedCreateActivity-> {
             }
         }
     }
