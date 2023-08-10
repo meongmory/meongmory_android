@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileViewModel
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageToolBar
 import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.EditStroke
@@ -52,14 +54,26 @@ val PADDING_24 = 24.dp
 
 
 @Composable
-fun MyPageQuestionScreen() {
+fun MyPageQuestionScreen(
+    viewModel: MyPageProfileViewModel = hiltViewModel(),
+    navigateToPrevious: () -> Unit,
+) {
+    val refreshButton = remember {
+        mutableStateOf(false)
+    }
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
     ) {
-        MyPageToolBar(stringResource(R.string.question_title))
+        MyPageToolBar(
+            stringResource(R.string.question_title),
+            onBackClick = {
+                navigateToPrevious
+                refreshButton.value = true
+            }
+        )
         Spacer(modifier = Modifier.padding(PADDING_8))
         EmailEdit()
         Column(
@@ -73,7 +87,12 @@ fun MyPageQuestionScreen() {
         ) {
             QuestionButton()
         }
-
+    }
+    // refreshButton 상태가 변경되었을 때 이전 페이지로 이동
+    LaunchedEffect(refreshButton.value) {
+        if (refreshButton.value) {
+            navigateToPrevious()
+        }
     }
 }
 
@@ -257,6 +276,8 @@ fun QuestionButton(
 @Composable
 fun PreviewQuestionScreen() {
     MeongmoryTheme {
-        MyPageQuestionScreen()
+        MyPageQuestionScreen(
+            navigateToPrevious = { }
+        )
     }
 }

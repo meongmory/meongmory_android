@@ -68,10 +68,14 @@ fun MainScreen(
                 )
             }
             composable(route = MeongMoryRoute.EDIT_NICKNAME.route) {
-                MyPageProfileScreen()
+                MyPageProfileScreen(
+                    navigateToPrevious = { navController.navigate(MeongMoryRoute.MY_PAGE.route) }
+                )
             }
             composable(route = MeongMoryRoute.QUESTION.route) {
-                MyPageQuestionScreen()
+                MyPageQuestionScreen(
+                    navigateToPrevious = { navController.navigate(MeongMoryRoute.MY_PAGE.route)}
+                )
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.meongmoryteam.presentation.ui.myPage.profile
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -42,6 +45,7 @@ import com.meongmoryteam.presentation.ui.theme.EditDivider
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
+import kotlinx.coroutines.flow.collect
 
 val PADDING_16 = 16.dp
 val PADDING_24 = 24.dp
@@ -49,9 +53,13 @@ val PADDING_24 = 24.dp
 @Composable
 fun MyPageProfileScreen(
     viewModel: MyPageProfileViewModel = hiltViewModel(),
+    navigateToPrevious: () -> Unit,
 ) {
     val uiState by viewModel.viewState.collectAsState()
-
+    // refreshButton 상태
+    val refreshButton = remember {
+        mutableStateOf(false)
+    }
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -66,7 +74,13 @@ fun MyPageProfileScreen(
                 modifier = Modifier.fillMaxHeight(),
                 Arrangement.spacedBy(150.dp)
             ) {
-                MyPageToolBar(stringResource(R.string.profile_change_title))
+                MyPageToolBar(
+                    stringResource(R.string.profile_change_title),
+                    onBackClick = {
+                        navigateToPrevious
+                        refreshButton.value = true
+                                  },
+                )
                 ProfileChangeEdit()
             }
             Column(
@@ -77,13 +91,24 @@ fun MyPageProfileScreen(
             }
         }
     }
+
+    // refreshButton 상태가 변경되었을 때 이전 페이지로 이동
+    LaunchedEffect(refreshButton.value) {
+        if (refreshButton.value) {
+            navigateToPrevious()
+        }
+    }
 }
 
 
 @Composable
 fun MyPageToolBar(
-    title: String
+    title: String,
+    onBackClick: () -> Unit,
 ) {
+    val refreshButton = remember {
+        mutableStateOf(false)
+    }
     Column() {
         // 위 아래 여백
         Row(
@@ -101,10 +126,16 @@ fun MyPageToolBar(
                         .height(24.dp)
                         .fillMaxWidth()
                 ) {
+
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_left_btn),
                         contentDescription = stringResource(R.string.profile_back_btn_description),
-                        modifier = Modifier.padding(start = PADDING_16),
+                        modifier = Modifier
+                            .padding(start = PADDING_16)
+                            .clickable {
+                                onBackClick()
+                                refreshButton.value = true
+                            }
                     )
                 }
                 Text(
@@ -118,7 +149,14 @@ fun MyPageToolBar(
         )
     }
 
+    // refreshButton 상태가 변경되었을 때 이전 페이지로 이동
+    LaunchedEffect(refreshButton.value) {
+        if (refreshButton.value) {
+            onBackClick()
+        }
+    }
 }
+
 
 
 @Composable
@@ -227,6 +265,9 @@ fun ProfileChangeButton(
 @Composable
 fun PreviewProfileScreen() {
     MeongmoryTheme {
-        MyPageProfileScreen()
+        MyPageProfileScreen(
+            viewModel = MyPageProfileViewModel(),
+            navigateToPrevious = { }
+        )
     }
 }
