@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
@@ -241,13 +242,13 @@ fun QuestionButton(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .height(45.dp),
+            .wrapContentHeight(),
         shape = RoundedCornerShape(10.dp)
     ) {
         Text(
             text = stringResource(R.string.question_button),
             color = QuestionButtonText,
-            fontSize = 15.sp
+            fontSize = 15.sp,
         )
     }
 }

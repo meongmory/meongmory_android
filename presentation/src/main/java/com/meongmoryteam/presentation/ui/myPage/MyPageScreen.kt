@@ -372,6 +372,7 @@ fun ListButton(
         Button(
             onClick = {
                 onClick()
+                openDialogCustom.value = true
                 if (onClickAction != null) {
                     refreshButton.value = true
                 }
@@ -404,7 +405,12 @@ fun ListButton(
             contentAlignment = Alignment.CenterEnd
         ) {
             Button(
-                onClick = { openDialogCustom.value = true },
+                onClick = {
+                    onClick()
+                    openDialogCustom.value = true
+                    if (onClickAction != null) {
+                        refreshButton.value = true
+                    }},
                 colors = ButtonDefaults.buttonColors(Color.Transparent, ListNextButton)
             ) {
                 Icon(
