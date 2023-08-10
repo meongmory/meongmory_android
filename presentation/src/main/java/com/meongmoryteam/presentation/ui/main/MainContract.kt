@@ -5,19 +5,13 @@ import com.meongmoryteam.presentation.base.ViewSideEffect
 import com.meongmoryteam.presentation.base.ViewState
 
 class MainContract {
-    data class MainViewState(
-         val loginState: LoginState = LoginState.NONE
-    ) : ViewState
+    object MainViewState : ViewState
 
     sealed class MainSideEffect : ViewSideEffect {
-        object Navigate
+        object RefreshScreen : MainSideEffect()
     }
 
     sealed class MainEvent : ViewEvent {
-        object OnBottomNavigationClicked : MainEvent()
-    }
-
-    enum class LoginState {
-        NONE, LOGIN
+        object FinishedCreateActivity : MainEvent()
     }
 }
