@@ -36,11 +36,8 @@ class MyPageProfileViewModel @Inject constructor(
     }
 
     private fun changeNickName(nickName: String) = viewModelScope.launch {
-        updateState {
-            copy(
-                loadState = LoadState.LOADING
-            )
-        }
+        updateState { copy( loadState = LoadState.SUCCESS) }
+        sendEffect({ MyPageProfileSideEffect.NavigateToPrevious })
     }
 
     // 텍스트 길이 초과
