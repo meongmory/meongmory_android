@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageProfileViewModel @Inject constructor(
-    private val saveStateHandle: SavedStateHandle,
 ) : BaseViewModel<MyPageProfileViewState, MyPageProfileSideEffect, MyPageProfileEvent>(
     MyPageProfileViewState()
 ) {

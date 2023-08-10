@@ -23,12 +23,12 @@ import com.meongmoryteam.presentation.ui.home.HomeScreen
 import com.meongmoryteam.presentation.ui.map.MapScreen
 import com.meongmoryteam.presentation.ui.myPage.MyPageScreen
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileScreen
+import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionScreen
 
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController(),
-    intentToCreateHome: () -> Unit,
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -70,6 +70,9 @@ fun MainScreen(
             composable(route = MeongMoryRoute.EDIT_NICKNAME.route) {
                 MyPageProfileScreen()
             }
+            composable(route = MeongMoryRoute.QUESTION.route) {
+                MyPageQuestionScreen()
+            }
         }
     }
 
@@ -85,7 +88,5 @@ fun MainScreen(
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen(
-        intentToCreateHome = { }
-    )
+    MainScreen()
 }

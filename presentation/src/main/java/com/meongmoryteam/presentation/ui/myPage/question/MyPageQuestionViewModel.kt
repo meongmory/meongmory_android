@@ -1,17 +1,17 @@
 package com.meongmoryteam.presentation.ui.myPage.question
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
+import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionConstract.MyPageQuestionEvent
+import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionConstract.MyPageQuestionSideEffect
+import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionConstract.MyPageQuestionViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionConstract.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class MyPageQuestionViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MyPageQuestionViewState, MyPageQuestionSideEffect, MyPageQuestionEvent>(
     MyPageQuestionViewState()
 ) {
