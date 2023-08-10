@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
@@ -212,12 +213,12 @@ fun ProfileChangeButton(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .height(45.dp),
-        shape = RoundedCornerShape(10.dp)
+            .wrapContentHeight(),
+        shape = RoundedCornerShape(10.dp),
     ) {
         Text(
             text = stringResource(R.string.profile_change_button),
-            fontSize = 15.sp
+            fontSize = 15.sp,
         )
     }
 }
