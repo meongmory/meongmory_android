@@ -18,7 +18,8 @@ class MyPageContract {
     }
 
     sealed class MyPageEvent: ViewEvent {
+        object InitMyPageScreen : MyPageEvent()
         object OnClickProfileEditButtonClicked: MyPageEvent()
-        object OnClickQuestionButtonClicked: MyPageEvent()
+        object OnQuestionClicked: MyPageEvent()
     }
 }

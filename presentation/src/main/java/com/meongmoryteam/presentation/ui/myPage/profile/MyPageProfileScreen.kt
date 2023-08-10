@@ -47,7 +47,10 @@ val PADDING_24 = 24.dp
 
 @Composable
 fun MyPageProfileScreen(
+    viewModel: MyPageProfileViewModel = hiltViewModel(),
 ) {
+    val uiState by viewModel.viewState.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxHeight()

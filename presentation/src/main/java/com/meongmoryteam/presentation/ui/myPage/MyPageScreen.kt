@@ -41,6 +41,7 @@ import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.base.LogoutAlertDialog
 import com.meongmoryteam.presentation.base.SecessionAlertDialog
+import com.meongmoryteam.presentation.ui.main.MainContract
 import com.meongmoryteam.presentation.ui.main.MainViewModel
 import com.meongmoryteam.presentation.ui.theme.ListDivider
 import com.meongmoryteam.presentation.ui.theme.ListNextButton
@@ -49,19 +50,25 @@ import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.MyPageProfileEditButton
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowFill
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowStroke
+import com.meongmoryteam.presentation.util.composableActivityViewModel
 
 val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
 
 @Composable
 fun MyPageScreen(
+    mainViewModel: MainViewModel = composableActivityViewModel(),
     viewModel: MyPageViewModel = hiltViewModel(),
     navigateToEditNickNameScreen: () -> Unit,
     navigateToQuestionScreen: () -> Unit,
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
-    LaunchedEffect(key1 = viewModel.effect) {
+    LaunchedEffect(true) {
+        viewModel.setEvent(MyPageContract.MyPageEvent.InitMyPageScreen)
+    }
+
+    LaunchedEffect(viewModel.effect) {
         viewModel.effect.collect { effect ->
             when (effect) {
                 is MyPageContract.MyPageSideEffect.NavigateToEditProfile -> {
@@ -74,32 +81,36 @@ fun MyPageScreen(
             }
         }
     }
-    when (viewState.loadState) {
-        LoadState.SUCCESS -> {
-            MyPageProfileButton(
-                OnClickEditNickname = {
-                    navigateToEditNickNameScreen
-                },
-            )
-        }
-        LoadState.LOADING -> {
 
-        }
-        LoadState.ERROR -> {
-
+    LaunchedEffect(mainViewModel.effect) {
+        mainViewModel.effect.collect { effect ->
+            when (effect) {
+                is MainContract.MainSideEffect.RefreshScreen -> {
+                    viewModel.setEvent(MyPageContract.MyPageEvent.InitMyPageScreen)
+                }
+            }
         }
     }
 
+    when (viewState.loadState) {
+        LoadState.SUCCESS -> {
+            Column {
+                MyPageTitle()
+                MyPageProfile(
+                    OnClickEditNickname = {
+                        viewModel.setEvent(MyPageContract.MyPageEvent.OnClickProfileEditButtonClicked)
+                    }
+                )
+                MyPageList(
+                    onQuestionClicked = {
+                        viewModel.setEvent(MyPageContract.MyPageEvent.OnQuestionClicked)
+                    }
+                )
+            }
+        }
 
-
-
-    Column {
-        MyPageTitle()
-        MyPageProfile(
-            userName = "",
-            OnClickEditNickname = { navigateToEditNickNameScreen() }
-        )
-        MyPageList()
+        LoadState.LOADING -> {}
+        LoadState.ERROR -> {}
     }
 }
 
@@ -122,7 +133,6 @@ fun MyPageTitle() {
 
 @Composable
 fun MyPageProfile(
-    userName: String,
     OnClickEditNickname: () -> Unit,
 ) {
 // 상단 프로필 메뉴
@@ -160,11 +170,11 @@ fun MyPageProfile(
                     ) {
                         MyPageProfileButton(
                             stringResource(R.string.my_page_profile_alarm),
-                            OnClickEditNickname = { }
+                            onClick = { }
                         )
                         MyPageProfileButton(
                             stringResource(R.string.my_page_profile_edit),
-                            OnClickEditNickname = { }
+                            onClick = OnClickEditNickname
                         )
                     }
 
@@ -185,7 +195,9 @@ fun MyPageProfile(
 
 
 @Composable
-fun MyPageList() {
+fun MyPageList(
+    onQuestionClicked: () -> Unit,
+) {
 
     // 마이페이지 목록 부분
     Row(
@@ -207,16 +219,22 @@ fun MyPageList() {
                 fontSize = 11.sp
             )
 
-            ListButton(R.drawable.ic_coin, stringResource(R.string.my_page_pro_ver))
+            ListButton(
+                R.drawable.ic_coin,
+                stringResource(R.string.my_page_pro_ver),
+                onClick = { },
+            )
             ListButton(
                 R.drawable.ic_logout,
                 stringResource(R.string.my_page_logout),
-                stringResource(R.string.my_page_logout)
+                stringResource(R.string.my_page_logout),
+                onClick = { },
             )
             ListButton(
                 R.drawable.ic_user,
                 stringResource(R.string.my_page_drop),
-                stringResource(R.string.my_page_drop)
+                stringResource(R.string.my_page_drop),
+                onClick = { },
             )
 
             Spacer(modifier = Modifier.padding(top = PADDING_16))
@@ -239,8 +257,16 @@ fun MyPageList() {
                 fontSize = 11.sp
             )
 
-            ListButton(R.drawable.ic_mail, stringResource(R.string.my_page_notice))
-            ListButton(R.drawable.ic_send, stringResource(R.string.my_page_question))
+            ListButton(
+                R.drawable.ic_mail,
+                stringResource(R.string.my_page_notice),
+                onClick = { },
+            )
+            ListButton(
+                R.drawable.ic_send,
+                stringResource(R.string.my_page_question),
+                onClick = onQuestionClicked,
+            )
 
 
             Spacer(modifier = Modifier.padding(top = PADDING_16))
@@ -261,8 +287,16 @@ fun MyPageList() {
                 color = ListTitle,
                 fontSize = 11.sp
             )
-            ListButton(R.drawable.ic_info, stringResource(R.string.my_page_clause))
-            ListButton(R.drawable.ic_unlock, stringResource(R.string.my_page_personal))
+            ListButton(
+                R.drawable.ic_info,
+                stringResource(R.string.my_page_clause),
+                onClick = { },
+            )
+            ListButton(
+                R.drawable.ic_unlock,
+                stringResource(R.string.my_page_personal),
+                onClick = { },
+            )
 
         }
 
@@ -275,7 +309,7 @@ fun MyPageList() {
 fun MyPageProfileButton(
     buttonText: String? = null,
     onClickAction: String? = null,
-    OnClickEditNickname: () -> Unit,
+    onClick: () -> Unit
 ) {
     val refreshButton = remember {
         mutableStateOf(false)
@@ -284,8 +318,10 @@ fun MyPageProfileButton(
 
         Button(
             onClick = {
-                // 프로필 편집 버튼이 클릭되었을 때
-                OnClickEditNickname
+                onClick()
+                if (onClickAction != null) {
+                    refreshButton.value = true
+                }
             },
             modifier = Modifier
                 .padding(end = PADDING_8)
@@ -318,20 +354,28 @@ fun MyPageProfileButton(
 fun ListButton(
     buttonIcon: Int? = null,
     buttonText: String,
-    onClickAction: String? = null
+    onClickAction: String? = null,
+    onClick: () -> Unit,
 ) {
 
     val openDialogCustom = remember {
         mutableStateOf(false)
     }
-
+    val refreshButton = remember {
+        mutableStateOf(false)
+    }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         Button(
-            onClick = { openDialogCustom.value = true },
+            onClick = {
+                onClick()
+                if (onClickAction != null) {
+                    refreshButton.value = true
+                }
+            },
             colors = ButtonDefaults.buttonColors(
                 contentColor = Color.Unspecified,
                 containerColor = Color.Transparent
