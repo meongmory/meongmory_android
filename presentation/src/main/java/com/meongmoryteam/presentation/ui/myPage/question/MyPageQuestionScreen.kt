@@ -43,8 +43,11 @@ import com.meongmoryteam.presentation.ui.myPage.profile.MyPageToolBar
 import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
+import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
+import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.QuestionButtonText
+import com.meongmoryteam.presentation.ui.theme.QuestionChangeButtonFill
 import com.meongmoryteam.presentation.ui.theme.QuestionChangeFill
 import com.meongmoryteam.presentation.ui.theme.QuestionChangeStroke
 import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
@@ -52,14 +55,14 @@ import com.meongmoryteam.presentation.ui.theme.QuestionSubTitle
 
 val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
-val PADDING_24 = 24.dp
 
 
 @Composable
 fun MyPageQuestionScreen(
-    viewModel: MyPageProfileViewModel = hiltViewModel(),
+    viewModel: MyPageQuestionViewModel = hiltViewModel(),
     navigateToPrevious: () -> Unit,
 ) {
+    val uiState by viewModel.viewState.collectAsState()
     val refreshButton = remember {
         mutableStateOf(false)
     }
@@ -87,7 +90,9 @@ fun MyPageQuestionScreen(
             modifier = Modifier.fillMaxHeight(),
             contentAlignment = Alignment.BottomCenter
         ) {
-            QuestionButton()
+            QuestionButton(
+                isAllFilled = uiState.isAllFilled
+            )
         }
     }
     // refreshButton 상태가 변경되었을 때 이전 페이지로 이동
@@ -99,14 +104,21 @@ fun MyPageQuestionScreen(
 }
 
 @Composable
-fun EmailEdit() {
+fun EmailEdit(
+    viewModel: MyPageQuestionViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.viewState.collectAsState()
     Column {
         QuestionLabel(stringResource(R.string.question_email_form_title))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            EmailForm()
+            EmailForm(
+                value = uiState.email
+            ) {
+                viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.FillEmail(it))
+            }
             Text(text = stringResource(R.string.question_at))
             EmailSelect()
         }
@@ -133,35 +145,32 @@ fun QuestionLabel(
 
 
 @Composable
-fun EmailForm() {
-    var email by remember { mutableStateOf("") }
-    var isTextEmpty by remember { mutableStateOf(true) } // Text가 비어있는지 여부를 추적
-
+fun EmailForm(
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .padding(all = PADDING_16)
             .height(48.dp)
             .fillMaxWidth(0.5f)
             .border(
-                color = if (isTextEmpty) EditStroke
+                color = if (value.isEmpty()) EditStroke
                 else QuestionChangeStroke,
                 width = 1.dp,
                 shape = RoundedCornerShape(10.dp),
             )
             .background(
-                color = if (isTextEmpty) QuestionEditFill
+                color = if (value.isEmpty()) QuestionEditFill
                 else QuestionChangeFill,
-                shape = RoundedCornerShape(10.dp)),
+                shape = RoundedCornerShape(10.dp)
+            ),
         contentAlignment = Alignment.CenterStart // 정렬
     ) {
 
         BasicTextField(
-            value = email,
-            onValueChange = { newText ->
-                // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
-                email = newText.replace(Regex("[\n]"), "")
-                isTextEmpty = newText.isBlank()
-            },
+            value = value,
+            onValueChange = onValueChange,
             textStyle = TextStyle(
                 fontSize = 14.sp,
                 textAlign = TextAlign.Start
@@ -169,7 +178,7 @@ fun EmailForm() {
             modifier = Modifier.padding(start = PADDING_16, end = PADDING_16)
         )
 
-        if (email.isEmpty()) {
+        if (value.isEmpty()) {
             Text(
                 text = stringResource(R.string.question_email_form_hint),
                 color = EditText,
@@ -212,40 +221,44 @@ fun EmailSelect() {
 
 
 @Composable
-fun DetailEdit() {
+fun DetailEdit(
+    viewModel: MyPageQuestionViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.viewState.collectAsState()
     QuestionLabel(stringResource(R.string.question_content_title))
-    DetailForm()
+    DetailForm(
+        value = uiState.question
+    ) {
+        viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.FillQuestion(it))
+    }
 }
 
 @Composable
-fun DetailForm() {
-    var detail by remember { mutableStateOf("") }
-    var isTextEmpty by remember { mutableStateOf(true) } // Text가 비어있는지 여부를 추적
-
+fun DetailForm(
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .padding(PADDING_16)
             .fillMaxSize()
             .border(
-                color = if (isTextEmpty) EditStroke
+                color = if (value.isEmpty()) EditStroke
                 else QuestionChangeStroke,
                 width = 1.dp,
                 shape = RoundedCornerShape(10.dp),
             )
             .background(
-                color = if (isTextEmpty) QuestionEditFill
+                color = if (value.isEmpty()) QuestionEditFill
                 else QuestionChangeFill,
-                shape = RoundedCornerShape(10.dp)),
+                shape = RoundedCornerShape(10.dp)
+            ),
         contentAlignment = Alignment.TopStart // 정렬
     ) {
 
         BasicTextField(
-            value = detail,
-            onValueChange = { newText ->
-                // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
-                detail = newText
-                isTextEmpty = newText.isBlank()
-            },
+            value = value,
+            onValueChange = onValueChange,
             textStyle = TextStyle(
                 fontSize = 14.sp,
                 textAlign = TextAlign.Start
@@ -253,7 +266,7 @@ fun DetailForm() {
             modifier = Modifier
                 .padding(PADDING_16)
         )
-        if (detail.isEmpty()) {
+        if (value.isEmpty()) {
             Text(
                 text = stringResource(R.string.question_content_detail),
                 color = EditText,
@@ -267,6 +280,7 @@ fun DetailForm() {
 
 @Composable
 fun QuestionButton(
+    isAllFilled: Boolean,
     viewModel: MyPageQuestionViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.viewState.collectAsState()
@@ -274,7 +288,11 @@ fun QuestionButton(
         onClick = {
             viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.OnClickButton)
         },
-        colors = ButtonDefaults.buttonColors(EditButtonFalse),
+        colors = if (!isAllFilled) {
+            ButtonDefaults.textButtonColors(LightGrey)
+        } else {
+            ButtonDefaults.textButtonColors(QuestionChangeButtonFill)
+        },
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()

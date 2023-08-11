@@ -35,20 +35,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.EditChangeFill
 import com.meongmoryteam.presentation.ui.theme.EditChangeStroke
 import com.meongmoryteam.presentation.ui.theme.EditDivider
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
+import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
+import com.meongmoryteam.presentation.ui.theme.Orange
 import kotlinx.coroutines.flow.collect
 
 val PADDING_16 = 16.dp
@@ -83,7 +88,7 @@ fun MyPageProfileScreen(
                     onBackClick = {
                         navigateToPrevious
                         refreshButton.value = true
-                                  },
+                    }
                 )
                 ProfileChangeEdit()
             }
@@ -91,7 +96,9 @@ fun MyPageProfileScreen(
                 Modifier.fillMaxHeight(),
                 Arrangement.Bottom
             ) {
-                ProfileChangeButton()
+                ProfileChangeButton(
+                    isFilled = uiState.isFilled
+                )
             }
         }
     }
@@ -195,10 +202,17 @@ fun ProfileChangeExplain() {
 
 @Composable
 fun ProfileChangeEdit(
+    viewModel: MyPageProfileViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.viewState.collectAsState()
     Column {
         ProfileChangeLabel()
-        MyPageEditForm()
+        MyPageEditForm(
+            value = uiState.nickName,
+            isOverflow = uiState.isError
+        ) {
+            viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.FillNickName(it))
+        }
         ProfileChangeExplain()
     }
 }
@@ -206,22 +220,23 @@ fun ProfileChangeEdit(
 
 @Composable
 fun MyPageEditForm(
+    value: String,
+    isOverflow: Boolean,
+    onValueChange: (String) -> Unit,
 ) {
-    var text by remember { mutableStateOf("") }
-    var isTextEmpty by remember { mutableStateOf(true) } // Text가 비어있는지 여부를 추적
-
     Box(
         modifier = Modifier
             .padding(PADDING_16)
             .fillMaxWidth()
             .height(48.dp)
             .background(
-                if (isTextEmpty) Color.White
+                if (value.isEmpty()) Color.White
                 else EditChangeFill
             )
             .border(
                 color =
-                if (isTextEmpty) EditStroke
+                if (value.isEmpty()) EditStroke
+                else if (isOverflow) Color.Red
                 else EditChangeStroke,
                 width = 1.dp,
                 shape = RoundedCornerShape(10.dp)
@@ -229,12 +244,8 @@ fun MyPageEditForm(
         contentAlignment = Alignment.CenterStart // 정렬
     ) {
         BasicTextField(
-            value = text,
-            onValueChange = { newText ->
-                // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
-                text = newText.replace(Regex("[\n]"), "")
-                isTextEmpty = newText.isBlank() // Text가 비어있는지 여부 업데이트
-            },
+            value = value,
+            onValueChange = onValueChange,
             textStyle = TextStyle(
                 fontSize = 14.sp,
                 textAlign = TextAlign.Start
@@ -242,7 +253,7 @@ fun MyPageEditForm(
             modifier = Modifier.padding(start = PADDING_16, end = PADDING_16)
         )
 
-        if (text.isEmpty()) {
+        if (value.isEmpty()) {
             Text(
                 text = stringResource(R.string.profile_now_nickname),
                 color = EditText,
@@ -254,19 +265,18 @@ fun MyPageEditForm(
 
 @Composable
 fun ProfileChangeButton(
+    isFilled: Boolean,
     viewModel: MyPageProfileViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.viewState.collectAsState()
-
-    val buttonColors = ButtonDefaults.buttonColors(
-        contentColor = Color.White
-    )
-
     Button(
         onClick = {
             viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickChangeButton)
         },
-        colors = ButtonDefaults.buttonColors(EditButtonFalse),
+        colors = if (!isFilled) {
+            ButtonDefaults.textButtonColors(LightGrey)
+        } else {
+            ButtonDefaults.textButtonColors(Orange)
+        },
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
@@ -276,6 +286,7 @@ fun ProfileChangeButton(
         Text(
             text = stringResource(R.string.profile_change_button),
             fontSize = 15.sp,
+            color = ButtonContent
         )
     }
 }

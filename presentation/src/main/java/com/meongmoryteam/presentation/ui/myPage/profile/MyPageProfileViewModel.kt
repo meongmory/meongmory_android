@@ -1,6 +1,5 @@
 package com.meongmoryteam.presentation.ui.myPage.profile
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
@@ -18,7 +17,7 @@ class MyPageProfileViewModel @Inject constructor(
 ) {
     override fun handleEvents(event: MyPageProfileEvent) {
         when (event) {
-            MyPageProfileEvent.ClearNickName -> reflectUpdatedState("")
+            is MyPageProfileEvent.ClearNickName -> reflectUpdatedState("")
             is MyPageProfileEvent.FillNickName -> reflectUpdatedState(event.nickName)
             MyPageProfileEvent.OnClickChangeButton -> changeNickName(viewState.value.nickName)
         }
@@ -30,19 +29,26 @@ class MyPageProfileViewModel @Inject constructor(
         updateState {
             copy(
                 nickName = nickName,
-                isError = isOverflowed(nickName)
+                isError = isOverflowed(nickName),
+                isFilled = isFilled(nickName)
             )
         }
     }
 
     private fun changeNickName(nickName: String) = viewModelScope.launch {
         updateState { copy( loadState = LoadState.SUCCESS) }
-        sendEffect({ MyPageProfileSideEffect.NavigateToPrevious })
+        sendEffect({ MyPageProfileSideEffect.NavigateToPreviousScreen })
     }
 
     // 텍스트 길이 초과
     private fun isOverflowed(nickName: String): Boolean {
         return nickName.isBlank() || (nickName.length > MAX_LENGTH_NICKNAME)
+    }
+
+    private fun isFilled(
+        nickName: String
+    ) : Boolean {
+        return (nickName.isNotEmpty())
     }
 }
 

@@ -17,18 +17,26 @@ class MyPageQuestionViewModel @Inject constructor(
 ) {
     override fun handleEvents(event: MyPageQuestionEvent) {
         when (event) {
-            MyPageQuestionEvent.ClearEmail -> reflectUpdatedState("")
-            is MyPageQuestionEvent.FillEmail -> reflectUpdatedState(event.email)
+            MyPageQuestionEvent.ClearEmail -> reflectUpdatedState(email = "")
+            MyPageQuestionEvent.ClearQuestion -> reflectUpdatedState(question = "")
+            is MyPageQuestionEvent.FillEmail -> reflectUpdatedState(email = event.email)
+            is MyPageQuestionEvent.FillQuestion -> reflectUpdatedState(question = event.question)
             MyPageQuestionEvent.OnClickButton -> setEmail(viewState.value.email)
         }
     }
 
     private fun reflectUpdatedState(
-        email: String = viewState.value.email
+        email: String = viewState.value.email,
+        question: String = viewState.value.question
     ) {
         updateState {
             copy(
                 email = email,
+                question = question,
+                isAllFilled = isFilled(
+                    email,
+                    question
+                )
             )
         }
     }
@@ -39,5 +47,12 @@ class MyPageQuestionViewModel @Inject constructor(
                 loadState = LoadState.LOADING
             )
         }
+    }
+
+    private fun isFilled(
+        email: String,
+        question: String,
+    ): Boolean {
+        return (email.isNotEmpty() && question.isNotEmpty())
     }
 }
