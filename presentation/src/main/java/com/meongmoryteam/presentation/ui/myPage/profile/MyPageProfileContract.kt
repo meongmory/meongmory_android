@@ -11,11 +11,12 @@ class MyPageProfileContract {
         val loadState: LoadState = LoadState.SUCCESS,
         val nickName: String = "",
         val nickNameHint: String = "",
+        val isFilled: Boolean = false,
         val isError: Boolean = true
     ) : ViewState
 
     sealed class MyPageProfileSideEffect: ViewSideEffect {
-        object NavigateToPrevious : MyPageProfileSideEffect()
+        object NavigateToPreviousScreen : MyPageProfileSideEffect()
     }
 
     sealed class MyPageProfileEvent: ViewEvent {
