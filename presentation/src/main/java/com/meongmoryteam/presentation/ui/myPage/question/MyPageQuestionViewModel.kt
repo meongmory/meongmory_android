@@ -21,7 +21,7 @@ class MyPageQuestionViewModel @Inject constructor(
             MyPageQuestionEvent.ClearQuestion -> reflectUpdatedState(question = "")
             is MyPageQuestionEvent.FillEmail -> reflectUpdatedState(email = event.email)
             is MyPageQuestionEvent.FillQuestion -> reflectUpdatedState(question = event.question)
-            MyPageQuestionEvent.OnClickButton -> setEmail(viewState.value.email)
+            MyPageQuestionEvent.OnClickButton -> setEmail()
         }
     }
 
@@ -41,7 +41,7 @@ class MyPageQuestionViewModel @Inject constructor(
         }
     }
 
-    private fun setEmail(email: String) = viewModelScope.launch {
+    private fun setEmail() = viewModelScope.launch {
         updateState {
             copy(
                 loadState = LoadState.LOADING

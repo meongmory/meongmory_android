@@ -15,15 +15,16 @@ class MyPageProfileContract {
         val isError: Boolean = true
     ) : ViewState
 
-    sealed class MyPageProfileSideEffect: ViewSideEffect {
+    sealed class MyPageProfileSideEffect : ViewSideEffect {
         object NavigateToPreviousScreen : MyPageProfileSideEffect()
     }
 
-    sealed class MyPageProfileEvent: ViewEvent {
+    sealed class MyPageProfileEvent : ViewEvent {
         data class FillNickName(
             val nickName: String
         ) : MyPageProfileEvent()
-        object ClearNickName: MyPageProfileEvent()
-        object OnClickChangeButton: MyPageProfileEvent()
+
+        object ClearNickName : MyPageProfileEvent()
+        object OnClickChangeButton : MyPageProfileEvent()
     }
 }

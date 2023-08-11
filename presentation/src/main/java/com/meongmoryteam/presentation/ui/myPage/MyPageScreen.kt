@@ -126,7 +126,6 @@ fun MyPageTitle() {
             text = stringResource(R.string.my_page_title),
             fontSize = 15.sp
         )
-
     }
 }
 
@@ -177,8 +176,6 @@ fun MyPageProfile(
                             onClick = OnClickEditNickname
                         )
                     }
-
-
                 }
                 Text(
                     modifier = Modifier.padding(bottom = 8.dp),
@@ -186,10 +183,7 @@ fun MyPageProfile(
                     fontSize = 10.sp
                 )
             }
-
         }
-
-
     }
 }
 
@@ -198,7 +192,6 @@ fun MyPageProfile(
 fun MyPageList(
     onQuestionClicked: () -> Unit,
 ) {
-
     // 마이페이지 목록 부분
     Row(
         modifier = Modifier
@@ -218,7 +211,6 @@ fun MyPageList(
                 color = ListTitle,
                 fontSize = 11.sp
             )
-
             ListButton(
                 R.drawable.ic_coin,
                 stringResource(R.string.my_page_pro_ver),
@@ -248,7 +240,6 @@ fun MyPageList(
                     .padding(start = 24.dp, end = 24.dp)
             )
 
-
             Text(
                 text = stringResource(R.string.my_page_support),
                 fontWeight = FontWeight.Bold,
@@ -267,7 +258,6 @@ fun MyPageList(
                 stringResource(R.string.my_page_question),
                 onClick = onQuestionClicked,
             )
-
 
             Spacer(modifier = Modifier.padding(top = PADDING_16))
 
@@ -297,12 +287,8 @@ fun MyPageList(
                 stringResource(R.string.my_page_personal),
                 onClick = { },
             )
-
         }
-
-
     }
-
 }
 
 @Composable
@@ -315,7 +301,6 @@ fun MyPageProfileButton(
         mutableStateOf(false)
     }
     Column(modifier = Modifier) {
-
         Button(
             onClick = {
                 onClick()
@@ -329,7 +314,6 @@ fun MyPageProfileButton(
             contentPadding = PaddingValues(4.dp),
             colors = ButtonDefaults.buttonColors(MyPageProfileEditButton, Color.Black)
         ) {
-
             if (buttonText != null) {
                 Text(
                     text = buttonText,
@@ -357,14 +341,12 @@ fun ListButton(
     onClickAction: String? = null,
     onClick: () -> Unit,
 ) {
-
     val openDialogCustom = remember {
         mutableStateOf(false)
     }
     val refreshButton = remember {
         mutableStateOf(false)
     }
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -397,7 +379,6 @@ fun ListButton(
                 fontSize = 12.sp
             )
         }
-
         Box(
             modifier = Modifier
                 .padding()
@@ -410,7 +391,8 @@ fun ListButton(
                     openDialogCustom.value = true
                     if (onClickAction != null) {
                         refreshButton.value = true
-                    }},
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(Color.Transparent, ListNextButton)
             ) {
                 Icon(
@@ -420,19 +402,15 @@ fun ListButton(
             }
         }
     }
-
     // 버튼마다 다른 다이어로그
     if (openDialogCustom.value) {
         if (onClickAction == stringResource(R.string.my_page_logout)) {
             LogoutAlertDialog(openDialogCustom = openDialogCustom)
         }
-
         if (onClickAction == stringResource(R.string.my_page_drop)) {
             SecessionAlertDialog(openDialogCustom = openDialogCustom)
         }
-
     }
-
 }
 
 

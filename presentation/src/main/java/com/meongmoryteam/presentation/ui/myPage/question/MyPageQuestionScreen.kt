@@ -25,7 +25,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -38,14 +37,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
-import com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileViewModel
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageToolBar
-import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
 import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
-import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.QuestionButtonText
 import com.meongmoryteam.presentation.ui.theme.QuestionChangeButtonFill
 import com.meongmoryteam.presentation.ui.theme.QuestionChangeFill
@@ -75,7 +71,6 @@ fun MyPageQuestionScreen(
         MyPageToolBar(
             stringResource(R.string.question_title),
             onBackClick = {
-                navigateToPrevious
                 refreshButton.value = true
             }
         )
@@ -283,7 +278,6 @@ fun QuestionButton(
     isAllFilled: Boolean,
     viewModel: MyPageQuestionViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.viewState.collectAsState()
     Button(
         onClick = {
             viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.OnClickButton)

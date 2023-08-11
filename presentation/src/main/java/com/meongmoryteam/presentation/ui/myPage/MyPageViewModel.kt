@@ -19,9 +19,11 @@ class MyPageViewModel @Inject constructor(
             is MyPageEvent.InitMyPageScreen -> {
                 updateState { copy(loadState = LoadState.SUCCESS) }
             }
+
             is MyPageEvent.OnClickProfileEditButtonClicked -> {
                 sendEffect({ MyPageSideEffect.NavigateToEditProfile })
             }
+
             is MyPageEvent.OnQuestionClicked -> {
                 sendEffect({ MyPageSideEffect.NavigateToQuestion })
             }

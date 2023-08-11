@@ -25,27 +25,20 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
-import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
 import com.meongmoryteam.presentation.ui.theme.EditChangeFill
 import com.meongmoryteam.presentation.ui.theme.EditChangeStroke
 import com.meongmoryteam.presentation.ui.theme.EditDivider
@@ -54,7 +47,6 @@ import com.meongmoryteam.presentation.ui.theme.EditText
 import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.Orange
-import kotlinx.coroutines.flow.collect
 
 val PADDING_16 = 16.dp
 val PADDING_24 = 24.dp
@@ -86,7 +78,6 @@ fun MyPageProfileScreen(
                 MyPageToolBar(
                     stringResource(R.string.profile_change_title),
                     onBackClick = {
-                        navigateToPrevious
                         refreshButton.value = true
                     }
                 )
@@ -97,7 +88,8 @@ fun MyPageProfileScreen(
                 Arrangement.Bottom
             ) {
                 ProfileChangeButton(
-                    isFilled = uiState.isFilled
+                    isFilled = uiState.isFilled,
+                    isOverflow = uiState.isError
                 )
             }
         }
@@ -120,7 +112,7 @@ fun MyPageToolBar(
     val refreshButton = remember {
         mutableStateOf(false)
     }
-    Column() {
+    Column {
         // 위 아래 여백
         Row(
             modifier = Modifier
@@ -167,7 +159,6 @@ fun MyPageToolBar(
         }
     }
 }
-
 
 
 @Composable
@@ -266,13 +257,14 @@ fun MyPageEditForm(
 @Composable
 fun ProfileChangeButton(
     isFilled: Boolean,
+    isOverflow: Boolean,
     viewModel: MyPageProfileViewModel = hiltViewModel()
 ) {
     Button(
         onClick = {
             viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickChangeButton)
         },
-        colors = if (!isFilled) {
+        colors = if (!isFilled || isOverflow) {
             ButtonDefaults.textButtonColors(LightGrey)
         } else {
             ButtonDefaults.textButtonColors(Orange)

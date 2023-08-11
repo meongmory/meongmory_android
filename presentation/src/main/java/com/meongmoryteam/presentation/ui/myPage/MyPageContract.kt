@@ -12,14 +12,14 @@ class MyPageContract {
         val isDialogVisible: Boolean = false
     ) : ViewState
 
-    sealed class MyPageSideEffect: ViewSideEffect {
-        object NavigateToEditProfile: MyPageSideEffect()
-        object NavigateToQuestion: MyPageSideEffect()
+    sealed class MyPageSideEffect : ViewSideEffect {
+        object NavigateToEditProfile : MyPageSideEffect()
+        object NavigateToQuestion : MyPageSideEffect()
     }
 
-    sealed class MyPageEvent: ViewEvent {
+    sealed class MyPageEvent : ViewEvent {
         object InitMyPageScreen : MyPageEvent()
-        object OnClickProfileEditButtonClicked: MyPageEvent()
-        object OnQuestionClicked: MyPageEvent()
+        object OnClickProfileEditButtonClicked : MyPageEvent()
+        object OnQuestionClicked : MyPageEvent()
     }
 }
