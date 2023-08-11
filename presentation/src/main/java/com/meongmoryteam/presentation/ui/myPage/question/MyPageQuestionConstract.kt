@@ -14,19 +14,21 @@ class MyPageQuestionConstract {
         val isAllFilled: Boolean = false,
     ) : ViewState
 
-    sealed class MyPageQuestionSideEffect: ViewSideEffect {
+    sealed class MyPageQuestionSideEffect : ViewSideEffect {
         object NavigateToPreviousScreen : MyPageQuestionSideEffect()
     }
 
-    sealed class MyPageQuestionEvent: ViewEvent {
+    sealed class MyPageQuestionEvent : ViewEvent {
         data class FillEmail(
             val email: String
-        ): MyPageQuestionEvent()
+        ) : MyPageQuestionEvent()
+
         data class FillQuestion(
             val question: String
-        ): MyPageQuestionEvent()
-        object ClearEmail: MyPageQuestionEvent()
-        object ClearQuestion: MyPageQuestionEvent()
-        object OnClickButton: MyPageQuestionEvent()
+        ) : MyPageQuestionEvent()
+
+        object ClearEmail : MyPageQuestionEvent()
+        object ClearQuestion : MyPageQuestionEvent()
+        object OnClickButton : MyPageQuestionEvent()
     }
 }

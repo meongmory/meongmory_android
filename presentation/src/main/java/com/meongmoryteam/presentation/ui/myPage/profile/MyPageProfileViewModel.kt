@@ -19,7 +19,7 @@ class MyPageProfileViewModel @Inject constructor(
         when (event) {
             is MyPageProfileEvent.ClearNickName -> reflectUpdatedState("")
             is MyPageProfileEvent.FillNickName -> reflectUpdatedState(event.nickName)
-            MyPageProfileEvent.OnClickChangeButton -> changeNickName(viewState.value.nickName)
+            MyPageProfileEvent.OnClickChangeButton -> changeNickName()
         }
     }
 
@@ -35,8 +35,8 @@ class MyPageProfileViewModel @Inject constructor(
         }
     }
 
-    private fun changeNickName(nickName: String) = viewModelScope.launch {
-        updateState { copy( loadState = LoadState.SUCCESS) }
+    private fun changeNickName() = viewModelScope.launch {
+        updateState { copy(loadState = LoadState.SUCCESS) }
         sendEffect({ MyPageProfileSideEffect.NavigateToPreviousScreen })
     }
 
@@ -47,7 +47,7 @@ class MyPageProfileViewModel @Inject constructor(
 
     private fun isFilled(
         nickName: String
-    ) : Boolean {
+    ): Boolean {
         return (nickName.isNotEmpty())
     }
 }
