@@ -42,6 +42,10 @@ val EditText = Color(0xFF737373)
 val EditStroke = Color(0xFFE7E7E7)
 val EditButtonFalse = Color(0xFFD9D9D9)
 val EditDivider = Color(0xFF757575)
+val EditChangeStroke = Color(0xFFBEB7AD)
+val EditChangeFill = Color(0xFFF5F4F2)
+val EditChangeButtonFill = Color(0xFF3C270A)
+
 
 // 문의 및 오류 제보 색상
 val QuestionSubTitle = Color(0xFF454545)

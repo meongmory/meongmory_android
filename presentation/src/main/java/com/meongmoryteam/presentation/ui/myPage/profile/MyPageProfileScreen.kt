@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.myPage.profile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -41,6 +43,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.EditButtonFalse
+import com.meongmoryteam.presentation.ui.theme.EditChangeFill
+import com.meongmoryteam.presentation.ui.theme.EditChangeStroke
 import com.meongmoryteam.presentation.ui.theme.EditDivider
 import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
@@ -201,15 +205,24 @@ fun ProfileChangeEdit(
 
 
 @Composable
-fun MyPageEditForm() {
+fun MyPageEditForm(
+) {
     var text by remember { mutableStateOf("") }
+    var isTextEmpty by remember { mutableStateOf(true) } // Text가 비어있는지 여부를 추적
+
     Box(
         modifier = Modifier
             .padding(PADDING_16)
             .fillMaxWidth()
             .height(48.dp)
+            .background(
+                if (isTextEmpty) Color.White
+                else EditChangeFill
+            )
             .border(
-                color = EditStroke,
+                color =
+                if (isTextEmpty) EditStroke
+                else EditChangeStroke,
                 width = 1.dp,
                 shape = RoundedCornerShape(10.dp)
             ),
@@ -220,6 +233,7 @@ fun MyPageEditForm() {
             onValueChange = { newText ->
                 // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
                 text = newText.replace(Regex("[\n]"), "")
+                isTextEmpty = newText.isBlank() // Text가 비어있는지 여부 업데이트
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
@@ -243,6 +257,11 @@ fun ProfileChangeButton(
     viewModel: MyPageProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.viewState.collectAsState()
+
+    val buttonColors = ButtonDefaults.buttonColors(
+        contentColor = Color.White
+    )
+
     Button(
         onClick = {
             viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickChangeButton)
@@ -260,6 +279,7 @@ fun ProfileChangeButton(
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

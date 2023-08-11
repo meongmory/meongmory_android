@@ -45,6 +45,8 @@ import com.meongmoryteam.presentation.ui.theme.EditStroke
 import com.meongmoryteam.presentation.ui.theme.EditText
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.QuestionButtonText
+import com.meongmoryteam.presentation.ui.theme.QuestionChangeFill
+import com.meongmoryteam.presentation.ui.theme.QuestionChangeStroke
 import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.QuestionSubTitle
 
@@ -133,17 +135,23 @@ fun QuestionLabel(
 @Composable
 fun EmailForm() {
     var email by remember { mutableStateOf("") }
+    var isTextEmpty by remember { mutableStateOf(true) } // Text가 비어있는지 여부를 추적
+
     Box(
         modifier = Modifier
             .padding(all = PADDING_16)
             .height(48.dp)
             .fillMaxWidth(0.5f)
             .border(
-                color = EditStroke,
+                color = if (isTextEmpty) EditStroke
+                else QuestionChangeStroke,
                 width = 1.dp,
                 shape = RoundedCornerShape(10.dp),
             )
-            .background(color = QuestionEditFill, shape = RoundedCornerShape(10.dp)),
+            .background(
+                color = if (isTextEmpty) QuestionEditFill
+                else QuestionChangeFill,
+                shape = RoundedCornerShape(10.dp)),
         contentAlignment = Alignment.CenterStart // 정렬
     ) {
 
@@ -152,6 +160,7 @@ fun EmailForm() {
             onValueChange = { newText ->
                 // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
                 email = newText.replace(Regex("[\n]"), "")
+                isTextEmpty = newText.isBlank()
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
@@ -211,16 +220,22 @@ fun DetailEdit() {
 @Composable
 fun DetailForm() {
     var detail by remember { mutableStateOf("") }
+    var isTextEmpty by remember { mutableStateOf(true) } // Text가 비어있는지 여부를 추적
+
     Box(
         modifier = Modifier
             .padding(PADDING_16)
             .fillMaxSize()
             .border(
-                color = EditStroke,
+                color = if (isTextEmpty) EditStroke
+                else QuestionChangeStroke,
                 width = 1.dp,
                 shape = RoundedCornerShape(10.dp),
             )
-            .background(color = QuestionEditFill, shape = RoundedCornerShape(10.dp)),
+            .background(
+                color = if (isTextEmpty) QuestionEditFill
+                else QuestionChangeFill,
+                shape = RoundedCornerShape(10.dp)),
         contentAlignment = Alignment.TopStart // 정렬
     ) {
 
@@ -229,12 +244,14 @@ fun DetailForm() {
             onValueChange = { newText ->
                 // 한 줄만 입력 가능하게 \n키를 누르면 입력 반영 안함
                 detail = newText
+                isTextEmpty = newText.isBlank()
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
                 textAlign = TextAlign.Start
             ),
-            modifier = Modifier.padding(PADDING_16)
+            modifier = Modifier
+                .padding(PADDING_16)
         )
         if (detail.isEmpty()) {
             Text(
