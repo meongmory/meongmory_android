@@ -16,13 +16,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.Typography
 
 @Composable
 fun LoginScreen(
-
+    loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
     Column(
         modifier = Modifier
