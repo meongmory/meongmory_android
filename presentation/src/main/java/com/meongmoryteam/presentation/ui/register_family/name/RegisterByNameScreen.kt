@@ -22,13 +22,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.base.TextButtonComponent
+import com.meongmoryteam.presentation.base.TextComponent
+import com.meongmoryteam.presentation.base.TextFieldComponent
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyViewModel
-import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
-import com.meongmoryteam.presentation.ui.register_family.TextComponent
-import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.InputBoxOutline
