@@ -1,7 +1,6 @@
 package com.meongmoryteam.meongmory.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.meongmoryteam.data.service.ExampleApi
 import com.meongmoryteam.data.service.login.LoginApi
 import dagger.Module
 import dagger.Provides
@@ -45,12 +44,6 @@ object NetworkModule {
             .addConverterFactory(json.asConverterFactory(contentType))
             .client(client)
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideApi(retrofit: Retrofit): ExampleApi {
-        return retrofit.create(ExampleApi::class.java)
     }
 
     @Provides
