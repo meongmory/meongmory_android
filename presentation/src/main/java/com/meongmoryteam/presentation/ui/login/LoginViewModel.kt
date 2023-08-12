@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.login
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.meongmoryteam.domain.model.login.SmsSendRequestEntity
 import com.meongmoryteam.domain.usecase.login.GetSmsSendUseCase
@@ -22,9 +23,7 @@ class LoginViewModel @Inject constructor(
         when(event) {
             is LoginEvent.GetCertificationButtonClicked -> {
                 updateState { copy(getSmsSendLoadState = LoadState.LOADING) }
-                /*
-                인증 번호 조회 api
-                 */
+                getSmsSend()
             }
             is LoginEvent.PostCertificationButtonClicked -> {
                 /*

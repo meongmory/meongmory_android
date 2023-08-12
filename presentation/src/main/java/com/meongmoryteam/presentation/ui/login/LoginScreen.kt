@@ -82,7 +82,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            onClick = { /*TODO*/ },
+            onClick = { loginViewModel.setEvent(LoginContract.LoginEvent.GetCertificationButtonClicked) },
         ) {
             
         }

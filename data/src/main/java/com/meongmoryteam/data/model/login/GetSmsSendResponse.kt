@@ -2,7 +2,9 @@ package com.meongmoryteam.data.model.login
 
 import com.meongmoryteam.domain.model.login.GetSmsSendData
 import com.meongmoryteam.domain.model.login.GetSmsSendEntity
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class GetSmsSendResponse(
     val status: Int,
     val code: String,
@@ -10,6 +12,7 @@ data class GetSmsSendResponse(
     val data: Data,
 )
 
+@Serializable
 data class Data(
     val value: String,
     val message: String?
