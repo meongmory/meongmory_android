@@ -46,11 +46,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.base.TextButtonComponent
+import com.meongmoryteam.presentation.base.TextFieldComponent
 import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.RegisterDogEvent
 import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.RegisterDogSideEffect
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
-import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
-import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
 import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
