@@ -2,6 +2,7 @@ package com.meongmoryteam.meongmory.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.meongmoryteam.data.service.ExampleApi
+import com.meongmoryteam.data.service.login.LoginApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,5 +45,11 @@ object NetworkModule {
     @Singleton
     fun provideApi(retrofit: Retrofit): ExampleApi {
         return retrofit.create(ExampleApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginApi(retrofit: Retrofit): LoginApi {
+        return retrofit.create(LoginApi::class.java)
     }
 }

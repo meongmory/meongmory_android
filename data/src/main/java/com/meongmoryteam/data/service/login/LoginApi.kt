@@ -9,6 +9,6 @@ interface LoginApi {
 
     @GET("sms/send")
     suspend fun getSmsSend(
-        @Body smsSendRequest: String
+        @Body smsSendRequest: SmsSendRequest
     ): GetSmsSendResponse
 }
