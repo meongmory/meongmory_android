@@ -4,17 +4,19 @@ import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.base.ViewEvent
 import com.meongmoryteam.presentation.base.ViewSideEffect
 import com.meongmoryteam.presentation.base.ViewState
+import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract
 
 class LoginContract {
     data class LoginState(
         val loginLoadState: LoadState = LoadState.SUCCESS,
-        val phoneNumber: String? = null,
+        val phoneNumber: String = "",
     ): ViewState
 
     sealed class LoginEvent : ViewEvent {
         object GetCertificationButtonClicked : LoginEvent()
         object PostCertificationButtonClicked : LoginEvent()
         object ToTermScreenButtonClicked : LoginEvent()
+        data class OnPhoneChanged(val phoneNumber: String) : LoginEvent()
     }
 
     sealed class LoginEffect : ViewSideEffect {

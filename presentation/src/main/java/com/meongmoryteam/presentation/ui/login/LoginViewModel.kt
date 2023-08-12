@@ -28,6 +28,18 @@ class LoginViewModel @Inject constructor(
             is LoginEvent.ToTermScreenButtonClicked -> {
                 sendEffect({ LoginEffect.MoveToTerm })
             }
+
+            is LoginEvent.OnPhoneChanged -> reflectUpdateState(phoneNumber = event.phoneNumber)
+        }
+    }
+
+    private fun reflectUpdateState(
+        phoneNumber: String = viewState.value.phoneNumber
+    ) {
+        updateState {
+            copy(
+                phoneNumber = phoneNumber
+            )
         }
     }
 }

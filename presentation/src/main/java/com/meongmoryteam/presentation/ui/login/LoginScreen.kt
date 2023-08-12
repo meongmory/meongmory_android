@@ -4,15 +4,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +33,8 @@ import com.meongmoryteam.presentation.ui.theme.Typography
 fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
+    val loginViewState by loginViewModel.viewState.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,6 +68,24 @@ fun LoginScreen(
             style = Typography.titleSmall
         )
         Spacer(modifier = Modifier.padding(10.dp))
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(37.dp)
+                .padding(horizontal = 16.dp),
+            value = loginViewState.phoneNumber,
+            onValueChange = { loginViewModel.setEvent(LoginContract.LoginEvent.OnPhoneChanged(it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+        )
+        Spacer(modifier = Modifier.padding(6.dp))
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            onClick = { /*TODO*/ },
+        ) {
+            
+        }
     }
 }
 
