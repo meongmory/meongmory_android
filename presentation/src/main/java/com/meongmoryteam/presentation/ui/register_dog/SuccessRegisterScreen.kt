@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
-import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
-import com.meongmoryteam.presentation.ui.register_family.TextComponent
+import com.meongmoryteam.presentation.base.TextButtonComponent
+import com.meongmoryteam.presentation.base.TextComponent
 import com.meongmoryteam.presentation.ui.theme.AppleSD
 import com.meongmoryteam.presentation.ui.theme.Brown
 import com.meongmoryteam.presentation.ui.theme.EditDivider

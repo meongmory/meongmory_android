@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.base.TextButtonComponent
+import com.meongmoryteam.presentation.base.TextComponent
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilyEvent
 import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyContract.RegisterFamilySideEffect
 import com.meongmoryteam.presentation.ui.theme.Brown
