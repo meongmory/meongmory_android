@@ -4,6 +4,7 @@
     <string name="check">확인</string>
     <string name="register">등록하기</string>
     <string name="close">닫기</string>
+    <string name="blank"></string>
     <!--강아지네 등록 관련-->
     <string name="not_valid_code">유효한 코드가 아닙니다.</string>
     <string name="register_by_code_info">가족 및 지인에게서 멍모리에서 보낸 초대 코드를 입력해주세요!\n유효한 초대코드를 입력하면 강아지의 일상을 같이 볼 수 있어요!</string>
@@ -34,6 +35,21 @@
     <string name="month">월</string>
     <string name="day">일</string>
     <string name="pet_registration_number">반려동물 등록번호</string>
+
+    <string name="search_breed">반려동물 품종 검색</string>
+    <string name="select">선택하기</string>
+    <string name="dog_icon">강아지</string>
+    <string name="cat_icon">고양이</string>
+    <string name="checked_box">선택된 체크박스</string>
+    <string name="unchecked_box">선택되진 않은 체크박스</string>
+
+    <string name="success_icon">등록 성공</string>
+    <string name="success_registration_title">반려동물 등록 성공!</string>
+    <string name="success_registration_content1">더 많은 반려동물 등록을 원하시나요?</string>
+    <string name="success_registration_content2">반려동물 등록하기\ </string>
+    <string name="success_registration_content3">버튼을 클릭해서</string>
+    <string name="success_registration_content4">다른 반려동물의 추억과 일정을 관리해보세요!</string>
+
 
     <!-- 마이페이지 관련 -->
     <string name="my_page_title">마이페이지</string>

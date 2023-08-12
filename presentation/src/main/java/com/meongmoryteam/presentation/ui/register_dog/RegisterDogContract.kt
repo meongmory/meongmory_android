@@ -15,13 +15,17 @@ class RegisterDogContract {
         val month: String = "",
         val day: String = "",
         val registrationNumber: String = "",
-        val isAllFilled: Boolean = false
+        val isAllFilled: Boolean = false,
+        val petType: String = "",
+        val gender: String = "",
+        val isSelected: Boolean = false
     ) : ViewState
 
     sealed class RegisterDogSideEffect : ViewSideEffect {
         object NavigateToSearchBreedScreen : RegisterDogSideEffect()
         object NavigateToNextScreen : RegisterDogSideEffect()
         object NavigateToPreviousScreen : RegisterDogSideEffect()
+        data class NavigateToRegisterScreen(val breed: String) : RegisterDogSideEffect()
     }
 
     sealed class RegisterDogEvent : ViewEvent {
@@ -32,9 +36,12 @@ class RegisterDogContract {
         data class FillInMonth(val month: String) : RegisterDogEvent()
         data class FillInDay(val day: String) : RegisterDogEvent()
         data class FillInRegistrationNum(val num: String) : RegisterDogEvent()
-
+        data class OnPetTypeClicked(val petType: String) : RegisterDogEvent()
+        data class OnBreedClicked(val breed: String) : RegisterDogEvent()
+        data class OnGenderClicked(val gender: String) : RegisterDogEvent()
         object OnClickSearchButton : RegisterDogEvent()
         object OnClickMakeButton : RegisterDogEvent()
         object OnClickBackButton : RegisterDogEvent()
+        data class OnClickSelectButton(val breed: String) : RegisterDogEvent()
     }
 }

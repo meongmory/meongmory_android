@@ -21,10 +21,17 @@ class RegisterDogViewModel @Inject constructor() :
             is RegisterDogEvent.FillInMonth -> reflectUpdateState(month = event.month)
             is RegisterDogEvent.FillInDay -> reflectUpdateState(day = event.day)
             is RegisterDogEvent.FillInRegistrationNum -> reflectUpdateState(registrationNumber = event.num)
-
+            is RegisterDogEvent.OnPetTypeClicked -> reflectUpdateState(petType = event.petType)
+            is RegisterDogEvent.OnBreedClicked -> reflectUpdateState(breed = event.breed)
+            is RegisterDogEvent.OnGenderClicked -> reflectUpdateState(gender = event.gender)
             is RegisterDogEvent.OnClickSearchButton -> sendEffect({ RegisterDogSideEffect.NavigateToSearchBreedScreen })
             is RegisterDogEvent.OnClickBackButton -> sendEffect({ RegisterDogSideEffect.NavigateToPreviousScreen })
             is RegisterDogEvent.OnClickMakeButton -> sendEffect({ RegisterDogSideEffect.NavigateToNextScreen })
+            is RegisterDogEvent.OnClickSelectButton -> sendEffect({
+                RegisterDogSideEffect.NavigateToRegisterScreen(
+                    breed = event.breed
+                )
+            })
         }
     }
 
@@ -35,7 +42,9 @@ class RegisterDogViewModel @Inject constructor() :
         year: String = viewState.value.year,
         month: String = viewState.value.month,
         day: String = viewState.value.day,
-        registrationNumber: String = viewState.value.registrationNumber
+        registrationNumber: String = viewState.value.registrationNumber,
+        petType: String = viewState.value.petType,
+        gender: String = viewState.value.gender
     ) {
         updateState {
             copy(
@@ -46,6 +55,8 @@ class RegisterDogViewModel @Inject constructor() :
                 month = month,
                 day = day,
                 registrationNumber = registrationNumber,
+                petType = petType,
+                gender = gender,
                 isAllFilled = isFilled(
                     name,
                     breed,
@@ -53,8 +64,10 @@ class RegisterDogViewModel @Inject constructor() :
                     year,
                     month,
                     day,
-                    registrationNumber
-                )
+                    registrationNumber,
+                    gender
+                ),
+                isSelected = isConfirmed(petType, breed)
             )
         }
     }
@@ -66,8 +79,16 @@ class RegisterDogViewModel @Inject constructor() :
         year: String,
         month: String,
         day: String,
-        registrationNumber: String
+        registrationNumber: String,
+        gender: String
     ): Boolean {
-        return (name.isNotEmpty() && breed.isNotEmpty() && age.isNotEmpty() && year.isNotEmpty() && month.isNotEmpty() && day.isNotEmpty() && registrationNumber.isNotEmpty())
+        return (name.isNotEmpty() && breed.isNotEmpty() && age.isNotEmpty() && year.isNotEmpty() && month.isNotEmpty() && day.isNotEmpty() && registrationNumber.isNotEmpty() && gender.isNotEmpty())
+    }
+
+    private fun isConfirmed(
+        petType: String,
+        breed: String
+    ): Boolean {
+        return (petType.isNotEmpty() && breed.isNotEmpty())
     }
 }

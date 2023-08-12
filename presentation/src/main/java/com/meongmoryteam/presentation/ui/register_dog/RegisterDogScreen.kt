@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.register_dog
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,10 +20,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,24 +34,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -58,6 +60,7 @@ import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.Regist
 import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract.RegisterDogSideEffect
 import com.meongmoryteam.presentation.ui.register_family.RegisterDogForm
 import com.meongmoryteam.presentation.ui.register_family.TextButtonComponent
+import com.meongmoryteam.presentation.ui.register_family.TextComponent
 import com.meongmoryteam.presentation.ui.register_family.TextFieldComponent
 import com.meongmoryteam.presentation.ui.theme.Black
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
@@ -67,6 +70,7 @@ import com.meongmoryteam.presentation.ui.theme.LightYellow
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.Placeholer
+import com.meongmoryteam.presentation.ui.theme.QuestionEditFill
 import com.meongmoryteam.presentation.ui.theme.Typography
 import com.meongmoryteam.presentation.ui.theme.Yellow
 import kotlinx.coroutines.CoroutineScope
@@ -79,31 +83,28 @@ fun RegisterDogScreen(
     viewModel: RegisterDogViewModel = hiltViewModel(),
     navigateToSearchBreedScreen: () -> Unit,
     navigateToPreviousScreen: () -> Unit,
-    navigateToMakeScreen: () -> Unit
+    navigateToMakeScreen: () -> Unit,
+    searchBreed: String
 ) {
     val viewState by viewModel.viewState.collectAsState()
-    val buttonItemList = listOf(ButtonItem(0, "수컷"), ButtonItem(1, "암컷"))
+    val buttonItemList = listOf("수컷", "암컷")
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = BringIntoViewRequester()
+    val scrollState = rememberScrollState()
 
     RegisterDogForm(
         bottomPadding = 0.dp,
-        navController = navController,
+        navController = navController, modifier = Modifier.verticalScroll(state = scrollState),
         navigateTo = { viewModel.setEvent(RegisterDogEvent.OnClickBackButton) }) {
         RenderProfile()
         RenderName(value = viewState.name) { viewModel.setEvent(RegisterDogEvent.FillInName(it)) }
-        RenderBreed(value = viewState.breed, onValueChange = {
-            viewModel.setEvent(
-                RegisterDogEvent.FillInBreed(
-                    it
-                )
-            )
-        }) { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
+        RenderBreed(value = searchBreed) { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
         RenderGender(
             label = R.string.gender,
-            buttonItem = buttonItemList
-        )
+            buttonItem = buttonItemList,
+            value = viewState.gender
+        ) { viewModel.setEvent(RegisterDogEvent.OnGenderClicked(it)) }
         RenderAge(value = viewState.age) { viewModel.setEvent(RegisterDogEvent.FillInAge(it)) }
         RenderAdoptionDate(
             year = viewState.year,
@@ -146,18 +147,20 @@ fun RegisterDogScreen(
                 is RegisterDogSideEffect.NavigateToPreviousScreen -> {
                     navigateToPreviousScreen()
                 }
+
+                is RegisterDogSideEffect.NavigateToRegisterScreen -> {}
             }
         }
     }
 }
 
 @Composable
-fun RenderProfile(painterResource: Int = R.drawable.default_profile) {
+fun RenderProfile() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(painterResource),
+            imageVector = ImageVector.vectorResource(R.drawable.default_profile_img),
             contentDescription = stringResource(R.string.profile_img),
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -169,7 +172,6 @@ fun RenderProfile(painterResource: Int = R.drawable.default_profile) {
             modifier = Modifier.padding(top = 10.dp, bottom = 30.dp)
         )
     }
-
 }
 
 @Composable
@@ -183,24 +185,59 @@ fun RenderName(value: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun RenderBreed(value: String, onValueChange: (String) -> Unit, navigateToSearch: () -> Unit) {
-    Box(contentAlignment = Alignment.BottomEnd) {
-        LabelNInputForm(
-            label = R.string.breed,
-            placeholder = R.string.breed,
-            value = value,
-            onValueChange = onValueChange
-        )
-        SearchButton(navigateToSearch)
+fun RenderBreed(value: String, navigateToSearch: () -> Unit) {
+    Box(contentAlignment = Alignment.CenterEnd) {
+        val bgColor = if (value.isEmpty()) {
+            QuestionEditFill
+        } else {
+            LightYellow
+        }
+        val borderColor = if (value.isEmpty()) {
+            InputBoxOutline
+        } else {
+            Yellow
+        }
+        Column(modifier = Modifier.padding(bottom = 14.dp)) {
+            TextComponent(
+                text = stringResource(R.string.breed),
+                style = Typography.titleSmall,
+                color = Placeholer,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(43.dp)
+                    .background(bgColor)
+                    .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
+                    .padding(horizontal = 15.dp, vertical = 14.dp)
+            ) {
+                TextComponent(
+                    text = stringResource(R.string.breed),
+                    style = Typography.titleSmall,
+                    color = Placeholer,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+                Text(
+                    text = value.ifEmpty { stringResource(R.string.breed) },
+                    style = Typography.titleSmall,
+                    color = if (value.isEmpty()) Placeholer else Black,
+                    maxLines = 1
+                )
+            }
+        }
+
+        SearchButton(padding = 15.dp, navigateToSearch)
     }
 }
 
 @Composable
 fun RenderGender(
     label: Int,
-    buttonItem: List<ButtonItem>
+    buttonItem: List<String>,
+    value: String,
+    onValueChange: (String) -> Unit
 ) {
-    var selectedIndex by rememberSaveable { mutableStateOf(-1) }
     Column(
         modifier = Modifier
             .padding(bottom = 14.dp)
@@ -223,10 +260,10 @@ fun RenderGender(
             items(buttonItem) { item ->
                 GenderButton(
                     item = item,
-                    isSelected = selectedIndex == item.index,
+                    isSelected = value == item,
                 )
                 {
-                    selectedIndex = item.index
+                    onValueChange(item)
                 }
             }
         }
@@ -316,7 +353,9 @@ fun RenderRegisterButton(
             color = ButtonContent,
             platformStyle = PlatformTextStyle(includeFontPadding = false)
         ),
-        modifier = Modifier.bringIntoViewRequester(bringIntoViewRequester),
+        modifier = Modifier
+            .bringIntoViewRequester(bringIntoViewRequester)
+            .padding(bottom = 30.dp),
         onClick = navigateTo
     )
 }
@@ -343,7 +382,7 @@ fun LabelNInputForm(
             onValueChange = onValueChange,
             placeholder = stringResource(placeholder),
             bgColor = if (value.isEmpty()) {
-                Color(0xFFF9F9F9)
+                QuestionEditFill
             } else {
                 LightYellow
             },
@@ -360,15 +399,15 @@ fun LabelNInputForm(
 }
 
 @Composable
-fun SearchButton(navigateToSearch: () -> Unit) {
+fun SearchButton(padding: Dp = 0.dp, navigateToSearch: () -> Unit) {
     IconButton(
         onClick = navigateToSearch,
         modifier = Modifier
             .size(45.dp)
-            .padding(bottom = 25.dp)
+            .padding(top = padding)
     ) {
         Icon(
-            painter = painterResource(R.drawable.search),
+            imageVector = ImageVector.vectorResource(R.drawable.search_btn),
             contentDescription = stringResource(R.string.search),
             modifier = Modifier.size(20.dp)
         )
@@ -377,7 +416,7 @@ fun SearchButton(navigateToSearch: () -> Unit) {
 
 @Composable
 fun GenderButton(
-    item: ButtonItem,
+    item: String,
     isSelected: Boolean,
     modifier: Modifier = Modifier,
     onTap: () -> Unit
@@ -407,7 +446,7 @@ fun GenderButton(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = item.label,
+            text = item,
             color = contentColor,
             style = Typography.titleSmall,
         )
@@ -458,7 +497,7 @@ fun DateInputForm(
                         onValueChange = valueChangeList[itemList.indexOf(it)],
                         placeholder = placeholderList[itemList.indexOf(it)],
                         bgColor = if (textValueList[itemList.indexOf(it)].isEmpty()) {
-                            Color(0xFFF9F9F9)
+                            QuestionEditFill
                         } else {
                             LightYellow
                         },
@@ -480,8 +519,3 @@ fun DateInputForm(
         }
     }
 }
-
-data class ButtonItem(
-    var index: Int,
-    var label: String
-)

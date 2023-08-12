@@ -51,9 +51,9 @@ fun RegisterFamilyNavigation(
         composable(route = RouteScreen.Choose.route) {
             RegisterFamilyScreen(
                 navController = navController,
-                navigatetoRegisterByName = { navController.navigate(RouteScreen.Name.route) },
+                navigateToRegisterByName = { navController.navigate(RouteScreen.Name.route) },
                 navigateToRegisterByCode = { navController.navigate(RouteScreen.Code.route) },
-                navigatetoPreviousScreen = { navController.popBackStack() }
+                navigateToPreviousScreen = { navController.popBackStack() }
             )
         }
         composable(route = RouteScreen.Name.route) {
