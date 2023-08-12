@@ -107,4 +107,6 @@
     <string name="login_phone_screen_sub_title">휴대폰 번호는 안전하게 보관되어\n이웃에게 공개되지 않아요.</string>
     <string name="login_phone">휴대폰 번호</string>
 
+    <!--  에러 메세지  -->
+    <string name="network_error_message">네트워크 에러가 발생하였습니다.</string>
 </resources>

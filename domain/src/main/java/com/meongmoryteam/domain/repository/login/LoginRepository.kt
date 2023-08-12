@@ -1,4 +1,4 @@
-package com.meongmoryteam.domain.repository
+package com.meongmoryteam.domain.repository.login
 
 import com.meongmoryteam.domain.model.login.GetSmsSendEntity
 import com.meongmoryteam.domain.model.login.SmsSendRequestEntity

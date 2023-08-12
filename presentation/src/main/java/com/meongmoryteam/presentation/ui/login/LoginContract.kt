@@ -8,8 +8,9 @@ import com.meongmoryteam.presentation.ui.register_dog.RegisterDogContract
 
 class LoginContract {
     data class LoginState(
-        val loginLoadState: LoadState = LoadState.SUCCESS,
+        val getSmsSendLoadState: LoadState = LoadState.SUCCESS,
         val phoneNumber: String = "",
+        val certificationNumber: String = ""
     ): ViewState
 
     sealed class LoginEvent : ViewEvent {
@@ -20,6 +21,7 @@ class LoginContract {
     }
 
     sealed class LoginEffect : ViewSideEffect {
+        data class ShowSnackBar(val message: String): LoginEffect()
         object MoveToTerm: LoginEffect()
         object SuccessCertification: LoginEffect()
         object FailCertification: LoginEffect()
