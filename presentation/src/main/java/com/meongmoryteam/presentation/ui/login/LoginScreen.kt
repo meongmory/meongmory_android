@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
+import com.meongmoryteam.presentation.ui.theme.Typography
 
 @Composable
 fun LoginScreen(
@@ -41,14 +42,21 @@ fun LoginScreen(
             color = Color.Black,
             fontWeight = FontWeight.SemiBold
         )
-        Spacer(modifier = Modifier.padding(12.dp))
+        Spacer(modifier = Modifier.padding(6.dp))
         Text(
             modifier = Modifier.padding(start = 16.dp),
             text = stringResource(R.string.login_phone_screen_sub_title),
-            fontSize = 12.sp,
             color = DarkGrey,
-            fontWeight = FontWeight.SemiBold
+            style = Typography.titleSmall
         )
+        Spacer(modifier = Modifier.padding(32.dp))
+        Text(
+            modifier = Modifier.padding(start = 16.dp),
+            text = stringResource(R.string.login_phone),
+            color = DarkGrey,
+            style = Typography.titleSmall
+        )
+        Spacer(modifier = Modifier.padding(10.dp))
     }
 }
 
