@@ -4,6 +4,7 @@ buildscript {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven("https://naver.jfrog.io/artifactory/maven/")
     }
 
     dependencies {

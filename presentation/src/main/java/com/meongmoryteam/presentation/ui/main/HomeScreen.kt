@@ -27,10 +27,8 @@ import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionScreen
 
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController(),
 ) {
-    val viewState by viewModel.viewState.collectAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     var bottomBarState by rememberSaveable { mutableStateOf(true) }

@@ -41,8 +41,6 @@ import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.base.LogoutAlertDialog
 import com.meongmoryteam.presentation.base.SecessionAlertDialog
-import com.meongmoryteam.presentation.ui.main.MainContract
-import com.meongmoryteam.presentation.ui.main.MainViewModel
 import com.meongmoryteam.presentation.ui.theme.ListDivider
 import com.meongmoryteam.presentation.ui.theme.ListNextButton
 import com.meongmoryteam.presentation.ui.theme.ListTitle
@@ -50,14 +48,12 @@ import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
 import com.meongmoryteam.presentation.ui.theme.MyPageProfileEditButton
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowFill
 import com.meongmoryteam.presentation.ui.theme.MyPageYellowStroke
-import com.meongmoryteam.presentation.util.composableActivityViewModel
 
 val PADDING_8 = 8.dp
 val PADDING_16 = 16.dp
 
 @Composable
 fun MyPageScreen(
-    mainViewModel: MainViewModel = composableActivityViewModel(),
     viewModel: MyPageViewModel = hiltViewModel(),
     navigateToEditNickNameScreen: () -> Unit,
     navigateToQuestionScreen: () -> Unit,
@@ -82,15 +78,7 @@ fun MyPageScreen(
         }
     }
 
-    LaunchedEffect(mainViewModel.effect) {
-        mainViewModel.effect.collect { effect ->
-            when (effect) {
-                is MainContract.MainSideEffect.RefreshScreen -> {
-                    viewModel.setEvent(MyPageContract.MyPageEvent.InitMyPageScreen)
-                }
-            }
-        }
-    }
+
 
     when (viewState.loadState) {
         LoadState.SUCCESS -> {
