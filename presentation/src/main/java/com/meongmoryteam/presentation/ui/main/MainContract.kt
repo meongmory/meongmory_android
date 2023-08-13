@@ -4,18 +4,18 @@ import com.meongmoryteam.presentation.base.ViewEvent
 import com.meongmoryteam.presentation.base.ViewSideEffect
 import com.meongmoryteam.presentation.base.ViewState
 
-class HomeContract {
-    data class HomeViewState(
+class MainContract {
+    data class MainViewState(
         val loginState: LoginState = LoginState.NONE,
     ) : ViewState
 
-    sealed class HomeSideEffect : ViewSideEffect {
+    sealed class MainSideEffect : ViewSideEffect {
     }
 
-    sealed class HomeEvent : ViewEvent {
+    sealed class MainEvent : ViewEvent {
     }
 
     enum class LoginState {
-        NONE, LOGIN
+        NONE
     }
 }

@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.myPage
 
+import androidx.compose.runtime.mutableStateOf
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.ui.myPage.MyPageContract.MyPageEvent
@@ -14,6 +15,8 @@ class MyPageViewModel @Inject constructor(
 ) : BaseViewModel<MyPageViewState, MyPageSideEffect, MyPageEvent>(
     MyPageViewState()
 ) {
+    val refreshButton = mutableStateOf(false)
+
     override fun handleEvents(event: MyPageEvent) {
         when (event) {
             is MyPageEvent.InitMyPageScreen -> {

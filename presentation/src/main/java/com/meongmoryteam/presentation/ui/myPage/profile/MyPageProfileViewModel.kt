@@ -1,5 +1,7 @@
 package com.meongmoryteam.presentation.ui.myPage.profile
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
@@ -15,11 +17,19 @@ class MyPageProfileViewModel @Inject constructor(
 ) : BaseViewModel<MyPageProfileViewState, MyPageProfileSideEffect, MyPageProfileEvent>(
     MyPageProfileViewState()
 ) {
+    // refreshButton 상태를 ViewModel 내부에서 관리
+    private val _refreshButton = mutableStateOf(false)
+    val refreshButton: State<Boolean> = _refreshButton
+
     override fun handleEvents(event: MyPageProfileEvent) {
         when (event) {
             is MyPageProfileEvent.ClearNickName -> reflectUpdatedState("")
             is MyPageProfileEvent.FillNickName -> reflectUpdatedState(event.nickName)
-            MyPageProfileEvent.OnClickChangeButton -> changeNickName()
+            MyPageProfileEvent.OnClickPreviousButton -> _refreshButton.value = true
+            is MyPageProfileEvent.OnClickChangeButton -> {
+                changeNickName()
+                _refreshButton.value = true
+            }
         }
     }
 
@@ -35,9 +45,16 @@ class MyPageProfileViewModel @Inject constructor(
         }
     }
 
-    private fun changeNickName() = viewModelScope.launch {
-        updateState { copy(loadState = LoadState.SUCCESS) }
-        sendEffect({ MyPageProfileSideEffect.NavigateToPreviousScreen })
+    private fun changeNickName(
+        nickName: String = viewState.value.nickName
+    ) = viewModelScope.launch {
+        updateState {
+            copy(
+                loadState = LoadState.SUCCESS,
+                nickName = nickName
+            )
+        }
+        sendEffect({ MyPageProfileSideEffect.NavigateToMyPageScreen })
     }
 
     // 텍스트 길이 초과

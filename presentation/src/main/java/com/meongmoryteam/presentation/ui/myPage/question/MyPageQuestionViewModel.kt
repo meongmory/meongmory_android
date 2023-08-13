@@ -1,5 +1,7 @@
 package com.meongmoryteam.presentation.ui.myPage.question
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
@@ -15,13 +17,20 @@ class MyPageQuestionViewModel @Inject constructor(
 ) : BaseViewModel<MyPageQuestionViewState, MyPageQuestionSideEffect, MyPageQuestionEvent>(
     MyPageQuestionViewState()
 ) {
+    private val _refreshButton = mutableStateOf(false)
+    val refreshButton: State<Boolean> = _refreshButton
+
     override fun handleEvents(event: MyPageQuestionEvent) {
         when (event) {
             MyPageQuestionEvent.ClearEmail -> reflectUpdatedState(email = "")
             MyPageQuestionEvent.ClearQuestion -> reflectUpdatedState(question = "")
             is MyPageQuestionEvent.FillEmail -> reflectUpdatedState(email = event.email)
             is MyPageQuestionEvent.FillQuestion -> reflectUpdatedState(question = event.question)
-            MyPageQuestionEvent.OnClickButton -> setEmail()
+            MyPageQuestionEvent.OnClickPreviousButton -> _refreshButton.value = true
+            is MyPageQuestionEvent.OnClickPostButton -> {
+                setEmail()
+                _refreshButton.value = true
+            }
         }
     }
 
@@ -41,12 +50,18 @@ class MyPageQuestionViewModel @Inject constructor(
         }
     }
 
-    private fun setEmail() = viewModelScope.launch {
+    private fun setEmail(
+        email: String = viewState.value.email,
+        question: String = viewState.value.question
+    ) = viewModelScope.launch {
         updateState {
             copy(
-                loadState = LoadState.LOADING
+                loadState = LoadState.SUCCESS,
+                email = email,
+                question = question
             )
         }
+        sendEffect({ MyPageQuestionSideEffect.NavigateToMyPageScreen })
     }
 
     private fun isFilled(

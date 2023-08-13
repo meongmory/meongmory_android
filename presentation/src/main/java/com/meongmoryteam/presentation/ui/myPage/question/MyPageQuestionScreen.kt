@@ -23,8 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -59,9 +57,8 @@ fun MyPageQuestionScreen(
     navigateToPrevious: () -> Unit,
 ) {
     val uiState by viewModel.viewState.collectAsState()
-    val refreshButton = remember {
-        mutableStateOf(false)
-    }
+    val refreshButton by viewModel.refreshButton
+
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -71,7 +68,7 @@ fun MyPageQuestionScreen(
         MyPageToolBar(
             stringResource(R.string.question_title),
             onBackClick = {
-                refreshButton.value = true
+                viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.OnClickPreviousButton)
             }
         )
         Spacer(modifier = Modifier.padding(PADDING_8))
@@ -91,8 +88,8 @@ fun MyPageQuestionScreen(
         }
     }
     // refreshButton 상태가 변경되었을 때 이전 페이지로 이동
-    LaunchedEffect(refreshButton.value) {
-        if (refreshButton.value) {
+    LaunchedEffect(refreshButton) {
+        if (refreshButton) {
             navigateToPrevious()
         }
     }
@@ -280,7 +277,7 @@ fun QuestionButton(
 ) {
     Button(
         onClick = {
-            viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.OnClickButton)
+            viewModel.setEvent(MyPageQuestionConstract.MyPageQuestionEvent.OnClickPreviousButton)
         },
         colors = if (!isAllFilled) {
             ButtonDefaults.textButtonColors(LightGrey)

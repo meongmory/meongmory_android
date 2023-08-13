@@ -23,8 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,10 +55,10 @@ fun MyPageProfileScreen(
     navigateToPrevious: () -> Unit,
 ) {
     val uiState by viewModel.viewState.collectAsState()
-    // refreshButton 상태
-    val refreshButton = remember {
-        mutableStateOf(false)
-    }
+
+    // ViewModel에서 refreshButton 상태 가져오기
+    val refreshButton by viewModel.refreshButton
+
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -78,7 +76,8 @@ fun MyPageProfileScreen(
                 MyPageToolBar(
                     stringResource(R.string.profile_change_title),
                     onBackClick = {
-                        refreshButton.value = true
+                        // ViewModel 내부의 refreshButton 상태 변경
+                        viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickPreviousButton)
                     }
                 )
                 ProfileChangeEdit()
@@ -96,8 +95,8 @@ fun MyPageProfileScreen(
     }
 
     // refreshButton 상태가 변경되었을 때 이전 페이지로 이동
-    LaunchedEffect(refreshButton.value) {
-        if (refreshButton.value) {
+    LaunchedEffect(refreshButton) {
+        if (refreshButton) {
             navigateToPrevious()
         }
     }
@@ -109,9 +108,6 @@ fun MyPageToolBar(
     title: String,
     onBackClick: () -> Unit,
 ) {
-    val refreshButton = remember {
-        mutableStateOf(false)
-    }
     Column {
         // 위 아래 여백
         Row(
@@ -137,7 +133,6 @@ fun MyPageToolBar(
                             .padding(start = PADDING_16)
                             .clickable {
                                 onBackClick()
-                                refreshButton.value = true
                             }
                     )
                 }
@@ -150,13 +145,6 @@ fun MyPageToolBar(
         Divider(
             color = EditDivider.copy(0.2f)
         )
-    }
-
-    // refreshButton 상태가 변경되었을 때 이전 페이지로 이동
-    LaunchedEffect(refreshButton.value) {
-        if (refreshButton.value) {
-            onBackClick()
-        }
     }
 }
 
@@ -262,7 +250,7 @@ fun ProfileChangeButton(
 ) {
     Button(
         onClick = {
-            viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickChangeButton)
+            viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickPreviousButton)
         },
         colors = if (!isFilled || isOverflow) {
             ButtonDefaults.textButtonColors(LightGrey)

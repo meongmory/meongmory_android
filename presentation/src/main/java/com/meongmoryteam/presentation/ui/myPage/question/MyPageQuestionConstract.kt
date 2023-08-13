@@ -15,7 +15,7 @@ class MyPageQuestionConstract {
     ) : ViewState
 
     sealed class MyPageQuestionSideEffect : ViewSideEffect {
-        object NavigateToPreviousScreen : MyPageQuestionSideEffect()
+        object NavigateToMyPageScreen : MyPageQuestionSideEffect()
     }
 
     sealed class MyPageQuestionEvent : ViewEvent {
@@ -29,6 +29,7 @@ class MyPageQuestionConstract {
 
         object ClearEmail : MyPageQuestionEvent()
         object ClearQuestion : MyPageQuestionEvent()
-        object OnClickButton : MyPageQuestionEvent()
+        object OnClickPreviousButton : MyPageQuestionEvent()
+        object OnClickPostButton : MyPageQuestionEvent()
     }
 }

@@ -16,7 +16,7 @@ class MyPageProfileContract {
     ) : ViewState
 
     sealed class MyPageProfileSideEffect : ViewSideEffect {
-        object NavigateToPreviousScreen : MyPageProfileSideEffect()
+        object NavigateToMyPageScreen : MyPageProfileSideEffect()
     }
 
     sealed class MyPageProfileEvent : ViewEvent {
@@ -25,6 +25,7 @@ class MyPageProfileContract {
         ) : MyPageProfileEvent()
 
         object ClearNickName : MyPageProfileEvent()
+        object OnClickPreviousButton : MyPageProfileEvent()
         object OnClickChangeButton : MyPageProfileEvent()
     }
 }
