@@ -15,6 +15,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.meongmoryteam.presentation.ui.theme.GRAY100
@@ -48,7 +49,7 @@ fun MeongMoryBottomNavigation(
                         }
                     )
                 },
-                selected = currentDestination?.route == bottomItem.route,
+                selected = currentDestination?.hierarchy?.any { it.route == bottomItem.route } == true,
                 onClick = { navigateToScreen(bottomItem) },
                 colors = NavigationBarItemDefaults.colors(indicatorColor = Color.White),
             )

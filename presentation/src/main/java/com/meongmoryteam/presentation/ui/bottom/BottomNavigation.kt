@@ -25,4 +25,6 @@ enum class MeongMoryRoute(val route: String) {
     MAP("map"),
     HOME("home"),
     MY_PAGE("my-page"),
+    EDIT_NICKNAME("edit-nickname"),
+    QUESTION("question"),
 }
