@@ -45,9 +45,13 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt)
+    implementation("com.naver.maps:map-sdk:3.17.0")
     kapt(libs.hilt.testing.compiler)
 
     // Serialization
     implementation(libs.serialization)
     implementation(libs.kotlin.serilization)
+
+    implementation(libs.naver.map)
+
 }

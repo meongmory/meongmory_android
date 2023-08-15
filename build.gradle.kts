@@ -4,13 +4,14 @@ buildscript {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://naver.jfrog.io/artifactory/maven/")
     }
 
     dependencies {
         classpath(libs.kotlin.gradleplugin)
         classpath(libs.agp)
         classpath(libs.hilt.plugin)
+        classpath(libs.mavenPublish.pluginGradle)
+        classpath(libs.metalava.pluginGradle)
     }
 }
 
@@ -25,3 +26,4 @@ plugins {
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
+
