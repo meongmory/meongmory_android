@@ -45,13 +45,14 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt)
-    implementation("com.naver.maps:map-sdk:3.17.0")
     kapt(libs.hilt.testing.compiler)
 
     // Serialization
     implementation(libs.serialization)
     implementation(libs.kotlin.serilization)
 
+    // NaverMap
     implementation(libs.naver.map)
-
+    implementation(libs.naver.map.clustering)
+    implementation(libs.google.play.services.location)
 }

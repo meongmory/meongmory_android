@@ -22,7 +22,8 @@ mavenPublish = "0.25.1"
 metalava = "0.3.3"
 
 naverMap = "3.17.0"
-
+naverMapClustering = "1.0.2"
+google-play-services-location = "16.0.0"
 
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -44,8 +45,6 @@ navigation = {group = "androidx.navigation", name = "navigation-compose", versio
 
 mavenPublish-pluginGradle = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "mavenPublish" }
 metalava-pluginGradle = { module = "me.tylerbwong.gradle.metalava:plugin", version.ref = "metalava" }
-
-naver-map = { module = "com.naver.maps:map-sdk", version.ref = "naverMap" }
 
 # Kotlin
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
@@ -69,6 +68,12 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 # Serialization
 serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 kotlin-serilization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "kotlin-serilization" }
+
+# NaverMap
+naver-map = { module = "com.naver.maps:map-sdk", version.ref = "naverMap" }
+naver-map-clustering = { module = "io.github.ParkSangGwon:tedclustering-naver", version.ref = "naverMapClustering" }
+google-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "google-play-services-location" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -65,9 +65,6 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation(libs.naver.map)
-    implementation("com.naver.maps:map-sdk:3.17.0")
-    implementation("com.naver.maps:map-sdk:3.17.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -87,4 +84,9 @@ dependencies {
     // Serialization
     implementation(libs.serialization)
     implementation(libs.kotlin.serilization)
+
+    // NaverMap
+    implementation(libs.naver.map)
+    implementation(libs.naver.map.clustering)
+    implementation(libs.google.play.services.location)
 }
