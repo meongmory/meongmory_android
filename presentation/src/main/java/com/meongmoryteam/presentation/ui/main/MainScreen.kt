@@ -55,7 +55,7 @@ fun MainScreen(
                 HomeScreen()
             }
             composable(route = MeongMoryRoute.MAP.route) {
-                MapScreen()
+                MapScreen({})
             }
             composable(route = MeongMoryRoute.MY_PAGE.route) {
                 MyPageScreen(

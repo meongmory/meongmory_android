@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.meongmoryteam.meongmory"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.meongmoryteam.meongmory"
         minSdk = 28
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -89,4 +89,5 @@ dependencies {
     implementation(libs.naver.map)
     implementation(libs.naver.map.clustering)
     implementation(libs.google.play.services.location)
+    implementation(libs.accompanist.permissions)
 }

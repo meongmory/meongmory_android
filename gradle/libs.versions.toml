@@ -24,6 +24,7 @@ metalava = "0.3.3"
 naverMap = "3.17.0"
 naverMapClustering = "1.0.2"
 google-play-services-location = "16.0.0"
+accompanist = "0.33.0-alpha"
 
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -73,6 +74,7 @@ kotlin-serilization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-ser
 naver-map = { module = "com.naver.maps:map-sdk", version.ref = "naverMap" }
 naver-map-clustering = { module = "io.github.ParkSangGwon:tedclustering-naver", version.ref = "naverMapClustering" }
 google-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "google-play-services-location" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 
 
 [plugins]

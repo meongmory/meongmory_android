@@ -55,4 +55,5 @@ dependencies {
     implementation(libs.naver.map)
     implementation(libs.naver.map.clustering)
     implementation(libs.google.play.services.location)
+    implementation(libs.accompanist.permissions)
 }
