@@ -48,6 +48,7 @@ fun LoginScreen() {
     ) {
         LoginPhoneCertTitle()
         LoginPhoneTextField()
+        LoginCertificationTextField()
     }
 }
 
@@ -124,6 +125,48 @@ fun LoginPhoneTextField(
             .padding(horizontal = 16.dp),
     ) {
         loginViewModel.setEvent(LoginContract.LoginEvent.GetCertificationButtonClicked)
+    }
+    Spacer(modifier = Modifier.padding(20.dp))
+}
+
+@Composable
+fun LoginCertificationTextField(
+    loginViewModel: LoginViewModel = hiltViewModel(),
+) {
+    val loginViewState by loginViewModel.viewState.collectAsState()
+
+    TextFieldComponent(
+        name = loginViewState.certificationNumber,
+        placeholder = stringResource(R.string.login_certification_text_field_hint),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(37.dp)
+            .padding(horizontal = 16.dp),
+        onValueChange = { loginViewModel.setEvent(LoginContract.LoginEvent.OnPhoneChanged(it.trim())) },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
+    Spacer(modifier = Modifier.padding(6.dp))
+
+    TextButtonComponent(
+        text = stringResource(R.string.login_phone_post_certification_button),
+        colors = if (loginViewState.certificationNumber.length != 5) {
+            ButtonDefaults.textButtonColors(LightGrey)
+        } else {
+            ButtonDefaults.textButtonColors(Orange)
+        },
+        style = TextStyle(
+            fontFamily = NotoSansKR,
+            fontWeight = FontWeight.W500,
+            fontSize = 15.sp,
+            lineHeight = 20.sp,
+            color = ButtonContent,
+            platformStyle = PlatformTextStyle(includeFontPadding = false)
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+    ) {
+        loginViewModel.setEvent(LoginContract.LoginEvent.PostCertificationButtonClicked)
     }
 }
 
