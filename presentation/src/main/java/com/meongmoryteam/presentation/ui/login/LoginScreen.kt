@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -35,6 +38,8 @@ import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.Typography
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
@@ -72,6 +77,26 @@ fun LoginScreen(
                 .padding(horizontal = 16.dp),
         ) {
 
+        }
+    }
+
+    LaunchedEffect(key1 = loginViewModel.effect) {
+        loginViewModel.effect.collect { effect ->
+            when (effect) {
+                is LoginContract.LoginEffect.MoveToTerm -> {
+
+                }
+                is LoginContract.LoginEffect.FailCertification -> {
+                    /*
+                    인증 실패 스낵바 기획 논의
+                     */
+                }
+                is LoginContract.LoginEffect.SuccessCertification -> {
+                    /*
+                    인증 성공 스낵바 기획 논의
+                     */
+                }
+            }
         }
     }
 }
