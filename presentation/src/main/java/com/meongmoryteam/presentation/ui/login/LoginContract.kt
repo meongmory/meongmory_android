@@ -24,7 +24,6 @@ class LoginContract {
     }
 
     sealed class LoginEffect : ViewSideEffect {
-        data class ShowSnackBar(val message: String): LoginEffect()
         object MoveToTerm: LoginEffect()
         object SuccessCertification: LoginEffect()
         object FailCertification: LoginEffect()

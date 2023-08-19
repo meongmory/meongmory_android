@@ -2,7 +2,9 @@ package com.meongmoryteam.presentation.ui.login
 
 import androidx.lifecycle.viewModelScope
 import com.meongmoryteam.domain.model.reqeust.login.SmsSendRequestEntity
+import com.meongmoryteam.domain.model.reqeust.login.SmsValidateRequestEntity
 import com.meongmoryteam.domain.usecase.login.GetSmsSendUseCase
+import com.meongmoryteam.domain.usecase.login.PostSmsValidateUseCase
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.ui.login.LoginContract.LoginEffect
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val getSmsSendUseCase: GetSmsSendUseCase
+    private val getSmsSendUseCase: GetSmsSendUseCase,
+    private val postSmsSendUseCase: PostSmsValidateUseCase
 ): BaseViewModel<LoginState, LoginEffect, LoginEvent>(
    LoginState()
 ) {
@@ -25,9 +28,7 @@ class LoginViewModel @Inject constructor(
                 getSmsSend()
             }
             is LoginEvent.PostCertificationButtonClicked -> {
-                /*
-                인증 번호 전송 api
-                 */
+                postSmsSend()
             }
             is LoginEvent.ToTermScreenButtonClicked -> {
                 sendEffect({ LoginEffect.MoveToTerm })
@@ -55,6 +56,25 @@ class LoginViewModel @Inject constructor(
                         getSmsSendLoadState = LoadState.ERROR,
                     )
                 }
+            }
+        }
+    }
+
+    private fun postSmsSend() {
+        val smsValidRequest = SmsValidateRequestEntity(
+            viewState.value.certificationNumber,
+            viewState.value.phoneNumber
+        )
+        viewModelScope.launch {
+            postSmsSendUseCase(smsValidRequest).onSuccess {
+                updateState {
+                    copy(
+                        isCertification = true
+                    )
+                }
+                sendEffect({ LoginEffect.SuccessCertification })
+            }.onFailure {
+                sendEffect({ LoginEffect.FailCertification })
             }
         }
     }

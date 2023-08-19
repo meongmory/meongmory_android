@@ -3,6 +3,8 @@ package com.meongmoryteam.data.repository.login
 import com.meongmoryteam.data.datasource.login.LoginDataSource
 import com.meongmoryteam.data.model.response.login.toGetSmsSendEntity
 import com.meongmoryteam.data.model.request.login.toSmsSendRequest
+import com.meongmoryteam.data.model.request.login.toSmsValidateRequest
+import com.meongmoryteam.data.model.response.login.toPostSmsValidateEntity
 import com.meongmoryteam.domain.model.response.login.GetSmsSendEntity
 import com.meongmoryteam.domain.model.reqeust.login.SmsSendRequestEntity
 import com.meongmoryteam.domain.model.reqeust.login.SmsValidateRequestEntity
@@ -19,6 +21,6 @@ class LoginRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postSmsValidate(smsValidateRequestEntity: SmsValidateRequestEntity): Result<PostSmsValidateEntity> {
-
+        return loginDataSource.postSmsValidate(smsValidateRequestEntity.toSmsValidateRequest()).map { it.toPostSmsValidateEntity() }
     }
 }
