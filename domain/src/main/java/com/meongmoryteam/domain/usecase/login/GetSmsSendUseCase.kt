@@ -1,6 +1,6 @@
 package com.meongmoryteam.domain.usecase.login
 
-import com.meongmoryteam.domain.model.login.SmsSendRequestEntity
+import com.meongmoryteam.domain.model.reqeust.login.SmsSendRequestEntity
 import com.meongmoryteam.domain.repository.login.LoginRepository
 import javax.inject.Inject
 

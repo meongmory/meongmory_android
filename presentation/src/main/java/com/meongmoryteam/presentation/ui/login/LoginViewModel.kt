@@ -1,7 +1,7 @@
 package com.meongmoryteam.presentation.ui.login
 
 import androidx.lifecycle.viewModelScope
-import com.meongmoryteam.domain.model.login.SmsSendRequestEntity
+import com.meongmoryteam.domain.model.reqeust.login.SmsSendRequestEntity
 import com.meongmoryteam.domain.usecase.login.GetSmsSendUseCase
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
@@ -32,9 +32,7 @@ class LoginViewModel @Inject constructor(
             is LoginEvent.ToTermScreenButtonClicked -> {
                 sendEffect({ LoginEffect.MoveToTerm })
             }
-
             is LoginEvent.OnPhoneChanged -> reflectUpdateState(phoneNumber = event.phoneNumber)
-
             is LoginEvent.OnCertificationNumberChanged -> reflectUpdateState(certificationNumber = event.certificationNumber)
         }
     }

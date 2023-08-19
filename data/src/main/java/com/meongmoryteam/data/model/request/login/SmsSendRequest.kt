@@ -1,6 +1,6 @@
-package com.meongmoryteam.data.model.login
+package com.meongmoryteam.data.model.request.login
 
-import com.meongmoryteam.domain.model.login.SmsSendRequestEntity
+import com.meongmoryteam.domain.model.reqeust.login.SmsSendRequestEntity
 import kotlinx.serialization.Serializable
 
 @Serializable

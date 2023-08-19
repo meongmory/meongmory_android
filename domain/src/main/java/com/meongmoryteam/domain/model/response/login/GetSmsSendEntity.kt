@@ -1,4 +1,4 @@
-package com.meongmoryteam.domain.model.login
+package com.meongmoryteam.domain.model.response.login
 
 data class GetSmsSendEntity(
     val status: Int,
