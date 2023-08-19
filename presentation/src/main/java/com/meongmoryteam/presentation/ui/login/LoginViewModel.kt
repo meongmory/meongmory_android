@@ -34,9 +34,9 @@ class LoginViewModel @Inject constructor(
                 sendEffect({ LoginEffect.MoveToTerm })
             }
 
-            is LoginEvent.OnPhoneChanged -> reflectUpdateState(event.phoneNumber)
+            is LoginEvent.OnPhoneChanged -> reflectUpdateState(phoneNumber = event.phoneNumber)
 
-            is LoginEvent.OnCertificationNumberChanged -> reflectUpdateState(event.certificationNumber)
+            is LoginEvent.OnCertificationNumberChanged -> reflectUpdateState(certificationNumber = event.certificationNumber)
         }
     }
 

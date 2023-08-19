@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -48,7 +49,6 @@ fun LoginScreen() {
     ) {
         LoginPhoneCertTitle()
         LoginPhoneTextField()
-        LoginCertificationTextField()
     }
 }
 
@@ -127,13 +127,6 @@ fun LoginPhoneTextField(
         loginViewModel.setEvent(LoginContract.LoginEvent.GetCertificationButtonClicked)
     }
     Spacer(modifier = Modifier.padding(20.dp))
-}
-
-@Composable
-fun LoginCertificationTextField(
-    loginViewModel: LoginViewModel = hiltViewModel(),
-) {
-    val loginViewState by loginViewModel.viewState.collectAsState()
 
     TextFieldComponent(
         name = loginViewState.certificationNumber,
@@ -142,7 +135,7 @@ fun LoginCertificationTextField(
             .fillMaxWidth()
             .height(37.dp)
             .padding(horizontal = 16.dp),
-        onValueChange = { loginViewModel.setEvent(LoginContract.LoginEvent.OnCertificationNumberChanged(it.trim())) },
+        onValueChange = { loginViewModel.setEvent(LoginContract.LoginEvent.OnCertificationNumberChanged(it)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
     Spacer(modifier = Modifier.padding(6.dp))
