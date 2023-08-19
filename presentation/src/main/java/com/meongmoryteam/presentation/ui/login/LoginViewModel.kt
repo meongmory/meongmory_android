@@ -35,6 +35,8 @@ class LoginViewModel @Inject constructor(
             }
 
             is LoginEvent.OnPhoneChanged -> reflectUpdateState(event.phoneNumber)
+
+            is LoginEvent.OnCertificationNumberChanged -> reflectUpdateState(event.certificationNumber)
         }
     }
 
@@ -47,7 +49,7 @@ class LoginViewModel @Inject constructor(
                 updateState {
                     copy(
                         getSmsSendLoadState = LoadState.SUCCESS,
-                        certificationNumber = it.getSmsSendData.value
+                        getCertificationNumber = it.getSmsSendData.value
                     )
                 }
             }.onFailure {
@@ -61,11 +63,13 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun reflectUpdateState(
-        phoneNumber: String = viewState.value.phoneNumber
+        phoneNumber: String = viewState.value.phoneNumber,
+        certificationNumber: String = viewState.value.certificationNumber
     ) {
         updateState {
             copy(
-                phoneNumber = phoneNumber
+                phoneNumber = phoneNumber,
+                certificationNumber = certificationNumber
             )
         }
     }

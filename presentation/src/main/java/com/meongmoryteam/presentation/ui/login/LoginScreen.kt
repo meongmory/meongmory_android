@@ -142,7 +142,7 @@ fun LoginCertificationTextField(
             .fillMaxWidth()
             .height(37.dp)
             .padding(horizontal = 16.dp),
-        onValueChange = { loginViewModel.setEvent(LoginContract.LoginEvent.OnPhoneChanged(it.trim())) },
+        onValueChange = { loginViewModel.setEvent(LoginContract.LoginEvent.OnCertificationNumberChanged(it.trim())) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
     Spacer(modifier = Modifier.padding(6.dp))
