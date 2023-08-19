@@ -1,6 +1,5 @@
 package com.meongmoryteam.presentation.ui.login
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.meongmoryteam.domain.model.login.SmsSendRequestEntity
 import com.meongmoryteam.domain.usecase.login.GetSmsSendUseCase

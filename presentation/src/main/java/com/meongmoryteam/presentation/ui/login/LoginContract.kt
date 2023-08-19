@@ -12,6 +12,7 @@ class LoginContract {
         val phoneNumber: String = "",
         val certificationNumber: String = "",
         val getCertificationNumber: String = "",
+        val isCertification: Boolean = false,
     ): ViewState
 
     sealed class LoginEvent : ViewEvent {

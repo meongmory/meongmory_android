@@ -7,14 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.relocation.bringIntoViewRequester
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,7 +37,11 @@ import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.Typography
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    loginViewModel: LoginViewModel = hiltViewModel(),
+) {
+    val loginViewState by loginViewModel.viewState.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,6 +49,30 @@ fun LoginScreen() {
     ) {
         LoginPhoneCertTitle()
         LoginPhoneTextField()
+        Spacer(modifier = Modifier.weight(1f))
+        TextButtonComponent(
+            text = stringResource(R.string.login_phone_login_next_button),
+            colors = if (!loginViewState.isCertification) {
+                ButtonDefaults.textButtonColors(LightGrey)
+            } else {
+                ButtonDefaults.textButtonColors(Orange)
+            },
+            style = TextStyle(
+                fontFamily = NotoSansKR,
+                fontWeight = FontWeight.W500,
+                fontSize = 15.sp,
+                lineHeight = 20.sp,
+                color = ButtonContent,
+                platformStyle = PlatformTextStyle(includeFontPadding = false)
+            ),
+            enabled = loginViewState.isCertification,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .padding(horizontal = 16.dp),
+        ) {
+
+        }
     }
 }
 
@@ -120,6 +144,7 @@ fun LoginPhoneTextField(
             color = ButtonContent,
             platformStyle = PlatformTextStyle(includeFontPadding = false)
         ),
+        enabled = loginViewState.phoneNumber.length == 11,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
@@ -155,6 +180,7 @@ fun LoginPhoneTextField(
             color = ButtonContent,
             platformStyle = PlatformTextStyle(includeFontPadding = false)
         ),
+        enabled = loginViewState.certificationNumber.length == 5,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),

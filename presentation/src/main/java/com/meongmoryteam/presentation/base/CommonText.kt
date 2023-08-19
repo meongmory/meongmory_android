@@ -53,7 +53,8 @@ fun TextButtonComponent(
     style: TextStyle,
     width: Float = 1f,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    enabled: Boolean = true,
+    onClick: () -> Unit,
 ) {
     TextButton(
         onClick = onClick,
@@ -63,6 +64,7 @@ fun TextButtonComponent(
             .height(50.dp)
             .padding(vertical = 5.dp),
         colors = colors,
+        enabled = enabled
     )
     {
         Text(
