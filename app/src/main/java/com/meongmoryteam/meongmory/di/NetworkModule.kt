@@ -1,7 +1,7 @@
 package com.meongmoryteam.meongmory.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.meongmoryteam.data.service.ExampleApi
+import com.meongmoryteam.data.service.login.LoginApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -19,14 +20,19 @@ object NetworkModule {
     private val contentType = "application/json".toMediaType()
     private val json = Json { ignoreUnknownKeys = true }
 
-    private const val BASE_URL = "https://www.test.com/"
+    private const val BASE_URL = "http://52.79.149.29/"
 
     @Provides
     @Singleton
     fun provideClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
         return OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100, TimeUnit.SECONDS)
+            .addInterceptor(loggingInterceptor) // 인터셉터 추가
             .build()
     }
 
@@ -42,7 +48,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): ExampleApi {
-        return retrofit.create(ExampleApi::class.java)
+    fun provideLoginApi(retrofit: Retrofit): LoginApi {
+        return retrofit.create(LoginApi::class.java)
     }
 }

@@ -102,5 +102,16 @@
     <string name="login_phone_title_text">휴대폰 번호로 시작하기</string>
     <string name="login_logo_description">펫다이어리 로고</string>
     <string name="login_phone_description">전화</string>
+    <string name="login_back_button">로그인 화면 닫기 버튼</string>
+    <string name="login_phone_screen_title">안녕하세요!\n휴대폰 번호로 로그인 해주세요!</string>
+    <string name="login_phone_screen_sub_title">휴대폰 번호는 안전하게 보관되어\n이웃에게 공개되지 않아요.</string>
+    <string name="login_phone">휴대폰 번호</string>
+    <string name="login_phone_text_field_hint">-없이 숫자만 입력</string>
+    <string name="login_phone_get_certification_button">인증번호 받기</string>
+    <string name="login_certification_text_field_hint">인증번호 입력</string>
+    <string name="login_phone_post_certification_button">인증 요청</string>
+    <string name="login_phone_login_next_button">다음</string>
 
+    <!--  에러 메세지  -->
+    <string name="network_error_message">네트워크 에러가 발생하였습니다.</string>
 </resources>

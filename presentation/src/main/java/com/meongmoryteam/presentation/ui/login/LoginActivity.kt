@@ -19,7 +19,7 @@ class LoginActivity : ComponentActivity() {
     private fun setUnivSelectScreen() {
         setContent {
             MeongmoryTheme {
-
+                LoginScreen()
             }
         }
     }
