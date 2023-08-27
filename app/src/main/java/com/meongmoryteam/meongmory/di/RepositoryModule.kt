@@ -41,4 +41,5 @@ abstract class RepositoryModule {
     abstract fun bindMyPageDataSource(
         myPageDataSourceImpl: MyPageDataSourceImpl
     ): MyPageDataSource
+
 }

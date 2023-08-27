@@ -2,6 +2,7 @@ package com.meongmoryteam.meongmory.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.meongmoryteam.data.service.login.LoginApi
+import com.meongmoryteam.data.service.mypage.MyPageApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,6 +12,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -50,5 +52,11 @@ object NetworkModule {
     @Singleton
     fun provideLoginApi(retrofit: Retrofit): LoginApi {
         return retrofit.create(LoginApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMyPageApi(retrofit: Retrofit): MyPageApi {
+        return retrofit.create(MyPageApi::class.java)
     }
 }
