@@ -25,6 +25,7 @@ class MyPageViewModel @Inject constructor(
         when (event) {
             is MyPageEvent.InitMyPageScreen -> {
                 updateState { copy(loadState = LoadState.SUCCESS) }
+                getUserMyPage()
             }
 
             is MyPageEvent.OnClickProfileEditButtonClicked -> {
@@ -42,13 +43,13 @@ class MyPageViewModel @Inject constructor(
             getUserMyPageUseCase().onSuccess {
                 updateState {
                     copy(
-
+                        loadState = LoadState.SUCCESS
                     )
                 }
             }.onFailure {
                 updateState {
                     copy(
-
+                        loadState = LoadState.ERROR
                     )
                 }
             }

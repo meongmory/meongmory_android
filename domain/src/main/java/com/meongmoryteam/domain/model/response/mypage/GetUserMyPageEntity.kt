@@ -4,7 +4,7 @@ data class GetUserMyPageEntity(
     val status: Int,
     val code: String,
     val message: String,
-    val getSmsSendData: GetUserMyPageData,
+    val getUserMyPageData: GetUserMyPageData,
 )
 
 data class GetUserMyPageData(
