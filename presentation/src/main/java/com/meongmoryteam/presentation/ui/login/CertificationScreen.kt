@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.login
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -87,14 +88,10 @@ fun CertificationScreen(
                     navigateToTermScreen()
                 }
                 is LoginContract.LoginEffect.FailCertification -> {
-                    /*
-                    인증 실패 스낵바 기획 논의
-                     */
+
                 }
                 is LoginContract.LoginEffect.SuccessCertification -> {
-                    /*
-                    인증 성공 스낵바 기획 논의
-                     */
+
                 }
             }
         }
