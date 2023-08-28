@@ -10,13 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -34,19 +32,15 @@ import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.base.TextButtonComponent
 import com.meongmoryteam.presentation.base.TextFieldComponent
-import com.meongmoryteam.presentation.ui.register_family.RouteScreen
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.Typography
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
-    navController: NavHostController,
+fun CertificationScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
     navigateToTermScreen: () -> Unit,
 ) {
@@ -222,5 +216,7 @@ fun LoginPhoneTextField(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    CertificationScreen() {
+
+    }
 }

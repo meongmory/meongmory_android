@@ -54,8 +54,7 @@ fun LoginNavigation(
         modifier = modifier
     ) {
         composable(route = LoginNaviRoute.CertificationScreen.route) {
-            LoginScreen(
-                navController = navController,
+            CertificationScreen(
                 navigateToTermScreen = { navController.navigate(LoginNaviRoute.TermScreen.route) }
             )
         }
