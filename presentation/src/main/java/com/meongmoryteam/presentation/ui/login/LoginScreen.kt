@@ -29,9 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.base.TextButtonComponent
 import com.meongmoryteam.presentation.base.TextFieldComponent
+import com.meongmoryteam.presentation.ui.register_family.RouteScreen
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.DarkGrey
 import com.meongmoryteam.presentation.ui.theme.LightGrey
@@ -43,7 +46,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
+    navController: NavHostController,
     loginViewModel: LoginViewModel = hiltViewModel(),
+    navigateToTermScreen: () -> Unit,
 ) {
     val loginViewState by loginViewModel.viewState.collectAsState()
 
@@ -76,7 +81,7 @@ fun LoginScreen(
                 .height(50.dp)
                 .padding(horizontal = 16.dp),
         ) {
-
+            loginViewModel.setEvent(LoginContract.LoginEvent.ToTermScreenButtonClicked)
         }
     }
 
@@ -84,7 +89,7 @@ fun LoginScreen(
         loginViewModel.effect.collect { effect ->
             when (effect) {
                 is LoginContract.LoginEffect.MoveToTerm -> {
-
+                    navigateToTermScreen()
                 }
                 is LoginContract.LoginEffect.FailCertification -> {
                     /*
