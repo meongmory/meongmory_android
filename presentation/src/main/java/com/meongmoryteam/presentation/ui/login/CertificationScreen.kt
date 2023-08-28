@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.base.TextButtonComponent
@@ -38,9 +38,11 @@ import com.meongmoryteam.presentation.ui.theme.LightGrey
 import com.meongmoryteam.presentation.ui.theme.NotoSansKR
 import com.meongmoryteam.presentation.ui.theme.Orange
 import com.meongmoryteam.presentation.ui.theme.Typography
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun CertificationScreen(
+    navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel(),
     navigateToTermScreen: () -> Unit,
 ) {
@@ -80,10 +82,10 @@ fun CertificationScreen(
     }
 
     LaunchedEffect(key1 = loginViewModel.effect) {
-        loginViewModel.effect.collect { effect ->
+        loginViewModel.effect.collectLatest { effect ->
             when (effect) {
                 is LoginContract.LoginEffect.MoveToTerm -> {
-                    navigateToTermScreen()
+                    navController.navigate(LoginNaviRoute.TermScreen.route)
                 }
                 is LoginContract.LoginEffect.FailCertification -> {
                     /*
@@ -216,7 +218,9 @@ fun LoginPhoneTextField(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    CertificationScreen() {
+    CertificationScreen(
+        navController = rememberNavController(),
+    ) {
 
     }
 }

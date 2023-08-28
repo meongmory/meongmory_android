@@ -112,6 +112,9 @@
     <string name="login_phone_post_certification_button">인증 요청</string>
     <string name="login_phone_login_next_button">다음</string>
 
+    <string name="term_back_button">약관동의 닫기 버튼</string>
+    <string name="term_title">약관동의</string>
+
     <!--  에러 메세지  -->
     <string name="network_error_message">네트워크 에러가 발생하였습니다.</string>
 </resources>
