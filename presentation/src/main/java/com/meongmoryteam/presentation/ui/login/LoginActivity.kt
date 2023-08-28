@@ -5,13 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.meongmoryteam.presentation.ui.register_family.RegisterFamilyNavigation
 import com.meongmoryteam.presentation.ui.theme.MeongmoryTheme
+import com.meongmoryteam.presentation.ui.theme.White
 import dagger.hilt.android.AndroidEntryPoint
 
 sealed class LoginNaviRoute(val route: String) {
@@ -30,7 +34,9 @@ class LoginActivity : ComponentActivity() {
     private fun setUnivSelectScreen() {
         setContent {
             MeongmoryTheme {
-                LoginNavigation()
+                Surface(color = White, modifier = Modifier.fillMaxSize()) {
+                    LoginNavigation()
+                }
             }
         }
     }
@@ -55,7 +61,6 @@ fun LoginNavigation(
     ) {
         composable(route = LoginNaviRoute.CertificationScreen.route) {
             CertificationScreen(
-                navController = navController,
                 navigateToTermScreen = { navController.navigate(LoginNaviRoute.TermScreen.route) }
             )
         }

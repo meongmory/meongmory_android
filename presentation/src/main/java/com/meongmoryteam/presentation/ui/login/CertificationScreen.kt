@@ -42,7 +42,6 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun CertificationScreen(
-    navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel(),
     navigateToTermScreen: () -> Unit,
 ) {
@@ -82,10 +81,10 @@ fun CertificationScreen(
     }
 
     LaunchedEffect(key1 = loginViewModel.effect) {
-        loginViewModel.effect.collectLatest { effect ->
+        loginViewModel.effect.collect { effect ->
             when (effect) {
                 is LoginContract.LoginEffect.MoveToTerm -> {
-                    navController.navigate(LoginNaviRoute.TermScreen.route)
+                    navigateToTermScreen()
                 }
                 is LoginContract.LoginEffect.FailCertification -> {
                     /*
@@ -218,9 +217,7 @@ fun LoginPhoneTextField(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    CertificationScreen(
-        navController = rememberNavController(),
-    ) {
+    CertificationScreen() {
 
     }
 }
