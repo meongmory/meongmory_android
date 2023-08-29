@@ -3,6 +3,8 @@ package com.meongmoryteam.presentation.ui.myPage.profile
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.meongmoryteam.domain.model.reqeust.mypage.UserMyPageRequestEntity
+import com.meongmoryteam.domain.usecase.mypage.PatchUserMyPageUseCase
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileContract.MyPageProfileEvent
@@ -14,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageProfileViewModel @Inject constructor(
+    private val patchUserMyPageUseCase: PatchUserMyPageUseCase,
 ) : BaseViewModel<MyPageProfileViewState, MyPageProfileSideEffect, MyPageProfileEvent>(
     MyPageProfileViewState()
 ) {
@@ -45,16 +48,27 @@ class MyPageProfileViewModel @Inject constructor(
         }
     }
 
-    private fun changeNickName(
-        nickName: String = viewState.value.nickName
-    ) = viewModelScope.launch {
-        updateState {
-            copy(
-                loadState = LoadState.SUCCESS,
-                nickName = nickName
+    private fun changeNickName() {
+        viewModelScope.launch {
+            val userNickNameRequest = UserMyPageRequestEntity(
+                viewState.value.nickName
             )
+            patchUserMyPageUseCase(userNickNameRequest).onSuccess {
+                updateState {
+                    copy(
+                        loadState = LoadState.SUCCESS,
+                        nickName = it.patchUserMyPageData
+                    )
+                }
+            }.onFailure {
+                updateState {
+                    copy(
+                        loadState = LoadState.ERROR
+                    )
+                }
+            }
+            sendEffect({ MyPageProfileSideEffect.NavigateToMyPageScreen })
         }
-        sendEffect({ MyPageProfileSideEffect.NavigateToMyPageScreen })
     }
 
     // 텍스트 길이 초과

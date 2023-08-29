@@ -14,6 +14,6 @@ class MyPageDataSourceImpl @Inject constructor(
     }
 
     override suspend fun patchUserMyPage(userMyPageRequest: UserMyPageRequest): Result<PatchUserMyPageResponse> {
-        return kotlin.runCatching { myPageApi.patchUserMyPage() }
+        return kotlin.runCatching { myPageApi.patchUserMyPage(userMyPageRequest) }
     }
 }

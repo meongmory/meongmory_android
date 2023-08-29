@@ -35,6 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.meongmoryteam.domain.repository.mypage.MyPageRepository
+import com.meongmoryteam.domain.usecase.mypage.PatchUserMyPageUseCase
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.theme.ButtonContent
 import com.meongmoryteam.presentation.ui.theme.EditChangeFill
@@ -277,7 +279,6 @@ fun ProfileChangeButton(
 fun PreviewProfileScreen() {
     MeongmoryTheme {
         MyPageProfileScreen(
-            viewModel = MyPageProfileViewModel(),
             navigateToPrevious = { }
         )
     }
