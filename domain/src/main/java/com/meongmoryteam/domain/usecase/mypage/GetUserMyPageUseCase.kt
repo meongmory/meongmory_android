@@ -1,4 +1,4 @@
-package com.meongmoryteam.domain.usecase.login
+package com.meongmoryteam.domain.usecase.mypage
 
 import com.meongmoryteam.domain.repository.mypage.MyPageRepository
 import javax.inject.Inject

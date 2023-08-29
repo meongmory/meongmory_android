@@ -2,7 +2,7 @@ package com.meongmoryteam.presentation.ui.myPage
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.meongmoryteam.domain.usecase.login.GetUserMyPageUseCase
+import com.meongmoryteam.domain.usecase.mypage.GetUserMyPageUseCase
 import com.meongmoryteam.presentation.base.BaseViewModel
 import com.meongmoryteam.presentation.base.LoadState
 import com.meongmoryteam.presentation.ui.myPage.MyPageContract.MyPageEvent
