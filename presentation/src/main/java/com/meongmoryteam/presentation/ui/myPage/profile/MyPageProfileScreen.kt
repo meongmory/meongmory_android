@@ -252,7 +252,9 @@ fun ProfileChangeButton(
 ) {
     Button(
         onClick = {
-            viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickPreviousButton)
+            if (isFilled && !isOverflow) {
+                viewModel.setEvent(MyPageProfileContract.MyPageProfileEvent.OnClickChangeButton)
+            }
         },
         colors = if (!isFilled || isOverflow) {
             ButtonDefaults.textButtonColors(LightGrey)
