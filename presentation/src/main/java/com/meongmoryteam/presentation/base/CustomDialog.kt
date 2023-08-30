@@ -154,7 +154,8 @@ fun LogoutAlertDialog(
 // 탈퇴 다이어로그
 @Composable
 fun SecessionAlertDialog(
-    openDialogCustom: MutableState<Boolean>
+    openDialogCustom: MutableState<Boolean>,
+    viewModel: MyPageViewModel = hiltViewModel()
 ) {
     Dialog(
         onDismissRequest = { openDialogCustom.value = false }
@@ -165,7 +166,9 @@ fun SecessionAlertDialog(
             leftButton = stringResource(R.string.dialog_cancel),
             rightButton = stringResource(R.string.dialog_secession_yes),
             dialogCustom = openDialogCustom,
-            onRightButtonClick = { }
+            onRightButtonClick = {
+                viewModel.setEvent(MyPageContract.MyPageEvent.OnClickDeleteUserButtonClicked)
+            }
         )
     }
 }

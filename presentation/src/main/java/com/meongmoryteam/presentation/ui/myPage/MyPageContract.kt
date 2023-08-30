@@ -23,5 +23,6 @@ class MyPageContract {
         object OnClickProfileEditButtonClicked : MyPageEvent()
         object OnQuestionClicked : MyPageEvent()
         object OnClickLogoutButtonClicked: MyPageEvent()
+        object OnClickDeleteUserButtonClicked: MyPageEvent()
     }
 }

@@ -2,6 +2,7 @@ package com.meongmoryteam.presentation.ui.myPage
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.meongmoryteam.domain.usecase.logout.DeleteUserUseCase
 import com.meongmoryteam.domain.usecase.logout.PostUserLogoutUseCase
 import com.meongmoryteam.domain.usecase.mypage.GetUserMyPageUseCase
 import com.meongmoryteam.presentation.base.BaseViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val getUserMyPageUseCase: GetUserMyPageUseCase,
-    private val postUserLogoutUseCase: PostUserLogoutUseCase
+    private val postUserLogoutUseCase: PostUserLogoutUseCase,
+    private val postUserDeleteUserUseCase: DeleteUserUseCase
 ) : BaseViewModel<MyPageViewState, MyPageSideEffect, MyPageEvent>(
     MyPageViewState()
 ) {
@@ -40,6 +42,11 @@ class MyPageViewModel @Inject constructor(
 
             is MyPageEvent.OnClickLogoutButtonClicked -> {
                 postUserLogout()
+                sendEffect({ MyPageSideEffect.NavigateToLogin })
+            }
+
+            is MyPageEvent.OnClickDeleteUserButtonClicked -> {
+                postUserDelete()
                 sendEffect({ MyPageSideEffect.NavigateToLogin })
             }
         }
@@ -66,6 +73,18 @@ class MyPageViewModel @Inject constructor(
     private fun postUserLogout() {
         viewModelScope.launch {
             postUserLogoutUseCase().onSuccess {
+                updateState {
+                    copy(
+                        loadState = LoadState.SUCCESS
+                    )
+                }
+            }
+        }
+    }
+
+    private fun postUserDelete() {
+        viewModelScope.launch {
+            postUserDeleteUserUseCase().onSuccess {
                 updateState {
                     copy(
                         loadState = LoadState.SUCCESS
