@@ -42,7 +42,6 @@ private fun CustomDialogUI(
     leftButton: String? = null,
     rightButton: String? = null,
     dialogCustom: MutableState<Boolean>,
-    viewModel: MyPageViewModel = hiltViewModel(),
     onRightButtonClick: () -> Unit
 ) {
     Card(
