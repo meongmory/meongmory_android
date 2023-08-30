@@ -2,6 +2,7 @@ package com.meongmoryteam.meongmory.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.meongmoryteam.data.service.login.LoginApi
+import com.meongmoryteam.data.service.logout.LogoutApi
 import com.meongmoryteam.data.service.mypage.MyPageApi
 import dagger.Module
 import dagger.Provides
@@ -58,5 +59,11 @@ object NetworkModule {
     @Singleton
     fun provideMyPageApi(retrofit: Retrofit): MyPageApi {
         return retrofit.create(MyPageApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogoutApi(retrofit: Retrofit): LogoutApi {
+        return retrofit.create(LogoutApi::class.java)
     }
 }
