@@ -309,7 +309,9 @@ fun MyPageScreen(
         // 버튼마다 다른 다이어로그
         if (refreshButton.value) {
             if (onClickAction == stringResource(R.string.my_page_profile_edit)) {
-                LogoutAlertDialog(openDialogCustom = refreshButton)
+                LogoutAlertDialog(
+                    openDialogCustom = refreshButton
+                )
             }
             if (onClickAction == stringResource(R.string.my_page_question)) {
                 SecessionAlertDialog(openDialogCustom = refreshButton)
