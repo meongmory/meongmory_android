@@ -38,8 +38,6 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(files("src/app/main/jniLibs"))
-    implementation(files("libs/libDaumMapAndroid.jar"))
 
 
     //Retrofit
@@ -48,7 +46,6 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt)
-    implementation(files("src/main/jniLibs"))
     kapt(libs.hilt.testing.compiler)
 
     // Serialization

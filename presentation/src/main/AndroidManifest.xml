@@ -6,4 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <meta-data
+        android:name="com.kakao.vectormap.APP_KEY"
+        android:value="e17010f4be125f8d80c96f81e0135dc4"/>
+
 </manifest>
