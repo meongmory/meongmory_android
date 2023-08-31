@@ -13,7 +13,6 @@ fun MapScreen() {
 }
 
 @Preview(showBackground = true)
-
 @Composable
 fun MapScreenPreview() {
     MeongmoryTheme {
