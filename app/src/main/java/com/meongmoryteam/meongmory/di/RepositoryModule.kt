@@ -1,5 +1,7 @@
 package com.meongmoryteam.meongmory.di
 
+import com.meongmoryteam.data.datasource.family.FamilyDataSource
+import com.meongmoryteam.data.datasource.family.FamilyDataSourceImpl
 import com.meongmoryteam.data.datasource.login.LoginDataSource
 import com.meongmoryteam.data.datasource.login.LoginDataSourceImpl
 import com.meongmoryteam.data.repository.login.LoginRepositoryImpl
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindLoginDataSource(
         loginDataSourceImpl: LoginDataSourceImpl
     ): LoginDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindFamilyRepository(
+        familyDataSourceImpl: FamilyDataSourceImpl
+    ): FamilyDataSource
 }
