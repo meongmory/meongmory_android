@@ -4,8 +4,9 @@ import com.meongmoryteam.domain.model.reqeust.family.RegisterFamilyNameRequestEn
 import com.meongmoryteam.domain.repository.family.FamilyRepository
 import javax.inject.Inject
 
-class PostRegisterWithNameUseCase @Inject constructor(
+class PostRegisterFamilyNameUseCase @Inject constructor(
     private val familyRepository: FamilyRepository
 ) {
-    suspend operator fun invoke(registerFamilyNameRequestEntity: RegisterFamilyNameRequestEntity) = familyRepository.postRegisterWithName(registerFamilyNameRequestEntity)
+    suspend operator fun invoke(registerFamilyNameRequestEntity: RegisterFamilyNameRequestEntity) =
+        familyRepository.postRegisterWithName(registerFamilyNameRequestEntity)
 }

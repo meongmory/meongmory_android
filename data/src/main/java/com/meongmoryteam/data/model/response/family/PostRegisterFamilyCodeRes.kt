@@ -1,10 +1,6 @@
 package com.meongmoryteam.data.model.response.family
 
-import com.meongmoryteam.data.model.response.login.PostSmsValidateResponse
 import com.meongmoryteam.domain.model.response.family.PostRegisterFamilyCodeEntity
-import com.meongmoryteam.domain.model.response.login.GetSmsSendData
-import com.meongmoryteam.domain.model.response.login.GetSmsSendEntity
-import com.meongmoryteam.domain.model.response.login.PostSmsValidateEntity
 import kotlinx.serialization.Serializable
 
 @Serializable

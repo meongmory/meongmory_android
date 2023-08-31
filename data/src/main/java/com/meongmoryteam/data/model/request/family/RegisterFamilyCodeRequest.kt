@@ -10,5 +10,6 @@ data class RegisterFamilyCodeRequest(
 
 fun RegisterFamilyCodeRequestEntity.toRegisterWithCodeRequest(): RegisterFamilyCodeRequest {
     return RegisterFamilyCodeRequest(
-        familyCode = this.familyCode)
+        familyCode = this.familyCode
+    )
 }

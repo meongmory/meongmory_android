@@ -14,12 +14,19 @@ import javax.inject.Inject
 
 class FamilyRepositoryImpl @Inject constructor(
     private val familyDataSource: FamilyDataSource
-): FamilyRepository {
-    override suspend fun postRegisterWithCode(registerFamilyCodeRequestEntity: RegisterFamilyCodeRequestEntity): Result<PostRegisterFamilyCodeEntity> {
-        return familyDataSource.registerFamilyWithCode(registerFamilyCodeRequestEntity.toRegisterWithCodeRequest()).map { it.toPostRegisterFamilyCodeEntity() }
+) : FamilyRepository {
+    override suspend fun postRegisterWithName(registerFamilyNameRequestEntity: RegisterFamilyNameRequestEntity): Result<PostRegisterFamilyNameEntity> {
+        return familyDataSource.registerFamilyWithName(registerFamilyNameRequestEntity.toRegisterWithNameRequest())
+            .map { it.toPostRegisterFamilyNameEntity() }
     }
 
-    override suspend fun postRegisterWithName(familyId: String, registerFamilyNameRequestEntity: RegisterFamilyNameRequestEntity): Result<PostRegisterFamilyNameEntity> {
-        return familyDataSource.registerFamilyWithName(familyId, registerFamilyNameRequestEntity.toRegisterWithNameRequest()).map { it.toPostRegisterFamilyNameEntity() }
+    override suspend fun postRegisterWithCode(
+        familyId: String,
+        registerFamilyCodeRequestEntity: RegisterFamilyCodeRequestEntity
+    ): Result<PostRegisterFamilyCodeEntity> {
+        return familyDataSource.registerFamilyWithCode(
+            familyId,
+            registerFamilyCodeRequestEntity.toRegisterWithCodeRequest()
+        ).map { it.toPostRegisterFamilyCodeEntity() }
     }
 }

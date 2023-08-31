@@ -92,7 +92,7 @@ fun RegisterByCodeScreen(
                 Spacer(modifier = Modifier.fillMaxWidth(0.1f))
                 TextButtonComponent(
                     text = stringResource(R.string.check),
-                    colors = if (!viewState.isFilledCode) {
+                    colors = if (viewState.invalidCode) {
                         ButtonDefaults.textButtonColors(LightGrey)
                     } else {
                         ButtonDefaults.textButtonColors(Orange)
@@ -105,9 +105,9 @@ fun RegisterByCodeScreen(
                         color = ButtonContent
                     ),
                     width = 1f
-                ) { if (viewState.isFilledCode) viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton) else {} }
+                ) { if (!viewState.invalidCode) viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton) else {} }
             }
-            CheckValidCode(isInvalid = viewState.isFilledCode)
+            CheckValidCode(isInvalid = viewState.invalidCode)
         }
         Spacer(modifier = Modifier.fillMaxHeight(0.3f))
         Column(modifier = Modifier.padding(bottom = 30.dp)) {
@@ -138,8 +138,8 @@ fun RegisterByCodeScreen(
                 RegisterFamilySideEffect.NavigateToPreviousScreen -> {
                     navigateToFamilyScreen()
                 }
-
                 RegisterFamilySideEffect.NavigateToNextScreen -> {
+                    //등록 성공 시 성공 후 메인으로 전환 (추후 변경)
                     navigateToRegisterScreen()
                 }
             }

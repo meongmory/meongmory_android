@@ -49,7 +49,8 @@ fun RegisterFamilyScreen(
             TextComponent(
                 text = stringResource(R.string.register_family_info),
                 style = Typography.titleMedium,
-                color = DarkGrey
+                color = DarkGrey,
+                maxLine = 5
             )
         }
         Column(modifier = Modifier.padding(bottom = 30.dp)) {

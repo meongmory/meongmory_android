@@ -10,13 +10,13 @@ import retrofit2.http.Path
 
 interface FamilyApi {
     @POST("families")
-    suspend fun postRegisterFamilyCode(
-        @Body registerFamilyCodeRequest: RegisterFamilyCodeRequest
-    ): PostRegisterFamilyCodeRes
-
-    @POST("families/{familyId}/invite")
     suspend fun postRegisterFamilyName(
-        @Path(value = "familyId") familyId: String,
         @Body registerFamilyNameRequest: RegisterFamilyNameRequest
     ): PostRegisterFamilyNameRes
+
+    @POST("families/{familyId}/invite")
+    suspend fun postRegisterFamilyCode(
+        @Path(value = "familyId") familyId: String,
+        @Body registerFamilyCodeRequest: RegisterFamilyCodeRequest
+    ): PostRegisterFamilyCodeRes
 }

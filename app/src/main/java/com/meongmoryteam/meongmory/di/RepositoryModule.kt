@@ -4,7 +4,9 @@ import com.meongmoryteam.data.datasource.family.FamilyDataSource
 import com.meongmoryteam.data.datasource.family.FamilyDataSourceImpl
 import com.meongmoryteam.data.datasource.login.LoginDataSource
 import com.meongmoryteam.data.datasource.login.LoginDataSourceImpl
+import com.meongmoryteam.data.repository.family.FamilyRepositoryImpl
 import com.meongmoryteam.data.repository.login.LoginRepositoryImpl
+import com.meongmoryteam.domain.repository.family.FamilyRepository
 import com.meongmoryteam.domain.repository.login.LoginRepository
 import dagger.Binds
 import dagger.Module
@@ -31,6 +33,12 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindFamilyRepository(
+        familyRepositoryImpl: FamilyRepositoryImpl
+    ): FamilyRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindFamilyDataSource(
         familyDataSourceImpl: FamilyDataSourceImpl
     ): FamilyDataSource
 }
