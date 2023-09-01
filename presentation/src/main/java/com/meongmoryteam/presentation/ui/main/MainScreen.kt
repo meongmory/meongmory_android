@@ -1,7 +1,5 @@
 package com.meongmoryteam.presentation.ui.main
 
-import android.view.LayoutInflater
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -10,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
@@ -18,12 +15,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.ui.bottom.MeongMoryBottomNavigation
 import com.meongmoryteam.presentation.ui.bottom.MeongMoryRoute
 import com.meongmoryteam.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.meongmoryteam.presentation.ui.home.HomeScreen
-import com.meongmoryteam.presentation.ui.map.MapFragment
 import com.meongmoryteam.presentation.ui.myPage.MyPageScreen
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileScreen
 import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionScreen
@@ -63,9 +58,11 @@ fun MainScreen(
             composable(route = MeongMoryRoute.MAP.route) {
                 AndroidView(
                     factory = { context ->
-                        val view = LayoutInflater.from(context).inflate(R.layout.fragment_map, null, false)
-                        return@AndroidView view
-                    }
+                        MapView(context).apply {
+                            mapType = MapView.MapType.Standard
+                        }
+                    },
+                    update = { }
                 )
             }
             composable(route = MeongMoryRoute.MY_PAGE.route) {
@@ -96,6 +93,7 @@ fun MainScreen(
         else -> false
     }
 }
+
 
 
 @Preview
