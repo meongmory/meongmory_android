@@ -85,4 +85,7 @@ dependencies {
 
     // Room
     implementation(libs.room)
+
+    // DataStore
+    implementation(libs.datastore)
 }
