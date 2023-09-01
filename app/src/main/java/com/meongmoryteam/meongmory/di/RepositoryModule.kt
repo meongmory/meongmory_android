@@ -41,4 +41,10 @@ abstract class RepositoryModule {
     abstract fun bindFamilyDataSource(
         familyDataSourceImpl: FamilyDataSourceImpl
     ): FamilyDataSource
+
+//    @Singleton
+//    @Binds
+//    abstract fun bindPetDataSource(
+//
+//    )
 }
