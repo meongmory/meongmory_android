@@ -62,7 +62,6 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation(files("src/main/jniLibs"))
     implementation(project(mapOf("path" to ":data")))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
@@ -71,8 +70,9 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation(files("src/app/main/jniLibs"))
+
     implementation(files("libs/libDaumMapAndroid.jar"))
+    implementation(files("src/main/jniLibs"))
 
 
     // Hilt

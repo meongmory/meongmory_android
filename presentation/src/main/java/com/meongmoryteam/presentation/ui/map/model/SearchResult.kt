@@ -1,4 +1,4 @@
-package com.meongmoryteam.presentation.model
+package com.meongmoryteam.presentation.ui.map.model
 
 import android.os.Parcelable
 import com.meongmoryteam.data.remote.model.DocumentResult

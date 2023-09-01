@@ -1,4 +1,4 @@
-package com.meongmoryteam.presentation.model
+package com.meongmoryteam.presentation.ui.map.model
 
 data class DocumentResult(
     val documentList: List<Document>,
