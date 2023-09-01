@@ -51,4 +51,7 @@ dependencies {
     // Serialization
     implementation(libs.serialization)
     implementation(libs.kotlin.serilization)
+
+    // Room
+    implementation(libs.room)
 }

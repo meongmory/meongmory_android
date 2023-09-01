@@ -80,4 +80,7 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation)
+
+    // Room
+    implementation(libs.room)
 }
