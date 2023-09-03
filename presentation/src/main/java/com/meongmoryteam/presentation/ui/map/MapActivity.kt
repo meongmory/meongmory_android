@@ -3,6 +3,7 @@ package com.meongmoryteam.presentation.ui.map
 import android.os.Bundle
 import com.meongmoryteam.presentation.base.BaseAppCompatActivity
 import com.meongmoryteam.presentation.databinding.ActivityMapBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 class MapActivity : BaseAppCompatActivity() {
     private lateinit var binding: ActivityMapBinding

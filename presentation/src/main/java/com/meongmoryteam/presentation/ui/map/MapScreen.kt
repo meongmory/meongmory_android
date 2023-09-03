@@ -52,20 +52,18 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapScreen(
-    mapViewMode: MapViewMode,
-    documentResult: DocumentResult,
-    selectPositionEvent: SelectPosition,
-    trackingMode: CurrentLocationTrackingMode,
-    listMode: ListMode,
-    onDocumentClick: (Document, Int) -> Unit,
-    onDocumentFavoriteClick: (Document) -> Unit,
-    onDocumentUnFavoriteClick: (Document) -> Unit,
-    onBackCLick: () -> Unit,
-    onSearchClick: () -> Unit,
-    onFavoriteClick: () -> Unit,
-    onTrackingModeClick: () -> Unit,
-    onListModeClick: () -> Unit,
-    mapView: @Composable () -> Unit,
+    mapViewMode: MapViewMode?,
+    documentResult: DocumentResult?,
+    selectPositionEvent: SelectPosition?,
+    trackingMode: CurrentLocationTrackingMode?,
+    listMode: ListMode?,
+    onDocumentClick: ((Document, Int) -> Unit?)?,
+    onBackCLick: () -> Unit?,
+    onSearchClick: () -> Unit?,
+    onFavoriteClick: () -> Unit?,
+    onTrackingModeClick: () -> Unit?,
+    onListModeClick: () -> Unit?,
+    mapView: @Composable () -> Unit?,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
@@ -73,19 +71,29 @@ fun MapScreen(
         sheetContent = {
             val lazyListState = rememberLazyListState()
             val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
-            if (selectPositionEvent.position != -1 && selectPositionEvent.selectedByMap) {
-                LaunchedEffect(Unit) {
-                    coroutineScope.launch {
-                        lazyListState.scrollToItem(selectPositionEvent.position)
+            if (selectPositionEvent != null) {
+                if (selectPositionEvent.position != -1 && selectPositionEvent.selectedByMap) {
+                    LaunchedEffect(Unit) {
+                        coroutineScope.launch {
+                            if (selectPositionEvent != null) {
+                                lazyListState.scrollToItem(selectPositionEvent.position)
+                            }
+                        }
                     }
                 }
             }
-            MapBottomSheet(
-                state = lazyListState,
-                documentList = documentResult.documentList,
-                selectedPosition = selectPositionEvent.position,
-                onDocumentClick = onDocumentClick
-            )
+            if (documentResult != null) {
+                if (selectPositionEvent != null) {
+                    if (onDocumentClick != null) {
+                        MapBottomSheet(
+                            state = lazyListState,
+                            documentList = documentResult.documentList,
+                            selectedPosition = selectPositionEvent.position,
+                            onDocumentClick = onDocumentClick
+                        )
+                    }
+                }
+            }
         },
         scaffoldState = bottomSheetScaffoldState,
         sheetPeekHeight = 0.dp,
@@ -105,28 +113,32 @@ fun MapScreen(
 
 @Composable
 fun ColumnScope.MapTopAppBar(
-    mapViewMode: MapViewMode,
-    onBackCLick: () -> Unit,
-    onSearchClick: () -> Unit
+    mapViewMode: MapViewMode?,
+    onBackCLick: () -> Unit?,
+    onSearchClick: () -> Unit?
 ) {
     CommonTopAppBar(
         navigationIcon = {
-            if (mapViewMode.isDefault) {
-                SearchImage()
+            if (mapViewMode != null) {
+                if (mapViewMode.isDefault) {
+                    SearchImage()
+                }
             }
         },
         title = {
-            val modifier = if (mapViewMode.isDefault) {
+            val modifier = if (mapViewMode?.isDefault == true) {
                 Modifier.clickable { onSearchClick() }
             } else {
                 Modifier
             }
-            Text(
-                text = stringResource(mapViewMode.toTitleRes()),
-                modifier = modifier,
-                fontSize = 16.sp,
-                color = Color.Black
-            )
+            if (mapViewMode != null) {
+                Text(
+                    text = stringResource(mapViewMode.toTitleRes()),
+                    modifier = modifier,
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            }
         },
     )
 }
@@ -170,7 +182,7 @@ fun MapBottomSheet(
     state: LazyListState,
     documentList: List<Document>,
     selectedPosition: Int,
-    onDocumentClick: (Document, Int) -> Unit,
+    onDocumentClick: (Document, Int) -> Unit?,
 ) {
     DocumentList(
         modifier = Modifier
@@ -190,7 +202,7 @@ fun DocumentList(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     documentList: List<Document>,
     selectedPosition: Int = -1,
-    onClick: (Document, Int) -> Unit = { _, _ -> },
+    onClick: (Document, Int) -> Unit? = { _, _ -> },
 ) {
     LazyColumn(
         modifier = modifier,
@@ -226,7 +238,7 @@ fun DocumentListItem(
     modifier: Modifier = Modifier,
     index: Int,
     document: Document,
-    onClick: (Document, Int) -> Unit = { _, _ -> },
+    onClick: (Document, Int) -> Unit? = { _, _ -> },
 ) {
     Row(
         modifier = modifier

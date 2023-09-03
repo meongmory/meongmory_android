@@ -3,9 +3,9 @@ package com.meongmoryteam.presentation.base
 import android.app.Activity
 import android.content.res.Configuration
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
 
 open class BaseAppCompatActivity : Activity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

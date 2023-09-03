@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -9,7 +10,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,10 +19,10 @@ import com.meongmoryteam.presentation.ui.bottom.MeongMoryBottomNavigation
 import com.meongmoryteam.presentation.ui.bottom.MeongMoryRoute
 import com.meongmoryteam.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.meongmoryteam.presentation.ui.home.HomeScreen
+import com.meongmoryteam.presentation.ui.map.MapScreen
 import com.meongmoryteam.presentation.ui.myPage.MyPageScreen
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileScreen
 import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionScreen
-import net.daum.mf.map.api.MapView
 
 @Composable
 fun MainScreen(
@@ -56,14 +56,21 @@ fun MainScreen(
                 HomeScreen()
             }
             composable(route = MeongMoryRoute.MAP.route) {
-                AndroidView(
-                    factory = { context ->
-                        MapView(context).apply {
-                            mapType = MapView.MapType.Standard
-                        }
-                    },
-                    update = { }
-                )
+                MapScreen(
+                    mapViewMode = null,
+                    documentResult = null,
+                    selectPositionEvent = null,
+                    trackingMode = null,
+                    listMode = null,
+                    onDocumentClick = null,
+                    onBackCLick = { /*TODO*/ },
+                    onSearchClick = { /*TODO*/ },
+                    onFavoriteClick = { /*TODO*/ },
+                    onTrackingModeClick = { /*TODO*/ },
+                    onListModeClick = { /*TODO*/ }) {
+
+                }
+                Log.d("맵", "맵 불러오기")
             }
             composable(route = MeongMoryRoute.MY_PAGE.route) {
                 MyPageScreen(
