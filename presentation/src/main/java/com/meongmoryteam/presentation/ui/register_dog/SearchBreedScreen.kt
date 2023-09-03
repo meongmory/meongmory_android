@@ -2,6 +2,7 @@
 
 package com.meongmoryteam.presentation.ui.register_dog
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.meongmoryteam.domain.model.response.pet.SearchBreedResponse
 import com.meongmoryteam.presentation.R
 import com.meongmoryteam.presentation.base.TextButtonComponent
 import com.meongmoryteam.presentation.base.TextFieldComponent
@@ -77,21 +79,21 @@ fun SearchBreedScreen(
     val buttonItemList =
         listOf(stringResource(R.string.dog_icon), stringResource(R.string.cat_icon))
     //임시데이터
-    val searchList =
-        listOf(
-            Breed("말티즈", "강아지"),
-            Breed("페르시안", "고양이"),
-            Breed("푸들", "강아지"),
-            Breed("벵갈", "고양이"),
-            Breed("포메라니안", "강아지"),
-            Breed("엑조틱", "고양이"),
-            Breed("비숑", "강아지"),
-            Breed("레그돌", "고양이"),
-            Breed("골든리트리버", "강아지"),
-            Breed("브리티쉬 숏헤어", "고양이"),
-            Breed("진돗개", "강아지"),
-            Breed("아메리칸 숏헤어", "고양이")
-        )
+//    val searchList =
+//        listOf(
+//            Breed("말티즈", "강아지"),
+//            Breed("페르시안", "고양이"),
+//            Breed("푸들", "강아지"),
+//            Breed("벵갈", "고양이"),
+//            Breed("포메라니안", "강아지"),
+//            Breed("엑조틱", "고양이"),
+//            Breed("비숑", "강아지"),
+//            Breed("레그돌", "고양이"),
+//            Breed("골든리트리버", "강아지"),
+//            Breed("브리티쉬 숏헤어", "고양이"),
+//            Breed("진돗개", "강아지"),
+//            Breed("아메리칸 숏헤어", "고양이")
+//        )
     val viewState by viewModel.viewState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
@@ -104,6 +106,7 @@ fun SearchBreedScreen(
         verticalArrangement = Arrangement.Top,
         navigateTo = { viewModel.setEvent(RegisterDogEvent.OnClickBackButton) }
     ) {
+
         CategoryScreen(
             buttonItem = buttonItemList,
             petType = viewState.petType
@@ -121,7 +124,8 @@ fun SearchBreedScreen(
             navigateToSearch = { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
         )
         SearchList(
-            searchList = searchList,
+//            searchList = searchList,
+            searchList = viewState.content,
             category = viewState.petType,
             breed = viewState.breed,
             onValueChange = { viewModel.setEvent(RegisterDogEvent.OnBreedClicked(it)) })
@@ -218,11 +222,13 @@ fun SearchScreen(
 
 @Composable
 fun SearchList(
-    searchList: List<Breed>,
+//    searchList: List<Breed>,
+    searchList: List<SearchBreedResponse>,
     category: String,
     breed: String,
     onValueChange: (String) -> Unit
 ) {
+    Log.d("search","$searchList")
     val lazyList = if (category == stringResource(R.string.blank)) searchList else selectLogic(
         searchList = searchList,
         category = category
@@ -233,7 +239,7 @@ fun SearchList(
             .fillMaxHeight(0.85f)
     ) {
         items(lazyList) { item ->
-            val tint = if (item.breed == breed) DeepYellow else EditDivider
+            val tint = if (item.animalName == breed) DeepYellow else EditDivider
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -241,7 +247,7 @@ fun SearchList(
             ) {
                 Row {
                     val imageVector =
-                        if (item.category == stringResource(R.string.dog_icon)) R.drawable.dog else R.drawable.cat
+                        if (item.animalType == stringResource(R.string.dog_icon)) R.drawable.dog else R.drawable.cat
                     Icon(
                         modifier = Modifier.padding(horizontal = 5.dp),
                         imageVector = ImageVector.vectorResource(imageVector),
@@ -250,10 +256,10 @@ fun SearchList(
                         ),
                         tint = tint
                     )
-                    Text(text = item.breed, style = Typography.labelSmall, color = Black)
+                    Text(text = item.animalName, style = Typography.labelSmall, color = Black)
                     Text(
                         modifier = Modifier.padding(horizontal = 5.dp),
-                        text = "[${item.category}]",
+                        text = "[${item.animalType}]",
                         style = Typography.labelSmall,
                         color = DarkGrey
                     )
@@ -265,7 +271,7 @@ fun SearchList(
                 ) {
                     IconButton(
                         onClick = {
-                            onValueChange(item.breed)
+                            onValueChange(item.animalName)
                         }
                     ) {
                         Icon(
@@ -316,13 +322,16 @@ fun RenderSelectButton(
 
 @Composable
 fun selectLogic(
-    searchList: List<Breed>,
+//    searchList: List<Breed>,
+    searchList: List<SearchBreedResponse>,
     category: String
-): MutableList<Breed> {
-    val selectedList = mutableListOf<Breed>()
+): MutableList<SearchBreedResponse> {
+    val selectedList = mutableListOf<SearchBreedResponse>()
 
     for (item in searchList) {
-        if (item.category == category) selectedList.add(item)
+//        if (item.category == category) selectedList.add(item)
+        if (item.animalType == category) selectedList.add(item)
+
     }
     return selectedList
 }

@@ -27,6 +27,9 @@ object NavArgs {
     const val BREED_ROUTE_PLUS = "/{breed}"
     const val BREED_ARG = "breed"
     const val BREED_EXCEPTION_ARG = "{breed}"
+    const val ANIMALID_ROUTE_PLUS = "/{animalId}"
+    const val ANIMALID_ARG = "animalId"
+    const val ANIMALID_EXCEPTION_ARG = "{animalId}"
 }
 
 sealed class Route(val route: String) {
@@ -63,12 +66,13 @@ fun RegisterDogNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS),
+        startDestination = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS).plus(NavArgs.ANIMALID_ROUTE_PLUS),
         modifier = modifier
     ) {
         composable(
-            route = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS),
-            arguments = listOf(navArgument(NavArgs.BREED_ARG) { type = NavType.StringType })
+            route = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS).plus(NavArgs.ANIMALID_ROUTE_PLUS),
+            arguments = listOf(navArgument(NavArgs.BREED_ARG) { type = NavType.StringType }, navArgument(NavArgs.ANIMALID_ARG){type=
+                NavType.IntType})
         ) {
             RegisterDogScreen(
                 navController = navController,
@@ -80,7 +84,8 @@ fun RegisterDogNavigation(
                         NavArgs.BREED_ARG
                     ) == NavArgs.BREED_EXCEPTION_ARG
                 ) stringResource(R.string.blank)
-                else "${it.arguments?.getString(NavArgs.BREED_ARG)}"
+                else "${it.arguments?.getString(NavArgs.BREED_ARG)}",
+                animalId = it.arguments?.getInt(NavArgs.ANIMALID_ARG) ?: 0
             )
         }
         composable(route = Route.SuccessRegister.route) {
@@ -95,11 +100,13 @@ fun RegisterDogNavigation(
             SearchBreedScreen(
                 navController = navController,
                 navigateToPreviousScreen = {
-                    navController.navigate(
-                        Route.RegisterDog.route.plus(
-                            NavArgs.BREED_ROUTE_PLUS
-                        )
-                    )
+//                    navController.navigate(
+//                        Route.RegisterDog.route.plus(
+//                            NavArgs.BREED_ROUTE_PLUS
+//                        )
+//                    )
+                    //이전 화면 데이터 유지되도록
+                    navController.popBackStack()
                 },
             )
         }

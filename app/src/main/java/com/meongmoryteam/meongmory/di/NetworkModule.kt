@@ -3,6 +3,7 @@ package com.meongmoryteam.meongmory.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.meongmoryteam.data.service.family.FamilyApi
 import com.meongmoryteam.data.service.login.LoginApi
+import com.meongmoryteam.data.service.pet.PetApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,5 +59,11 @@ object NetworkModule {
     @Singleton
     fun provideFamilyApi(retrofit: Retrofit): FamilyApi {
         return retrofit.create(FamilyApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePetApi(retrofit: Retrofit): PetApi {
+        return retrofit.create(PetApi::class.java)
     }
 }

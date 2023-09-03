@@ -106,7 +106,7 @@ fun TextFieldComponent(
                     .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
                     .padding(horizontal = 15.dp, vertical = 14.dp)
             ) {
-                if (name.isEmpty()) {
+                if (name.isEmpty() || name == "0") {
                     Text(text = placeholder, style = Typography.titleSmall, color = Placeholer)
                 } else {
                     it()

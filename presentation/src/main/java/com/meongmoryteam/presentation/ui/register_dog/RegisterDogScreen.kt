@@ -83,7 +83,8 @@ fun RegisterDogScreen(
     navigateToSearchBreedScreen: () -> Unit,
     navigateToPreviousScreen: () -> Unit,
     navigateToMakeScreen: () -> Unit,
-    searchBreed: String
+    searchBreed: String,
+    animalId: Int
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val buttonItemList = listOf("수컷", "암컷")
@@ -104,7 +105,7 @@ fun RegisterDogScreen(
             buttonItem = buttonItemList,
             value = viewState.gender
         ) { viewModel.setEvent(RegisterDogEvent.OnGenderClicked(it)) }
-        RenderAge(value = viewState.age) { viewModel.setEvent(RegisterDogEvent.FillInAge(it)) }
+        RenderAge(value = viewState.age) { viewModel.setEvent(RegisterDogEvent.FillInAge(it.toInt())) }
         RenderAdoptionDate(
             year = viewState.year,
             month = viewState.month,
@@ -120,7 +121,7 @@ fun RegisterDogScreen(
             focusManager = focusManager
         ) {
             viewModel.setEvent(
-                RegisterDogEvent.FillInRegistrationNum(it)
+                RegisterDogEvent.FillInRegistrationNum(it.toInt())
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
@@ -270,11 +271,11 @@ fun RenderGender(
 }
 
 @Composable
-fun RenderAge(value: String, onValueChange: (String) -> Unit) {
+fun RenderAge(value: Int, onValueChange: (String) -> Unit) {
     LabelNInputForm(
         label = R.string.age,
         placeholder = R.string.age,
-        value = value,
+        value = value.toString(),
         onValueChange = onValueChange
     )
 }
@@ -303,7 +304,7 @@ fun RenderAdoptionDate(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RenderPetRegistrationNumber(
-    value: String,
+    value: Int,
     coroutineScope: CoroutineScope,
     bringIntoViewRequester: BringIntoViewRequester,
     focusManager: FocusManager,
@@ -312,7 +313,7 @@ fun RenderPetRegistrationNumber(
     LabelNInputForm(
         label = R.string.pet_registration_number,
         placeholder = R.string.pet_registration_number,
-        value = value,
+        value = value.toString(),
         onValueChange = onValueChange,
         modifier = Modifier
             .fillMaxWidth()
@@ -380,12 +381,12 @@ fun LabelNInputForm(
             name = value,
             onValueChange = onValueChange,
             placeholder = stringResource(placeholder),
-            bgColor = if (value.isEmpty()) {
+            bgColor = if (value.isEmpty() || value == "0") {
                 QuestionEditFill
             } else {
                 LightYellow
             },
-            borderColor = if (value.isEmpty()) {
+            borderColor = if (value.isEmpty() || value == "0") {
                 InputBoxOutline
             } else {
                 Yellow
