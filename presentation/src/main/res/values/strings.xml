@@ -114,4 +114,14 @@
 
     <!--  에러 메세지  -->
     <string name="network_error_message">네트워크 에러가 발생하였습니다.</string>
+
+    <!-- 맵 -->
+    <string name="map_rate">평점</string>
+    <string name="map_place_name">명지대학교</string>
+    <string name="map_category_name">대학교</string>
+    <string name="map_road_address_name">경기도 용인시 처인구 남동</string>
+    <string name="map_x">0</string>
+    <string name="map_y">0</string>
+    <string name="map_search_bar">주소 검색</string>
+
 </resources>
