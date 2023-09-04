@@ -31,10 +31,12 @@ class RegisterDogContract {
         object NavigateToSearchBreedScreen : RegisterDogSideEffect()
         object NavigateToNextScreen : RegisterDogSideEffect()
         object NavigateToPreviousScreen : RegisterDogSideEffect()
-        data class NavigateToRegisterScreen(val breed: String) : RegisterDogSideEffect()
+        data class NavigateToRegisterScreen(val breed: String, val animalId: Int) :
+            RegisterDogSideEffect()
     }
 
     sealed class RegisterDogEvent : ViewEvent {
+        object InitList : RegisterDogEvent()
         data class FillInName(val name: String) : RegisterDogEvent()
         data class FillInBreed(val breed: String) : RegisterDogEvent()
         data class FillInAge(val age: Int) : RegisterDogEvent()
@@ -44,10 +46,11 @@ class RegisterDogContract {
         data class FillInRegistrationNum(val num: Int) : RegisterDogEvent()
         data class OnPetTypeClicked(val petType: String) : RegisterDogEvent()
         data class OnBreedClicked(val breed: String) : RegisterDogEvent()
+        data class SetAnimalID(val animalId: Int) : RegisterDogEvent()
         data class OnGenderClicked(val gender: String) : RegisterDogEvent()
         object OnClickSearchButton : RegisterDogEvent()
         object OnClickMakeButton : RegisterDogEvent()
         object OnClickBackButton : RegisterDogEvent()
-        data class OnClickSelectButton(val breed: String) : RegisterDogEvent()
+        data class OnClickSelectButton(val breed: String, val animalId: Int) : RegisterDogEvent()
     }
 }

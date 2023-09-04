@@ -69,6 +69,7 @@ import com.meongmoryteam.presentation.ui.theme.Yellow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SearchBreedScreen(
     navController: NavController,
@@ -78,27 +79,14 @@ fun SearchBreedScreen(
 ) {
     val buttonItemList =
         listOf(stringResource(R.string.dog_icon), stringResource(R.string.cat_icon))
-    //임시데이터
-//    val searchList =
-//        listOf(
-//            Breed("말티즈", "강아지"),
-//            Breed("페르시안", "고양이"),
-//            Breed("푸들", "강아지"),
-//            Breed("벵갈", "고양이"),
-//            Breed("포메라니안", "강아지"),
-//            Breed("엑조틱", "고양이"),
-//            Breed("비숑", "강아지"),
-//            Breed("레그돌", "고양이"),
-//            Breed("골든리트리버", "강아지"),
-//            Breed("브리티쉬 숏헤어", "고양이"),
-//            Breed("진돗개", "강아지"),
-//            Breed("아메리칸 숏헤어", "고양이")
-//        )
+    viewModel.setEvent(RegisterDogEvent.InitList)
+
     val viewState by viewModel.viewState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val bringIntoViewRequester = BringIntoViewRequester()
 
+    val searchList = viewState.content
     RegisterDogForm(
         navController = navController,
         title = stringResource(R.string.search_breed),
@@ -124,16 +112,24 @@ fun SearchBreedScreen(
             navigateToSearch = { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
         )
         SearchList(
-//            searchList = searchList,
-            searchList = viewState.content,
+            searchList = searchList,
             category = viewState.petType,
             breed = viewState.breed,
-            onValueChange = { viewModel.setEvent(RegisterDogEvent.OnBreedClicked(it)) })
+            onValueChange = { viewModel.setEvent(RegisterDogEvent.OnBreedClicked(it)) },
+            setID = { viewModel.setEvent(RegisterDogEvent.SetAnimalID(it)) }
+        )
         RenderSelectButton(
             isSelected = viewState.isSelected,
             breed = viewState.breed,
             bringIntoViewRequester = bringIntoViewRequester,
-            navigateTo = { viewModel.setEvent(RegisterDogEvent.OnClickSelectButton(it)) }
+            navigateTo = {
+                viewModel.setEvent(
+                    RegisterDogEvent.OnClickSelectButton(
+                        viewState.breed,
+                        viewState.animalId
+                    )
+                )
+            }
         )
     }
 
@@ -146,7 +142,7 @@ fun SearchBreedScreen(
 
                 is RegisterDogSideEffect.NavigateToSearchBreedScreen -> {}
                 is RegisterDogSideEffect.NavigateToRegisterScreen -> {
-                    navController.navigate(Route.RegisterDog.route.plus("/${effect.breed}"))
+                    navController.navigate(Route.RegisterDog.route.plus("/${effect.breed}/${effect.animalId}"))
                 }
 
                 is RegisterDogSideEffect.NavigateToNextScreen -> {}
@@ -222,13 +218,13 @@ fun SearchScreen(
 
 @Composable
 fun SearchList(
-//    searchList: List<Breed>,
     searchList: List<SearchBreedResponse>,
     category: String,
     breed: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    setID: (Int) -> Unit
 ) {
-    Log.d("search","$searchList")
+    Log.d("search", "$searchList")
     val lazyList = if (category == stringResource(R.string.blank)) searchList else selectLogic(
         searchList = searchList,
         category = category
@@ -272,6 +268,7 @@ fun SearchList(
                     IconButton(
                         onClick = {
                             onValueChange(item.animalName)
+                            setID(item.animalId)
                         }
                     ) {
                         Icon(
@@ -322,21 +319,14 @@ fun RenderSelectButton(
 
 @Composable
 fun selectLogic(
-//    searchList: List<Breed>,
     searchList: List<SearchBreedResponse>,
     category: String
 ): MutableList<SearchBreedResponse> {
     val selectedList = mutableListOf<SearchBreedResponse>()
 
     for (item in searchList) {
-//        if (item.category == category) selectedList.add(item)
         if (item.animalType == category) selectedList.add(item)
 
     }
     return selectedList
 }
-
-data class Breed(
-    val breed: String,
-    val category: String
-)

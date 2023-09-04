@@ -66,13 +66,19 @@ fun RegisterDogNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS).plus(NavArgs.ANIMALID_ROUTE_PLUS),
+        startDestination = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS)
+            .plus(NavArgs.ANIMALID_ROUTE_PLUS),
         modifier = modifier
     ) {
         composable(
-            route = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS).plus(NavArgs.ANIMALID_ROUTE_PLUS),
-            arguments = listOf(navArgument(NavArgs.BREED_ARG) { type = NavType.StringType }, navArgument(NavArgs.ANIMALID_ARG){type=
-                NavType.IntType})
+            route = Route.RegisterDog.route.plus(NavArgs.BREED_ROUTE_PLUS)
+                .plus(NavArgs.ANIMALID_ROUTE_PLUS),
+            arguments = listOf(
+                navArgument(NavArgs.BREED_ARG) { type = NavType.StringType },
+                navArgument(NavArgs.ANIMALID_ARG) {
+                    type =
+                        NavType.IntType
+                })
         ) {
             RegisterDogScreen(
                 navController = navController,

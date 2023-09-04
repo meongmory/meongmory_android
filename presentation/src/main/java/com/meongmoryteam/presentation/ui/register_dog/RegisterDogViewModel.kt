@@ -24,6 +24,7 @@ class RegisterDogViewModel @Inject constructor(
     ) {
     override fun handleEvents(event: RegisterDogEvent) {
         when (event) {
+            is RegisterDogEvent.InitList -> getSearchBreed()
             is RegisterDogEvent.FillInName -> reflectUpdateState(name = event.name)
             is RegisterDogEvent.FillInBreed -> reflectUpdateState(breed = event.breed)
             is RegisterDogEvent.FillInAge -> reflectUpdateState(age = event.age)
@@ -35,54 +36,65 @@ class RegisterDogViewModel @Inject constructor(
             is RegisterDogEvent.OnBreedClicked -> {
                 reflectUpdateState(breed = event.breed)
             }
+
+            is RegisterDogEvent.SetAnimalID -> reflectUpdateState(animalId = event.animalId)
             is RegisterDogEvent.OnGenderClicked -> reflectUpdateState(gender = event.gender)
             is RegisterDogEvent.OnClickSearchButton -> {
                 getSearchBreed()
-                Log.d("confirm","${viewState.value.content}")
-
-//                sendEffect({ RegisterDogSideEffect.NavigateToSearchBreedScreen })
             }
+
             is RegisterDogEvent.OnClickBackButton -> sendEffect({ RegisterDogSideEffect.NavigateToPreviousScreen })
             is RegisterDogEvent.OnClickMakeButton -> {
                 postRegisterPet()
-//                sendEffect({ RegisterDogSideEffect.NavigateToNextScreen })
             }
+
             is RegisterDogEvent.OnClickSelectButton -> sendEffect({
                 RegisterDogSideEffect.NavigateToRegisterScreen(
-                    breed = event.breed
+                    breed = event.breed,
+                    animalId = event.animalId
                 )
             })
         }
     }
 
-    private fun getSearchBreed(){
-        viewModelScope.launch{
-            sendEffect({ RegisterDogSideEffect.NavigateToSearchBreedScreen })
-            getSearchBreedUseCase(null, viewState.value.breed, null, null, viewState.value.petType).onSuccess {
+    private fun getSearchBreed() {
+        viewModelScope.launch {
+            getSearchBreedUseCase(
+                null,
+                viewState.value.breed,
+                null,
+                null,
+                viewState.value.petType
+            ).onSuccess {
                 updateState {
                     copy(
                         getBreedLoadState = LoadState.SUCCESS,
-//                        animalId = it.animalTypeList.content,
-//                        animalType = it.animalTypeList.content.animalType,
-//                        breed = it.animalTypeList.content.animalName
-                    content = it.data.animalTypeLists.content
+                        content = it.data.animalTypeLists.content
                     )
                 }
-                Log.d("getSearchBreed","${viewState.value.content}")
+                Log.d("getSearchBreed", "${viewState.value.content}")
+
+                sendEffect({ RegisterDogSideEffect.NavigateToSearchBreedScreen })
             }.onFailure {
                 updateState {
                     copy(
                         getBreedLoadState = LoadState.ERROR
                     )
                 }
-                Log.d("getSearchBreed","${it.cause} | ${it.message}")
+                Log.d("getSearchBreed", "${it.cause} | ${it.message}")
             }
         }
     }
 
     private fun postRegisterPet() {
         val registerPetRequest = RegisterPetRequestEntity(
-            "${viewState.value.year}-${viewState.value.month}-${viewState.value.day}", viewState.value.animalId, viewState.value.age, viewState.value.gender, viewState.value.imgKey, viewState.value.name, viewState.value.registrationNumber
+            "${viewState.value.year}-${viewState.value.month}-${viewState.value.day}",
+            viewState.value.animalId,
+            viewState.value.age,
+            viewState.value.gender,
+            viewState.value.imgKey,
+            viewState.value.name,
+            viewState.value.registrationNumber
         )
         viewModelScope.launch {
             postRegisterPetUseCase(viewState.value.familyId, registerPetRequest).onSuccess {
@@ -98,10 +110,11 @@ class RegisterDogViewModel @Inject constructor(
                         postRegisterPetLoadState = LoadState.ERROR
                     )
                 }
-                Log.d("postRegisterPet","${it.cause} | ${it.message}")
+                Log.d("postRegisterPet", "${it.cause} | ${it.message}")
             }
         }
     }
+
     private fun reflectUpdateState(
         name: String = viewState.value.name,
         breed: String = viewState.value.breed,
@@ -135,7 +148,8 @@ class RegisterDogViewModel @Inject constructor(
                     registrationNumber,
                     gender
                 ),
-                isSelected = isConfirmed(animalType, breed)
+                isSelected = isConfirmed(animalType, breed),
+                animalId = animalId
             )
         }
     }
@@ -150,13 +164,13 @@ class RegisterDogViewModel @Inject constructor(
         registrationNumber: Int,
         gender: String
     ): Boolean {
-        return (name.isNotEmpty() && breed.isNotEmpty() && (age!=-1) && year.isNotEmpty() && month.isNotEmpty() && day.isNotEmpty() && (registrationNumber!=0) && gender.isNotEmpty())
+        return (name.isNotEmpty() && breed.isNotEmpty() && (age != -1) && year.isNotEmpty() && month.isNotEmpty() && day.isNotEmpty() && (registrationNumber != 0) && gender.isNotEmpty())
     }
 
     private fun isConfirmed(
         petType: String,
         breed: String
     ): Boolean {
-        return (petType.isNotEmpty() && breed.isNotEmpty())
+        return (breed.isNotEmpty())
     }
 }

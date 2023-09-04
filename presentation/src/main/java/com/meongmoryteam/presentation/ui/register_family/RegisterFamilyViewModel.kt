@@ -29,7 +29,6 @@ class RegisterFamilyViewModel @Inject constructor(
             is RegisterFamilyEvent.FillInCode -> reflectUpdateState(code = event.code)
             is RegisterFamilyEvent.OnClickBackButton -> sendEffect({ RegisterFamilySideEffect.NavigateToPreviousScreen })
             is RegisterFamilyEvent.OnClickMakeButton -> {
-//                sendEffect({ RegisterFamilySideEffect.NavigateToNextScreen })
                 postRegisterWithName()
             }
 
