@@ -8,7 +8,6 @@ import com.meongmoryteam.domain.model.response.family.PostRegisterFamilyNameEnti
 interface FamilyRepository {
     suspend fun postRegisterWithName(registerFamilyNameRequestEntity: RegisterFamilyNameRequestEntity): Result<PostRegisterFamilyNameEntity>
     suspend fun postRegisterWithCode(
-        familyId: String,
         registerFamilyCodeRequestEntity: RegisterFamilyCodeRequestEntity
     ): Result<PostRegisterFamilyCodeEntity>
 }

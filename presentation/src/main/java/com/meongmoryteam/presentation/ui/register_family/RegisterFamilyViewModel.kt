@@ -36,7 +36,7 @@ class RegisterFamilyViewModel @Inject constructor(
             is RegisterFamilyEvent.OnClickNextButton -> sendEffect({ RegisterFamilySideEffect.NavigateToNextScreen })
             is RegisterFamilyEvent.OnClickOkButton -> {
                 reflectUpdateState()
-                postRegisterWithCode()
+                postRegisterWithCode(code = event.code)
             }
 
             is RegisterFamilyEvent.OnClickRegisterCodeButton -> sendEffect({ RegisterFamilySideEffect.NavigateToRegisterCodeScreen })
@@ -46,13 +46,12 @@ class RegisterFamilyViewModel @Inject constructor(
         }
     }
 
-    private fun postRegisterWithCode() {
+    private fun postRegisterWithCode(code: String = viewState.value.code) {
         val registerFamilyCodeRequest = RegisterFamilyCodeRequestEntity(
-            viewState.value.code
+            code
         )
         viewModelScope.launch {
             postRegisterWithCodeUseCase(
-                viewState.value.familyId,
                 registerFamilyCodeRequest
             ).onSuccess {
                 updateState {
@@ -60,12 +59,14 @@ class RegisterFamilyViewModel @Inject constructor(
                         invalidCode = false
                     )
                 }
+                Log.d("post", "${it.data}")
             }.onFailure {
                 updateState {
                     copy(
                         invalidCode = true
                     )
                 }
+                Log.d("postfail", "${it.message}")
             }
         }
     }

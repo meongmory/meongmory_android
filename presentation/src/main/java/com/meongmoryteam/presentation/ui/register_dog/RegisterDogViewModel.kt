@@ -38,6 +38,7 @@ class RegisterDogViewModel @Inject constructor(
             is RegisterDogEvent.OnGenderClicked -> reflectUpdateState(gender = event.gender)
             is RegisterDogEvent.OnClickSearchButton -> {
                 getSearchBreed()
+                Log.d("confirm","${viewState.value.content}")
 
 //                sendEffect({ RegisterDogSideEffect.NavigateToSearchBreedScreen })
             }

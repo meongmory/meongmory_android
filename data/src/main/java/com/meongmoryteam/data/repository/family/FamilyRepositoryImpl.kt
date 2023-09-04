@@ -21,11 +21,9 @@ class FamilyRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postRegisterWithCode(
-        familyId: String,
         registerFamilyCodeRequestEntity: RegisterFamilyCodeRequestEntity
     ): Result<PostRegisterFamilyCodeEntity> {
         return familyDataSource.registerFamilyWithCode(
-            familyId,
             registerFamilyCodeRequestEntity.toRegisterWithCodeRequest()
         ).map { it.toPostRegisterFamilyCodeEntity() }
     }

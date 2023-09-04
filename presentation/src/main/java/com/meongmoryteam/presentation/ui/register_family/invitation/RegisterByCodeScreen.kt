@@ -92,7 +92,7 @@ fun RegisterByCodeScreen(
                 Spacer(modifier = Modifier.fillMaxWidth(0.1f))
                 TextButtonComponent(
                     text = stringResource(R.string.check),
-                    colors = if (viewState.invalidCode) {
+                    colors = if (!viewState.isFilledCode) {
                         ButtonDefaults.textButtonColors(LightGrey)
                     } else {
                         ButtonDefaults.textButtonColors(Orange)
@@ -105,7 +105,7 @@ fun RegisterByCodeScreen(
                         color = ButtonContent
                     ),
                     width = 1f
-                ) { if (!viewState.invalidCode) viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton) else {} }
+                ) { if (viewState.isFilledCode) viewModel.setEvent(RegisterFamilyEvent.OnClickOkButton(viewState.code)) else {} }
             }
             CheckValidCode(isInvalid = viewState.invalidCode)
         }

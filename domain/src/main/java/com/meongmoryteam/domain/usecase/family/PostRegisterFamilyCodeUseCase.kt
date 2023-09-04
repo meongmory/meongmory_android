@@ -8,7 +8,6 @@ class PostRegisterFamilyCodeUseCase @Inject constructor(
     private val familyRepository: FamilyRepository
 ) {
     suspend operator fun invoke(
-        familyId: String,
         registerFamilyCodeRequestEntity: RegisterFamilyCodeRequestEntity
-    ) = familyRepository.postRegisterWithCode(familyId, registerFamilyCodeRequestEntity)
+    ) = familyRepository.postRegisterWithCode(registerFamilyCodeRequestEntity)
 }

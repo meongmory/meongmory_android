@@ -26,7 +26,7 @@ class RegisterFamilyContract {
     sealed class RegisterFamilyEvent : ViewEvent {
         data class FillInFamilyName(val familyName: String) : RegisterFamilyEvent()
         data class FillInCode(val code: String) : RegisterFamilyEvent()
-        object OnClickOkButton : RegisterFamilyEvent()
+        data class OnClickOkButton(val code: String) : RegisterFamilyEvent()
         object OnClickNextButton : RegisterFamilyEvent()
         object OnClickBackButton : RegisterFamilyEvent()
         object OnClickMakeButton : RegisterFamilyEvent()

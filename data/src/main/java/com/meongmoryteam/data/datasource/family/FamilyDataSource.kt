@@ -7,5 +7,5 @@ import com.meongmoryteam.data.model.response.family.PostRegisterFamilyNameRes
 
 interface FamilyDataSource {
     suspend fun registerFamilyWithName(registerFamilyNameReq: RegisterFamilyNameRequest): Result<PostRegisterFamilyNameRes>
-    suspend fun registerFamilyWithCode(familyId: String, registerFamilyCodeReq: RegisterFamilyCodeRequest): Result<PostRegisterFamilyCodeRes>
+    suspend fun registerFamilyWithCode(registerFamilyCodeReq: RegisterFamilyCodeRequest): Result<PostRegisterFamilyCodeRes>
 }

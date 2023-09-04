@@ -14,9 +14,8 @@ interface FamilyApi {
         @Body registerFamilyNameRequest: RegisterFamilyNameRequest
     ): PostRegisterFamilyNameRes
 
-    @POST("families/{familyId}/invite")
+    @POST("families/invite")
     suspend fun postRegisterFamilyCode(
-        @Path(value = "familyId") familyId: String,
         @Body registerFamilyCodeRequest: RegisterFamilyCodeRequest
     ): PostRegisterFamilyCodeRes
 }

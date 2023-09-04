@@ -15,10 +15,9 @@ class FamilyDataSourceImpl @Inject constructor(
     }
 
     override suspend fun registerFamilyWithCode(
-        familyId: String,
         registerFamilyCodeReq: RegisterFamilyCodeRequest
     ): Result<PostRegisterFamilyCodeRes> {
-        return runCatching { familyApi.postRegisterFamilyCode(familyId, registerFamilyCodeReq) }
+        return runCatching { familyApi.postRegisterFamilyCode(registerFamilyCodeReq) }
     }
 
 }
