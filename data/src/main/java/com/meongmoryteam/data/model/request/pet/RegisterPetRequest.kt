@@ -1,7 +1,9 @@
 package com.meongmoryteam.data.model.request.pet
 
 import com.meongmoryteam.domain.model.reqeust.pet.RegisterPetRequestEntity
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RegisterPetRequest(
     val adoptDate : String,
     val animalId: Int,

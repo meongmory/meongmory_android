@@ -13,6 +13,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -78,7 +79,8 @@ fun RegisterDogNavigation(
                 navArgument(NavArgs.ANIMALID_ARG) {
                     type =
                         NavType.IntType
-                })
+                }
+                )
         ) {
             RegisterDogScreen(
                 navController = navController,
@@ -109,8 +111,7 @@ fun RegisterDogNavigation(
 //                    navController.navigate(
 //                        Route.RegisterDog.route.plus(
 //                            NavArgs.BREED_ROUTE_PLUS
-//                        )
-//                    )
+//                        ).plus(NavArgs.ANIMALID_ROUTE_PLUS))
                     //이전 화면 데이터 유지되도록
                     navController.popBackStack()
                 },

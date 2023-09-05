@@ -85,7 +85,8 @@ fun TextFieldComponent(
     bgColor: Color = Color(0xFFF9F9F9),
     borderColor: Color = InputBoxOutline,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    enabled: Boolean = true
 ) {
     BasicTextField(
         value = name,
@@ -115,6 +116,7 @@ fun TextFieldComponent(
             }
         },
         keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions
+        keyboardActions = keyboardActions,
+        enabled = enabled
     )
 }

@@ -1,5 +1,6 @@
 package com.meongmoryteam.presentation.ui.register_dog
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -84,7 +85,7 @@ fun RegisterDogScreen(
     navigateToPreviousScreen: () -> Unit,
     navigateToMakeScreen: () -> Unit,
     searchBreed: String,
-    animalId: Int
+    animalId: Int,
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val buttonItemList = listOf("수컷", "암컷")
@@ -93,13 +94,18 @@ fun RegisterDogScreen(
     val bringIntoViewRequester = BringIntoViewRequester()
     val scrollState = rememberScrollState()
 
+
     RegisterDogForm(
         bottomPadding = 0.dp,
         navController = navController, modifier = Modifier.verticalScroll(state = scrollState),
         navigateTo = { viewModel.setEvent(RegisterDogEvent.OnClickBackButton) }) {
         RenderProfile()
         RenderName(value = viewState.name) { viewModel.setEvent(RegisterDogEvent.FillInName(it)) }
-        RenderBreed(value = searchBreed) { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) }
+        viewState.breed = searchBreed
+        RenderBreed(
+            value = viewState.breed,
+            onValueChange = { viewModel.setEvent(RegisterDogEvent.FillInBreed(it)) },
+            navigateToSearch = { viewModel.setEvent(RegisterDogEvent.OnClickSearchButton) })
         RenderGender(
             label = R.string.gender,
             buttonItem = buttonItemList,
@@ -126,10 +132,35 @@ fun RegisterDogScreen(
         }
         Spacer(modifier = Modifier.height(10.dp))
         RenderRegisterButton(
+            animalName = viewState.breed,
             isAllFilled = viewState.isAllFilled,
-            bringIntoViewRequester = bringIntoViewRequester
+            bringIntoViewRequester = bringIntoViewRequester,
+            animalId = viewState.animalId,
+            age = viewState.age,
+            gender = viewState.gender,
+            imgKey = viewState.imgKey,
+            name = viewState.name,
+            registrationNumber = viewState.registrationNumber,
+            year = viewState.year,
+            month = viewState.month,
+            day = viewState.day
         ) {
-            viewModel.setEvent(RegisterDogEvent.OnClickMakeButton)
+            Log.d("breed", viewState.breed)
+            viewModel.setEvent(
+                RegisterDogEvent.OnClickMakeButton(
+                    viewState.breed,
+                    viewState.name,
+                    animalId,
+                    viewState.age,
+                    viewState.gender,
+                    viewState.imgKey,
+                    viewState.name,
+                    viewState.registrationNumber,
+                    viewState.year,
+                    viewState.month,
+                    viewState.day
+                )
+            )
         }
     }
 
@@ -185,47 +216,56 @@ fun RenderName(value: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
-fun RenderBreed(value: String, navigateToSearch: () -> Unit) {
+fun RenderBreed(value: String, navigateToSearch: () -> Unit, onValueChange: (String) -> Unit) {
     Box(contentAlignment = Alignment.CenterEnd) {
-        val bgColor = if (value.isEmpty()) {
-            QuestionEditFill
-        } else {
-            LightYellow
-        }
-        val borderColor = if (value.isEmpty()) {
-            InputBoxOutline
-        } else {
-            Yellow
-        }
-        Column(modifier = Modifier.padding(bottom = 14.dp)) {
-            TextComponent(
-                text = stringResource(R.string.breed),
-                style = Typography.titleSmall,
-                color = Placeholer,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(43.dp)
-                    .background(bgColor)
-                    .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
-                    .padding(horizontal = 15.dp, vertical = 14.dp)
-            ) {
-                TextComponent(
-                    text = stringResource(R.string.breed),
-                    style = Typography.titleSmall,
-                    color = Placeholer,
-                    modifier = Modifier.padding(bottom = 12.dp)
-                )
-                Text(
-                    text = value.ifEmpty { stringResource(R.string.breed) },
-                    style = Typography.titleSmall,
-                    color = if (value.isEmpty()) Placeholer else Black,
-                    maxLines = 1
-                )
-            }
-        }
+//        val bgColor = if (value.isEmpty()) {
+//            QuestionEditFill
+//        } else {
+//            LightYellow
+//        }
+//        val borderColor = if (value.isEmpty()) {
+//            InputBoxOutline
+//        } else {
+//            Yellow
+//        }
+//        Column(modifier = Modifier.padding(bottom = 14.dp)) {
+//            TextComponent(
+//                text = stringResource(R.string.breed),
+//                style = Typography.titleSmall,
+//                color = Placeholer,
+//                modifier = Modifier.padding(bottom = 12.dp)
+//            )
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(43.dp)
+//                    .background(bgColor)
+//                    .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
+//                    .padding(horizontal = 15.dp, vertical = 14.dp)
+//            ) {
+//                TextComponent(
+//                    text = stringResource(R.string.breed),
+//                    style = Typography.titleSmall,
+//                    color = Placeholer,
+//                    modifier = Modifier.padding(bottom = 12.dp)
+//                )
+//                Text(
+//                    text = value.ifEmpty { stringResource(R.string.breed) },
+//                    style = Typography.titleSmall,
+//                    color = if (value.isEmpty()) Placeholer else Black,
+//                    maxLines = 1
+//                )
+//            }
+//        }
+
+        LabelNInputForm(
+            label = R.string.breed,
+            placeholder = R.string.breed,
+            value = value,
+            onValueChange = onValueChange,
+            enabled = false
+        )
+        Log.d("renderBreed", "$value")
 
         SearchButton(padding = 15.dp, navigateToSearch)
     }
@@ -334,8 +374,18 @@ fun RenderPetRegistrationNumber(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RenderRegisterButton(
+    animalName: String,
     isAllFilled: Boolean,
     bringIntoViewRequester: BringIntoViewRequester,
+    animalId: Int,
+    age: Int,
+    gender: String,
+    imgKey: String,
+    name: String,
+    registrationNumber: Int,
+    year: String,
+    month: String,
+    day: String,
     navigateTo: () -> Unit
 ) {
     TextButtonComponent(
@@ -368,6 +418,7 @@ fun LabelNInputForm(
     modifier: Modifier = Modifier.fillMaxWidth(),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    enabled: Boolean = true,
     onValueChange: (String) -> Unit
 ) {
     Column(modifier = Modifier.padding(bottom = 14.dp)) {
@@ -378,7 +429,7 @@ fun LabelNInputForm(
             modifier = Modifier.padding(bottom = 12.dp)
         )
         TextFieldComponent(
-            name = value,
+            name = if (value == "0" || value == "") "" else value,
             onValueChange = onValueChange,
             placeholder = stringResource(placeholder),
             bgColor = if (value.isEmpty() || value == "0") {
@@ -393,7 +444,8 @@ fun LabelNInputForm(
             },
             modifier = modifier,
             keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions
+            keyboardActions = keyboardActions,
+            enabled = enabled
         )
     }
 }

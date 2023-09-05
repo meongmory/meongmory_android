@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface PetApi {
     //추후 userId, isLogin 쿼리 추가
-    @POST("families/{familyId}")
+    @POST("families/{familyId}/pet")
     suspend fun postRegisterPet(
         @Path(value = "familyId") familyId: Int,
         @Body registerPetRequest: RegisterPetRequest,

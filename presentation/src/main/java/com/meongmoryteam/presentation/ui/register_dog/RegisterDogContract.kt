@@ -11,7 +11,7 @@ class RegisterDogContract {
         val postRegisterPetLoadState: LoadState = LoadState.SUCCESS,
         val getBreedLoadState: LoadState = LoadState.SUCCESS,
         val name: String = "",
-        val breed: String = "",
+        var breed: String = "",
         val age: Int = 0,
         val year: String = "",
         val month: String = "",
@@ -24,6 +24,7 @@ class RegisterDogContract {
         val imgKey: String = "",
         val familyId: Int = 0,
         val animalId: Int = 0,
+        val animalName: String = "",
         val content: MutableList<SearchBreedResponse> = mutableListOf()
     ) : ViewState
 
@@ -37,6 +38,7 @@ class RegisterDogContract {
 
     sealed class RegisterDogEvent : ViewEvent {
         object InitList : RegisterDogEvent()
+        object SetData: RegisterDogEvent()
         data class FillInName(val name: String) : RegisterDogEvent()
         data class FillInBreed(val breed: String) : RegisterDogEvent()
         data class FillInAge(val age: Int) : RegisterDogEvent()
@@ -49,7 +51,7 @@ class RegisterDogContract {
         data class SetAnimalID(val animalId: Int) : RegisterDogEvent()
         data class OnGenderClicked(val gender: String) : RegisterDogEvent()
         object OnClickSearchButton : RegisterDogEvent()
-        object OnClickMakeButton : RegisterDogEvent()
+        data class OnClickMakeButton(val breed: String, val animalName: String, val animalId: Int, val age: Int, val gender: String, val imgKey: String, val name: String, val registrationNumber: Int, val year: String, val month: String, val day: String) : RegisterDogEvent()
         object OnClickBackButton : RegisterDogEvent()
         data class OnClickSelectButton(val breed: String, val animalId: Int) : RegisterDogEvent()
     }

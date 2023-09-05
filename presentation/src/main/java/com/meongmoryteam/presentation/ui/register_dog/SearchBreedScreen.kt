@@ -142,7 +142,9 @@ fun SearchBreedScreen(
 
                 is RegisterDogSideEffect.NavigateToSearchBreedScreen -> {}
                 is RegisterDogSideEffect.NavigateToRegisterScreen -> {
+//                    navController.popBackStack(Route.RegisterDog.route.plus("/${effect.breed}/${effect.animalId}"),false)
                     navController.navigate(Route.RegisterDog.route.plus("/${effect.breed}/${effect.animalId}"))
+                    Log.d("pop","${Route.RegisterDog.route.plus("/${effect.breed}/${effect.animalId}")}")
                 }
 
                 is RegisterDogSideEffect.NavigateToNextScreen -> {}

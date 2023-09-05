@@ -25,6 +25,7 @@ class RegisterDogViewModel @Inject constructor(
     override fun handleEvents(event: RegisterDogEvent) {
         when (event) {
             is RegisterDogEvent.InitList -> getSearchBreed()
+            is RegisterDogEvent.SetData -> reflectUpdateState()
             is RegisterDogEvent.FillInName -> reflectUpdateState(name = event.name)
             is RegisterDogEvent.FillInBreed -> reflectUpdateState(breed = event.breed)
             is RegisterDogEvent.FillInAge -> reflectUpdateState(age = event.age)
@@ -40,12 +41,24 @@ class RegisterDogViewModel @Inject constructor(
             is RegisterDogEvent.SetAnimalID -> reflectUpdateState(animalId = event.animalId)
             is RegisterDogEvent.OnGenderClicked -> reflectUpdateState(gender = event.gender)
             is RegisterDogEvent.OnClickSearchButton -> {
+                reflectUpdateState()
                 getSearchBreed()
             }
 
             is RegisterDogEvent.OnClickBackButton -> sendEffect({ RegisterDogSideEffect.NavigateToPreviousScreen })
             is RegisterDogEvent.OnClickMakeButton -> {
-                postRegisterPet()
+                reflectUpdateState(breed = event.breed, animalName = event.breed, animalId = event.animalId)
+                postRegisterPet(
+                    animalId = event.animalId,
+                    age = event.age,
+                    gender = event.gender,
+                    imgKey = event.imgKey,
+                    name = event.name,
+                    registrationNumber = event.registrationNumber,
+                    year = event.year,
+                    month = event.month,
+                    day = event.day
+                )
             }
 
             is RegisterDogEvent.OnClickSelectButton -> sendEffect({
@@ -86,15 +99,26 @@ class RegisterDogViewModel @Inject constructor(
         }
     }
 
-    private fun postRegisterPet() {
+    private fun postRegisterPet(
+        animalId: Int = viewState.value.animalId,
+        age: Int = viewState.value.age,
+        gender: String = viewState.value.gender,
+        imgKey: String = viewState.value.imgKey,
+        name: String = viewState.value.name,
+        registrationNumber: Int = viewState.value.registrationNumber,
+
+        year: String = viewState.value.year,
+        month: String = viewState.value.month,
+        day: String = viewState.value.day,
+    ) {
         val registerPetRequest = RegisterPetRequestEntity(
-            "${viewState.value.year}-${viewState.value.month}-${viewState.value.day}",
-            viewState.value.animalId,
-            viewState.value.age,
-            viewState.value.gender,
-            viewState.value.imgKey,
-            viewState.value.name,
-            viewState.value.registrationNumber
+            "${year}-${month}-${day}",
+            animalId,
+            age,
+            gender,
+            imgKey,
+            name,
+            registrationNumber
         )
         viewModelScope.launch {
             postRegisterPetUseCase(viewState.value.familyId, registerPetRequest).onSuccess {
@@ -116,6 +140,7 @@ class RegisterDogViewModel @Inject constructor(
     }
 
     private fun reflectUpdateState(
+        imgKey: String = viewState.value.imgKey,
         name: String = viewState.value.name,
         breed: String = viewState.value.breed,
         age: Int = viewState.value.age,
@@ -125,7 +150,8 @@ class RegisterDogViewModel @Inject constructor(
         registrationNumber: Int = viewState.value.registrationNumber,
         animalType: String = viewState.value.petType,
         gender: String = viewState.value.gender,
-        animalId: Int = viewState.value.animalId
+        animalId: Int = viewState.value.animalId,
+        animalName: String = viewState.value.animalName
     ) {
         updateState {
             copy(
@@ -139,6 +165,7 @@ class RegisterDogViewModel @Inject constructor(
                 petType = animalType,
                 gender = gender,
                 isAllFilled = isFilled(
+                    imgKey,
                     name,
                     breed,
                     age,
@@ -152,9 +179,11 @@ class RegisterDogViewModel @Inject constructor(
                 animalId = animalId
             )
         }
+        Log.d("viewmodel","${viewState.value.name} + ${viewState.value.breed} + ${viewState.value.gender} + ${viewState.value.age} + ${viewState.value.registrationNumber}")
     }
 
     private fun isFilled(
+        imgKey: String,
         name: String,
         breed: String,
         age: Int,
@@ -164,7 +193,9 @@ class RegisterDogViewModel @Inject constructor(
         registrationNumber: Int,
         gender: String
     ): Boolean {
-        return (name.isNotEmpty() && breed.isNotEmpty() && (age != -1) && year.isNotEmpty() && month.isNotEmpty() && day.isNotEmpty() && (registrationNumber != 0) && gender.isNotEmpty())
+        Log.d("viewmodelFilled","${name} + ${breed} + ${gender} + ${age} + ${registrationNumber}")
+
+        return (name.isNotEmpty() && breed.isNotEmpty() && (age != 0) && year.isNotEmpty() && month.isNotEmpty() && day.isNotEmpty() && (registrationNumber != 0) && gender.isNotEmpty())
     }
 
     private fun isConfirmed(
