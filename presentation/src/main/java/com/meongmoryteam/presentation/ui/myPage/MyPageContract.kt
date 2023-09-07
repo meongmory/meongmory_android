@@ -15,11 +15,14 @@ class MyPageContract {
     sealed class MyPageSideEffect : ViewSideEffect {
         object NavigateToEditProfile : MyPageSideEffect()
         object NavigateToQuestion : MyPageSideEffect()
+        object NavigateToLogin : MyPageSideEffect()
     }
 
     sealed class MyPageEvent : ViewEvent {
         object InitMyPageScreen : MyPageEvent()
         object OnClickProfileEditButtonClicked : MyPageEvent()
         object OnQuestionClicked : MyPageEvent()
+        object OnClickLogoutButtonClicked: MyPageEvent()
+        object OnClickDeleteUserButtonClicked: MyPageEvent()
     }
 }

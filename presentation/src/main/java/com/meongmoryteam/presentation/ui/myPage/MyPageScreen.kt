@@ -54,6 +54,7 @@ fun MyPageScreen(
     viewModel: MyPageViewModel = hiltViewModel(),
     navigateToEditNickNameScreen: () -> Unit,
     navigateToQuestionScreen: () -> Unit,
+    navigateToLoginScreen: () -> Unit
 ) {
     LaunchedEffect(true) {
         viewModel.setEvent(MyPageContract.MyPageEvent.InitMyPageScreen)
@@ -68,6 +69,10 @@ fun MyPageScreen(
 
                 is MyPageContract.MyPageSideEffect.NavigateToQuestion -> {
                     navigateToQuestionScreen()
+                }
+
+                is MyPageContract.MyPageSideEffect.NavigateToLogin -> {
+                    navigateToLoginScreen()
                 }
             }
         }
@@ -198,7 +203,7 @@ fun MyPageScreen(
                     R.drawable.ic_logout,
                     stringResource(R.string.my_page_logout),
                     stringResource(R.string.my_page_logout),
-                    onClick = { },
+                    onClick = {  },
                 )
                 ListButton(
                     R.drawable.ic_user,
@@ -304,7 +309,9 @@ fun MyPageScreen(
         // 버튼마다 다른 다이어로그
         if (refreshButton.value) {
             if (onClickAction == stringResource(R.string.my_page_profile_edit)) {
-                LogoutAlertDialog(openDialogCustom = refreshButton)
+                LogoutAlertDialog(
+                    openDialogCustom = refreshButton
+                )
             }
             if (onClickAction == stringResource(R.string.my_page_question)) {
                 SecessionAlertDialog(openDialogCustom = refreshButton)
@@ -400,6 +407,7 @@ fun MyPageScreen(
             MyPageScreen(
                 navigateToEditNickNameScreen = { },
                 navigateToQuestionScreen = { },
+                navigateToLoginScreen = { }
             )
         }
     }

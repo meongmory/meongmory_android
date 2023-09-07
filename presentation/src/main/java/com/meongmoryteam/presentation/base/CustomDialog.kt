@@ -26,7 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.meongmoryteam.presentation.R
+import com.meongmoryteam.presentation.ui.myPage.MyPageContract
+import com.meongmoryteam.presentation.ui.myPage.MyPageViewModel
 import com.meongmoryteam.presentation.ui.theme.DialogBackground
 import com.meongmoryteam.presentation.ui.theme.DialogStroke
 import com.meongmoryteam.presentation.ui.theme.DialogTextBlue
@@ -38,7 +41,8 @@ private fun CustomDialogUI(
     textDetail: String? = null,
     leftButton: String? = null,
     rightButton: String? = null,
-    dialogCustom: MutableState<Boolean>
+    dialogCustom: MutableState<Boolean>,
+    onRightButtonClick: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(14.dp),
@@ -84,9 +88,10 @@ private fun CustomDialogUI(
                 Arrangement.SpaceEvenly
             ) {
 
-                TextButton(onClick = {
-                    dialogCustom.value = false
-                }) {
+                TextButton(
+                    onClick = {
+                        dialogCustom.value = false
+                    }) {
                     leftButton?.let {
                         Text(
                             leftButton,
@@ -101,9 +106,12 @@ private fun CustomDialogUI(
                         .width(1.dp)
                         .background(DialogStroke.copy(0.36f))
                 )
-                TextButton(onClick = {
-                    dialogCustom.value = true
-                }) {
+                TextButton(
+                    onClick = {
+                        dialogCustom.value = true
+                        onRightButtonClick()
+                    }
+                ) {
                     rightButton?.let {
                         Text(
                             rightButton,
@@ -121,7 +129,8 @@ private fun CustomDialogUI(
 // 로그아웃 다이어로그
 @Composable
 fun LogoutAlertDialog(
-    openDialogCustom: MutableState<Boolean>
+    openDialogCustom: MutableState<Boolean>,
+    viewModel: MyPageViewModel = hiltViewModel()
 ) {
     Dialog(
         onDismissRequest = { openDialogCustom.value = false }
@@ -131,7 +140,12 @@ fun LogoutAlertDialog(
             textDetail = stringResource(R.string.dialog_logout_detail),
             leftButton = stringResource(R.string.dialog_cancel),
             rightButton = stringResource(R.string.dialog_logout),
-            dialogCustom = openDialogCustom
+            dialogCustom = openDialogCustom,
+            onRightButtonClick = {
+                // 오른쪽 버튼 클릭 시 viewModel 호출
+                viewModel.setEvent(MyPageContract.MyPageEvent.OnClickLogoutButtonClicked)
+                openDialogCustom.value = false  // 다이얼로그 닫기
+            }
         )
     }
 }
@@ -140,7 +154,8 @@ fun LogoutAlertDialog(
 // 탈퇴 다이어로그
 @Composable
 fun SecessionAlertDialog(
-    openDialogCustom: MutableState<Boolean>
+    openDialogCustom: MutableState<Boolean>,
+    viewModel: MyPageViewModel = hiltViewModel()
 ) {
     Dialog(
         onDismissRequest = { openDialogCustom.value = false }
@@ -150,7 +165,10 @@ fun SecessionAlertDialog(
             textDetail = stringResource(R.string.dialog_secession_detail),
             leftButton = stringResource(R.string.dialog_cancel),
             rightButton = stringResource(R.string.dialog_secession_yes),
-            dialogCustom = openDialogCustom
+            dialogCustom = openDialogCustom,
+            onRightButtonClick = {
+                viewModel.setEvent(MyPageContract.MyPageEvent.OnClickDeleteUserButtonClicked)
+            }
         )
     }
 }
