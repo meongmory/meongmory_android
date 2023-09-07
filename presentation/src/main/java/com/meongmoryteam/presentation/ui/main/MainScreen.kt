@@ -13,15 +13,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.meongmoryteam.presentation.ui.bottom.MeongMoryBottomNavigation
 import com.meongmoryteam.presentation.ui.bottom.MeongMoryRoute
 import com.meongmoryteam.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.meongmoryteam.presentation.ui.home.HomeScreen
+import com.meongmoryteam.presentation.ui.login.LoginActivity
 import com.meongmoryteam.presentation.ui.map.MapScreen
 import com.meongmoryteam.presentation.ui.myPage.MyPageScreen
 import com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileScreen
 import com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionScreen
+import com.meongmoryteam.presentation.ui.register_family.RouteScreen
 
 @Composable
 fun MainScreen(
@@ -61,6 +64,7 @@ fun MainScreen(
                 MyPageScreen(
                     navigateToEditNickNameScreen = { navController.navigate(MeongMoryRoute.EDIT_NICKNAME.route) },
                     navigateToQuestionScreen = { navController.navigate(MeongMoryRoute.QUESTION.route) },
+                    navigateToLoginScreen = { navController.navigate(MeongMoryRoute.HOME.route) }
                 )
             }
             composable(route = MeongMoryRoute.EDIT_NICKNAME.route) {

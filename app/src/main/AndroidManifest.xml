@@ -19,32 +19,22 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Meongmory">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
             android:name="com.meongmoryteam.presentation.ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Meongmory">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name="com.meongmoryteam.presentation.ui.login.LoginActivity"
-            android:theme="@style/Theme.Meongmory">
-
-        </activity>
-        <activity
-            android:name="com.meongmoryteam.presentation.ui.myPage.profile.MyPageProfileActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Meongmory">
-
-        </activity>
-
-        <activity android:name="com.meongmoryteam.presentation.ui.myPage.question.MyPageQuestionActivity"
-            android:exported="true"
             android:theme="@style/Theme.Meongmory">
 
         </activity>
