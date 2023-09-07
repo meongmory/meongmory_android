@@ -1,6 +1,7 @@
 package com.meongmoryteam.meongmory.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.meongmoryteam.data.service.family.FamilyApi
 import com.meongmoryteam.data.service.login.LoginApi
 import com.meongmoryteam.data.service.logout.LogoutApi
 import com.meongmoryteam.data.service.mypage.MyPageApi
@@ -55,6 +56,12 @@ object NetworkModule {
         return retrofit.create(LoginApi::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideFamilyApi(retrofit: Retrofit): FamilyApi {
+        return retrofit.create(FamilyApi::class.java)
+    }
+    
     @Provides
     @Singleton
     fun provideMyPageApi(retrofit: Retrofit): MyPageApi {

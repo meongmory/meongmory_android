@@ -12,7 +12,8 @@ class RegisterFamilyContract {
         val familyName: String = "",
         val isFilledName: Boolean = false,
         val isFilledCode: Boolean = false,
-        val invalidCode: Boolean = false
+        val invalidCode: Boolean = true,
+        val familyId: String = ""
     ) : ViewState
 
     sealed class RegisterFamilySideEffect : ViewSideEffect {
